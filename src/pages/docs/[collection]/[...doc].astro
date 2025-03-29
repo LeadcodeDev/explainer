@@ -1,0 +1,19 @@
+---
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { collections } from "../../../../config";
+
+export function getStaticPaths() {
+	return Object.values(collections.docs).map((collection) => ({
+		params: { collection },
+	}));
+}
+
+const { collection } = Astro.params;
+---
+
+<DocsLayout>
+	<div>
+		{collection}
+		<h1>Hello World</h1>
+	</div>
+</DocsLayout>
