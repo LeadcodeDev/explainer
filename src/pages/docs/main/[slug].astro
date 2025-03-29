@@ -1,5 +1,6 @@
 ---
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import { render } from "astro:content";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 interface Props {
@@ -9,13 +10,13 @@ interface Props {
 export async function getStaticPaths() {
 	const contents = await getCollection("main");
 	return contents.map((element: CollectionEntry<"main">) => ({
-		params: { slug: element.slug },
+		params: { slug: element.data.permalink },
 		props: { element },
 	}));
 }
 
 const { element } = Astro.props;
-const { Content } = await element.render();
+const { Content } = await render(element);
 ---
 
 <DocsLayout>

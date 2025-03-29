@@ -4,10 +4,21 @@ permalink: welcome
 ---
 # {frontmatter.title}
 ```rust
-pub struct Foo {}
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
 
-impl Foo {
-  pub fn new() -> Self {
-    Self {}
+impl User {
+  pub fn new(firstname: String, lastname: String) -> Self {
+    Self { firstname, lastname }
   }
 }
+```
+
+```mermaid
+sequenceDiagram
+  participant F as Frontend
+  participant B as Backend
+  participant A as Axonaut
+```
