@@ -27,6 +27,7 @@
     "playwright": "^1.51.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "rehype-callouts": "^2.0.2",
     "rehype-code-group": "^0.2.4",
     "rehype-mermaid": "^3.0.0",
     "tailwind-merge": "^3.0.2",

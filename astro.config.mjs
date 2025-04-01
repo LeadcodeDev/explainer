@@ -6,6 +6,7 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import rehypeMermaid from 'rehype-mermaid';
 import rehypeCodeGroup from 'rehype-code-group';
+import rehypeCallouts from 'rehype-callouts'
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -40,6 +41,13 @@ export default defineConfig({
     },
     rehypePlugins: [
       rehypeMermaid,
+      [rehypeCallouts, {
+        customClassNames: {
+          calloutClass: "callout",
+          calloutTitleClass: "callout-title",
+          calloutContentClass: "callout-content",
+        }
+      }],
       [rehypeCodeGroup, {
         customClassNames: {
           codeGroupClass: "code-group",

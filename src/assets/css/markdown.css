@@ -9,6 +9,10 @@
   --bg-diff-remove: rgba(244, 63, 94, .20);
   --bg-diff-add: rgba(16, 185, 129, .20);
   --bg-highlight: rgba(51, 79, 110, 0.10);
+  --callout-success: #00c16a;
+  --callout-warning: var(--color-warning);
+  --callout-note: oklch(0.546 0.245 262.881);
+  --callout-error: #ef4444;
 }
 
 .dark {
@@ -166,6 +170,92 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
 
     >* {
       margin: 0 !important;
+    }
+  }
+}
+
+.callout {
+  margin: 2rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+
+  .callout-title-icon {
+    display: none;
+  }
+
+  &[data-callout="note"] {
+    background-color: color-mix(in oklab, var(--callout-note)10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--callout-note)25%, transparent);
+    color: var(--callout-note);
+
+    .callout-title {
+      &::before {
+        content: "ⓘ";
+        font-weight: bold;
+        color: var(--callout-note);
+      }
+    }
+  }
+
+  &[data-callout="success"] {
+    background-color: color-mix(in oklab, var(--callout-success)10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--callout-success)40%, transparent);
+    color: var(--callout-success);
+
+    .callout-title {
+      &::before {
+        content: "✓";
+        font-weight: bold;
+        color: var(--callout-success);
+      }
+    }
+  }
+
+  &[data-callout="warning"] {
+    background-color: color-mix(in oklab, var(--callout-warning)10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--callout-warning)40%, transparent);
+    color: var(--callout-warning);
+
+    .callout-title {
+      &::before {
+        content: "⚠︎";
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--callout-warning);
+      }
+    }
+  }
+
+  &[data-callout="error"] {
+    background-color: color-mix(in oklab, var(--callout-error)10%, transparent);
+    border: 1px solid color-mix(in oklab, var(--callout-error)40%, transparent);
+    color: var(--callout-error);
+
+    .callout-title {
+      &::before {
+        content: "✗";
+        font-weight: bold;
+        color: var(--callout-error);
+      }
+    }
+  }
+
+  .callout-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .callout-content {
+    padding-left: 1.5rem;
+    opacity: 0.8;
+
+    >*:first-child {
+      margin-top: 0;
+    }
+
+    >*:last-child {
+      margin-bottom: 0;
     }
   }
 }
