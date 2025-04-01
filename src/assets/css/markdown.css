@@ -1,5 +1,130 @@
+:root {
+  --bg-default: #f0f0f0;
+  --color-remove: rgba(244, 63, 94, .75);
+  --color-add: rgba(16, 185, 129, .75);
+  --color-warning: rgba(187, 142, 5, 0.75);
+  --bg-diff-remove: rgba(244, 63, 94, .20);
+  --bg-diff-add: rgba(16, 185, 129, .20);
+  --bg-highlight: rgba(51, 79, 110, 0.10);
+}
+
+.dark {
+  --bg-highlight: rgb(29, 44, 61);
+  --color-warning: rgba(255, 193, 7, .75);
+}
+
+html .astro-code,
+html .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
+  background-color: var(--bg-default) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) {
+  color: var(--shiki-dark) !important;
+}
+
+html.dark .astro-code,
+html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
 .astro-code {
-  padding: 1rem;
+  margin: 2rem 0;
+  padding: 1rem 0.5rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
+  position: relative;
+
+  &.has-focused .line:not(.focused) {
+    opacity: .7;
+    filter: blur(.095rem);
+  }
+
+  &.has-focused:hover .line:not(.focused) {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.astro-code code {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.astro-code .line {
+  padding: 0.20rem 0.5rem;
+  min-height: 1.75rem;
+  position: relative;
+
+  &.highlighted {
+    background-color: var(--bg-highlight);
+    border-radius: 0.25rem;
+
+    &.error {
+      background-color: rgba(244, 63, 94, .20);
+
+      &::after {
+        content: "Error";
+        position: absolute;
+        right: 10px;
+        color: var(--color-remove);
+      }
+    }
+
+    &.warning {
+      background-color: rgba(255, 193, 7, .20);
+
+      &::after {
+        content: "Warning";
+        position: absolute;
+        right: 10px;
+        color: var(--color-warning);
+      }
+    }
+  }
+
+  .highlighted-word {
+    position: relative;
+    color: white;
+    margin: 0 5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: -3px;
+      bottom: -3px;
+      right: -5px;
+      border: 1px solid rgb(255, 255, 255, .25);
+      border-radius: 0.25rem;
+    }
+  }
+
+  &.diff {
+    border-radius: 0.25rem;
+
+    &.remove {
+      background-color: var(--bg-diff-remove);
+
+      &::before {
+        content: "-";
+        position: absolute;
+        left: 5px;
+        color: var(--color-remove);
+      }
+    }
+
+    &.add {
+      background-color: var(--bg-diff-add);
+
+      &::before {
+        content: "+";
+        position: absolute;
+        left: 5px;
+        color: var(--color-add);
+      }
+    }
+  }
 }

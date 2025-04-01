@@ -5,6 +5,14 @@ import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import rehypeMermaid from 'rehype-mermaid';
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+  transformerNotationFocus,
+  transformerNotationErrorLevel,
+  transformerMetaHighlight,
+} from '@shikijs/transformers'
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +20,18 @@ export default defineConfig({
 
   markdown: {
     shikiConfig: {
-      theme: 'catppuccin-frappe',
+      themes: {
+        light: 'github-light',
+        dark: 'catppuccin-frappe',
+      },
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationWordHighlight(),
+        transformerNotationFocus(),
+        transformerNotationErrorLevel(),
+        transformerMetaHighlight(),
+      ]
     },
     syntaxHighlight: {
       type: 'shiki',

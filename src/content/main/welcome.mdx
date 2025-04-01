@@ -5,6 +5,22 @@ permalink: welcome
 # {frontmatter.title}
 ```rust
 pub struct User {
+  // [!code word:firstname:1]
+  pub firstname: String,
+  pub lastname: String, // [!code highlight]
+}
+
+impl User {
+  pub fn new() -> Self { // [!code --]
+  pub fn new(firstname: String, lastname: String) -> Self { // [!code ++]
+    Self { firstname, lastname }
+  }
+}
+```
+
+```rust
+pub struct User {
+    // [!code focus:2]
   pub firstname: String,
   pub lastname: String,
 }
@@ -13,6 +29,20 @@ impl User {
   pub fn new(firstname: String, lastname: String) -> Self {
     Self { firstname, lastname }
   }
+}
+```
+
+```rust
+pub struct User {
+  pub firstname: String // [!code error]
+  pub lastname: String, // [!code warning]
+}
+```
+
+```rust {1,3-4}
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
 }
 ```
 
