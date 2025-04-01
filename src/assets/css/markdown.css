@@ -1,5 +1,8 @@
 :root {
   --bg-default: #f0f0f0;
+  --bg-tab-container: var(--background);
+  --bg-tab-item: oklch(0.968 0.007 247.896);
+  --color-border-tab: oklch(0.9 0.013 255.508);
   --color-remove: rgba(244, 63, 94, .75);
   --color-add: rgba(16, 185, 129, .75);
   --color-warning: rgba(187, 142, 5, 0.75);
@@ -11,6 +14,8 @@
 .dark {
   --bg-highlight: rgb(29, 44, 61);
   --color-warning: rgba(255, 193, 7, .75);
+  --bg-tab-item: oklch(0.208 0.042 265.755);
+  --color-border-tab: oklch(0.372 0.044 257.287);
 }
 
 html .astro-code,
@@ -125,6 +130,42 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
         left: 5px;
         color: var(--color-add);
       }
+    }
+  }
+}
+
+.code-group {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border-tab);
+  gap: 0 !important;
+
+
+  .tab-container {
+    display: flex;
+    gap: 0.5rem;
+    background-color: var(--bg-tab-container);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--color-border-tab);
+
+    .tab {
+      border-radius: 0.25rem;
+      border: none !important;
+      padding: 0.2rem 0.5rem;
+
+      &.active {
+        background-color: var(--bg-tab-item) !important;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .content-container {
+    padding: 1rem;
+
+    >* {
+      margin: 0 !important;
     }
   }
 }

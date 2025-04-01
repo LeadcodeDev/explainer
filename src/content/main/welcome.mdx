@@ -46,6 +46,33 @@ pub struct User {
 }
 ```
 
+::: code-group labels=[npm, Rust, Dart]
+
+```bash
+npm install rehype-code-group
+```
+
+```rust
+pub struct Foo {
+  pub name: String,
+}
+
+impl Foo {
+  pub fn new(name: String) -> Self {
+    Self { name }
+  }
+}
+```
+
+```dart
+final class Foo {
+  final String name;
+  Foo({required this.name});
+}
+```
+
+:::
+
 ```mermaid
 sequenceDiagram
   participant F as Frontend

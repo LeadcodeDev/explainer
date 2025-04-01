@@ -5,6 +5,7 @@ import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import rehypeMermaid from 'rehype-mermaid';
+import rehypeCodeGroup from 'rehype-code-group';
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -37,7 +38,17 @@ export default defineConfig({
       type: 'shiki',
       excludeLangs: ['mermaid'],
     },
-    rehypePlugins: [rehypeMermaid],
+    rehypePlugins: [
+      rehypeMermaid,
+      [rehypeCodeGroup, {
+        customClassNames: {
+          codeGroupClass: "code-group",
+          tabContainerClass: "tab-container",
+          tabClass: "tab",
+          blockContainerClass: "content-container",
+        }
+      }]
+    ],
   },
 
   vite: {
