@@ -11,7 +11,7 @@
   --bg-highlight: rgba(51, 79, 110, 0.10);
   --callout-success: #00c16a;
   --callout-warning: var(--color-warning);
-  --callout-note: oklch(0.546 0.245 262.881);
+  --callout-note: #3b82f6;
   --callout-error: #ef4444;
 }
 
