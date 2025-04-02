@@ -1,5 +1,8 @@
 ---
+import { BackgroundAnimation } from "@/components/elements/background-animation";
+import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
+import { BookIcon, RocketIcon } from "lucide-react";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -7,6 +10,29 @@ import Layout from "@/layouts/Layout.astro";
 
 <Layout>
 	<div>
-		<h1>Hello World</h1>
+		<div class="relative flex items-center justify-center min-h-[60vh]">
+			<BackgroundAnimation client:only />
+			<div
+				class="relative z-10 flex flex-col items-center justify-center gap-5 text-center"
+			>
+				<h1 class="text-7xl font-bold text-primary">Explainer</h1>
+				<p class="text-4xl text-foreground font-bold">Docs, made easy.</p>
+				<p class="text-lg text-foreground font-light">
+					Elegant documentation tooling for UnJS ecosystem.
+				</p>
+
+				<div class="flex gap-5">
+					<Button>
+						<RocketIcon className="w-5 h-5" />
+						Get started</Button
+					>
+					<Button>
+						<BookIcon className="w-5 h-5" />
+						Documentation</Button
+					>
+					<Button variant="outline">View on Github</Button>
+				</div>
+			</div>
+		</div>
 	</div>
 </Layout>

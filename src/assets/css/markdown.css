@@ -13,6 +13,8 @@
   --callout-warning: var(--color-warning);
   --callout-note: #3b82f6;
   --callout-error: #ef4444;
+  --title-color: oklch(0.372 0.044 257.287);
+  --paragraph-color: oklch(0.372 0.044 257.287);
 }
 
 .dark {
@@ -20,6 +22,8 @@
   --color-warning: rgba(255, 193, 7, .75);
   --bg-tab-item: oklch(0.208 0.042 265.755);
   --color-border-tab: oklch(0.372 0.044 257.287);
+  --title-color: oklch(0.968 0.007 247.896);
+  --paragraph-color: oklch(0.968 0.007 247.896 /0.8);
 }
 
 h1,
@@ -29,22 +33,15 @@ h4,
 h5,
 h6 {
   scroll-margin-top: 100px;
+  color: var(--title-color);
 }
 
 .prose {
-  color: var(--text-color);
+  color: var(--paragraph-color);
   max-width: 65ch;
 
   >*+* {
     margin-top: 1.25em;
-  }
-
-  [class~="lead"] {
-    color: var(--text-color);
-    font-size: 1.25em;
-    line-height: 1.6;
-    margin-top: 1.2em;
-    margin-bottom: 1.2em;
   }
 
   a {
@@ -84,7 +81,7 @@ h6 {
   ul>li::before {
     content: "";
     position: absolute;
-    background-color: var(--text-color);
+    background-color: var(--paragraph-color);
     border-radius: 50%;
     width: 0.375em;
     height: 0.375em;
@@ -143,7 +140,7 @@ h6 {
 
   >p {
     text-wrap: pretty;
-    color: oklch(0.372 0.044 257.287);
+    color: var(--paragraph-color);
     line-height: calc(0.25*7);
     margin-block: calc(0.25*5);
   }
@@ -269,8 +266,7 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
 }
 
 .astro-code .line {
-  padding: 0.20rem 0.5rem;
-  min-height: 1.75rem;
+  padding: 0.1rem 0.5rem;
   position: relative;
 
   &.highlighted {
