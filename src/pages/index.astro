@@ -1,8 +1,16 @@
 ---
-import { BackgroundAnimation } from "@/components/elements/background-animation";
+import { BackgroundAnimation } from "@/components/ui/background-animation";
 import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
 import { BookIcon, RocketIcon } from "lucide-react";
+import { HomeMarquee } from "@/components/elements/home-marquee";
+import {
+	Card,
+	CardHeader,
+	CardTitle,
+	CardDescription,
+	CardContent,
+} from "@/components/ui/card";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -32,6 +40,61 @@ import { BookIcon, RocketIcon } from "lucide-react";
 					>
 					<Button variant="outline">View on Github</Button>
 				</div>
+			</div>
+		</div>
+
+		<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-16">
+			<Card>
+				<CardHeader>
+					<CardTitle>Latest tweets</CardTitle>
+					<CardDescription>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</CardDescription>
+				</CardHeader>
+
+				<CardContent>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+					eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Latest tweets</CardTitle>
+					<CardDescription>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</CardDescription>
+				</CardHeader>
+
+				<CardContent>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+					eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Latest tweets</CardTitle>
+					<CardDescription>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					</CardDescription>
+				</CardHeader>
+
+				<CardContent>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+					eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				</CardContent>
+			</Card>
+		</div>
+
+		<div class="flex flex-col gap-5 max-w-6xl mx-auto py-16">
+			<h2 class="text-5xl font-bold">Nos utilisateurs en parlent</h2>
+			<p class="text-muted-foreground max-w-xl">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua.
+			</p>
+			<div class="py-5">
+				<HomeMarquee client:visible />
 			</div>
 		</div>
 	</div>

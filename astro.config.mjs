@@ -60,6 +60,6 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   }
 });

@@ -45,7 +45,7 @@ export function BackgroundAnimation() {
   return (
     <div className="bg absolute inset-0 -z-10 transform-gpu blur-3xl overflow-hidden" aria-hidden="true">
       <div
-        className="aspect-[1.7] h-full w-full bg-gradient-to-r from-primary to-white/10 lg:opacity-20 xs:opacity-50"
+        className="aspect-[1.7] h-full w-full bg-gradient-to-r from-primary to-white/10 lg:opacity-20 lg:dark:opacity-40 xs:opacity-50"
         style={{
           clipPath: `polygon(${poly})`,
           transition: 'clip-path 3s'

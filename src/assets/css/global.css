@@ -128,3 +128,29 @@
 .light .bg>div {
   opacity: 1 !important;
 }
+
+@theme {
+  --animate-marquee: marquee 10s linear infinite;
+  --animate-marquee-vertical: marquee-vertical 10s linear infinite;
+
+  @keyframes marquee-vertical {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+}
