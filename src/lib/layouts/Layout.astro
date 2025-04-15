@@ -12,9 +12,13 @@ import "../../assets/css/global.css";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
-		<Navbar client:only />
-		<slot />
+	<body class="relative min-h-screen">
+		<div class="flex flex-col min-h-screen">
+			<Navbar client:only />
+			<main class="flex-1">
+				<slot />
+			</main>
+		</div>
 	</body>
 </html>
 

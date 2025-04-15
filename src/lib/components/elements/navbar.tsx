@@ -1,8 +1,3 @@
-import * as React from "react"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
-import { cn } from "@/utils"
-import { SunIcon, MoonIcon, LaptopIcon } from "lucide-react"
-import { useTheme } from "@/hooks/use-theme"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -10,6 +5,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
+import { useTheme } from "@/hooks/use-theme"
+import { cn } from "@/utils"
+import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
+import * as React from "react"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -77,7 +77,7 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div className="w-full p-2 border-b">
+    <div className="sticky top-0 z-50 w-full p-2 border-b bg-background/60 backdrop-blur-sm">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo and brand */}
         <div className="flex items-center space-x-2">
@@ -126,7 +126,7 @@ export default function Navbar() {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md">
+                <NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
                   Blog
                 </NavigationMenuLink>
               </NavigationMenuItem>
