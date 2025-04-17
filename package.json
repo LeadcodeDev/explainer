@@ -12,6 +12,7 @@
     "@astrojs/mdx": "^4.2.2",
     "@astrojs/react": "^4.2.2",
     "@expressive-code/plugin-line-numbers": "^0.40.2",
+    "@lucide/astro": "^0.488.0",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-navigation-menu": "^1.2.5",
     "@radix-ui/react-slot": "^1.1.2",

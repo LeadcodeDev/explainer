@@ -8,44 +8,9 @@ import {
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
 import { useTheme } from "@/hooks/use-theme"
 import { cn } from "@/utils"
+import config from 'explainer.config'
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react"
 import * as React from "react"
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Server Components",
-    href: "/features/server-components",
-    description: "Build efficient, server-rendered React components.",
-  },
-  {
-    title: "File-based Routing",
-    href: "/features/file-based-routing",
-    description: "Intuitive page routing based on your file structure.",
-  },
-  {
-    title: "SEO Optimization",
-    href: "/features/seo-optimization",
-    description: "Built-in tools to improve your site's search engine visibility.",
-  },
-]
-
-const resources: { title: string; href: string; description: string }[] = [
-  {
-    title: "Documentation",
-    href: "/resources/documentation",
-    description: "Comprehensive guides and API references.",
-  },
-  {
-    title: "API Reference",
-    href: "/resources/api",
-    description: "Detailed information about available APIs and methods.",
-  },
-  {
-    title: "Examples",
-    href: "/resources/examples",
-    description: "Sample projects and code snippets to get started quickly.",
-  },
-]
 
 const ListItem = React.forwardRef<
   React.ComponentRef<"a">,
@@ -80,50 +45,35 @@ export default function Navbar() {
     <div className="sticky top-0 z-50 w-full p-2 border-b bg-background/60 backdrop-blur-sm">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo and brand */}
-        <div className="flex items-center space-x-2">
+        <a href="/" className="flex items-center space-x-2">
           <svg className="h-6 w-6 text-green-500" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
           </svg>
           <span className="font-bold text-lg">Explainer</span>
-        </div>
+        </a>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:block">
           <NavigationMenu>
             <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {components.map((component) => (
-                      <ListItem
-                        key={component.title}
-                        title={component.title}
-                        href={component.href}
-                      >
-                        {component.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    {resources.map((resource) => (
-                      <ListItem
-                        key={resource.title}
-                        title={resource.title}
-                        href={resource.href}
-                      >
-                        {resource.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+              {config.navbar.map((element) => (
+                <NavigationMenuItem key={element.label}>
+                  <NavigationMenuTrigger>{element.label}</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {element.items.map((item) => (
+                        <ListItem
+                          key={item.label}
+                          title={item.label}
+                          href={item.href}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ))}
 
               <NavigationMenuItem>
                 <NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
@@ -167,6 +117,6 @@ export default function Navbar() {
           </DropdownMenu>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

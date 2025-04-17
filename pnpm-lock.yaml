@@ -14,6 +14,9 @@ dependencies:
   '@expressive-code/plugin-line-numbers':
     specifier: ^0.40.2
     version: 0.40.2
+  '@lucide/astro':
+    specifier: ^0.488.0
+    version: 0.488.0(astro@5.5.5)
   '@radix-ui/react-dropdown-menu':
     specifier: ^2.1.6
     version: 2.1.6(@types/react-dom@19.0.4)(@types/react@19.0.12)(react-dom@19.1.0)(react@19.1.0)
@@ -26,12 +29,6 @@ dependencies:
   '@tailwindcss/vite':
     specifier: ^4.0.17
     version: 4.0.17(vite@6.2.3)
-  '@types/hast':
-    specifier: ^3.0.4
-    version: 3.0.4
-  '@types/mdast':
-    specifier: ^4.0.4
-    version: 4.0.4
   '@types/react':
     specifier: ^19.0.12
     version: 19.0.12
@@ -53,9 +50,6 @@ dependencies:
   lucide-react:
     specifier: ^0.485.0
     version: 0.485.0(react@19.1.0)
-  mdast-util-find-and-replace:
-    specifier: ^3.0.2
-    version: 3.0.2
   mermaid:
     specifier: ^11.6.0
     version: 11.6.0
@@ -92,12 +86,6 @@ dependencies:
   tw-animate-css:
     specifier: ^1.2.5
     version: 1.2.5
-  unified:
-    specifier: ^11.0.5
-    version: 11.0.5
-  unist-util-visit:
-    specifier: ^5.0.0
-    version: 5.0.0
 
 devDependencies:
   '@shikijs/transformers':
@@ -958,6 +946,14 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+    dev: false
+
+  /@lucide/astro@0.488.0(astro@5.5.5):
+    resolution: {integrity: sha512-kJ9kpHr8khwpOmbYKtWrRwB563Gu6RIv94QAbMJ60f5NSIoxcWkV4nijjijFeE24EJ/mXiGQZO4p9P5S+E5iSg==}
+    peerDependencies:
+      astro: ^4 || ^5
+    dependencies:
+      astro: 5.5.5(typescript@5.8.2)
     dev: false
 
   /@mdx-js/mdx@3.1.0(acorn@8.14.1):

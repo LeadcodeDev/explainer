@@ -1,7 +1,7 @@
 {
-  "$ref": "#/definitions/main",
+  "$ref": "#/definitions/test",
   "definitions": {
-    "main": {
+    "test": {
       "type": "object",
       "properties": {
         "title": {
