@@ -28,7 +28,9 @@ const blog = defineCollection({
     description: z.string(),
     permalink: z.string().optional(),
     icon: z.string().optional(),
+    thumbnail: z.string().optional(),
     authors: z.array(z.string()).optional(),
+    publishedAt: z.string().optional()
   }),
 })
 

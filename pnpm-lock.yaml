@@ -29,6 +29,9 @@ dependencies:
   '@tailwindcss/vite':
     specifier: ^4.0.17
     version: 4.0.17(vite@6.2.3)
+  '@types/luxon':
+    specifier: ^3.6.2
+    version: 3.6.2
   '@types/react':
     specifier: ^19.0.12
     version: 19.0.12
@@ -50,6 +53,9 @@ dependencies:
   lucide-react:
     specifier: ^0.485.0
     version: 0.485.0(react@19.1.0)
+  luxon:
+    specifier: ^3.6.1
+    version: 3.6.1
   mermaid:
     specifier: ^11.6.0
     version: 11.6.0
@@ -2108,6 +2114,10 @@ packages:
     dependencies:
       '@types/unist': 3.0.3
 
+  /@types/luxon@3.6.2:
+    resolution: {integrity: sha512-R/BdP7OxEMc44l2Ex5lSXHoIXTB2JLNa3y2QISIbr58U/YcsffyQrYW//hZSdrfxrjRZj3GcUoxMPGdO8gSYuw==}
+    dev: false
+
   /@types/mdast@4.0.4:
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
     dependencies:
@@ -3756,6 +3766,11 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
       react: 19.1.0
+    dev: false
+
+  /luxon@3.6.1:
+    resolution: {integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /magic-string@0.30.17:

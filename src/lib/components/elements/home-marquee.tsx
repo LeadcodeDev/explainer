@@ -1,4 +1,5 @@
 import { cn } from "@/utils";
+import { GridPattern } from '../ui/grid-pattern';
 import { Marquee } from "../ui/marquee";
 
 const reviews = [
@@ -46,25 +47,39 @@ const secondRow = reviews.slice(reviews.length / 2);
 
 export function HomeMarquee() {
   return (
-    <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-      <h2 className="text-base/7 font-semibold text-primary">Deploy faster</h2>
-      <p className="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 dark:text-accent-foreground sm:text-5xl">
-        Everything you need to deploy your app
-      </p>
+    <div className="relative mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8 pb-20">
+      <GridPattern
+        width={25}
+        height={25}
+        x={-1}
+        y={-1}
+        strokeDasharray={"4 2"}
+        className={cn(
+          "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
+        )}
+      />
+      <div className="relative z-10">
+        <h2 className="text-base/7 font-semibold text-primary">
+          What our users are saying
+        </h2>
+        <p className="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 dark:text-accent-foreground sm:text-5xl">
+          Because our users are the best people
+        </p>
 
-      <div className="mt-10 relative flex w-full flex-col items-center justify-center overflow-hidden">
-        <Marquee pauseOnHover className="[--duration:20s]">
-          {firstRow.map((review) => (
-            <ReviewCard key={review.username} {...review} />
-          ))}
-        </Marquee>
-        <Marquee reverse pauseOnHover className="[--duration:20s]">
-          {secondRow.map((review) => (
-            <ReviewCard key={review.username} {...review} />
-          ))}
-        </Marquee>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
+        <div className="mt-10 relative flex w-full flex-col items-center justify-center overflow-hidden">
+          <Marquee pauseOnHover className="[--duration:20s]">
+            {firstRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <Marquee reverse pauseOnHover className="[--duration:20s]">
+            {secondRow.map((review) => (
+              <ReviewCard key={review.username} {...review} />
+            ))}
+          </Marquee>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background"></div>
+        </div>
       </div>
     </div>
   );
@@ -83,11 +98,11 @@ function ReviewCard(props: ReviewCardProps) {
   return (
     <figure
       className={cn(
-        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+        "relative h-full w-64 bg-background cursor-pointer overflow-hidden rounded-xl border p-4",
         // light styles
-        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        "border-gray-950/[.1] hover:bg-gray-950/[.05]",
         // dark styles
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]",
+        "dark:border-gray-50/[.1] dark:hover:bg-gray-50/[.15]",
       )}
     >
       <div className="flex flex-row items-center gap-2">

@@ -1,5 +1,6 @@
 ---
 import HomeBentogrid from "@/components/elements/home-bentogrid";
+import { HomeBlog } from "@/components/elements/home-blog";
 import { HomeMarquee } from "@/components/elements/home-marquee";
 import { BackgroundAnimation } from "@/components/ui/background-animation";
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,16 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import { BookIcon, RocketIcon } from "lucide-react";
+
+const posts = await getCollection("blog", (post) => {
+	if (import.meta.env.DEV) {
+		return true;
+	}
+
+	return post.data.publishedAt && new Date(post.data.publishedAt) <= new Date();
+});
 ---
 
 <Layout>
@@ -94,5 +104,13 @@ import { BookIcon, RocketIcon } from "lucide-react";
 		<div class="max-w-screen-xl mx-auto">
 			<HomeMarquee client:visible />
 		</div>
+
+		{
+			posts.length && (
+				<div class="max-w-screen-xl mx-auto">
+					<HomeBlog posts={posts} client:visible />
+				</div>
+			)
+		}
 	</div>
 </Layout>

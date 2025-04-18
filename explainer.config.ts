@@ -22,6 +22,9 @@ export default defineExplainerConfig({
     },
   },
   blog: {
+    defaults: {
+      thumbnail: 'https://placehold.co/1200x630',
+    },
     authors: {
       leadcode_dev: {
         name: 'LeadcodeDev',
@@ -30,46 +33,39 @@ export default defineExplainerConfig({
       },
     }
   },
-  navbar: [
-    {
-      label: 'Docs',
-      items: [
-        {
-          label: 'Welcome',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/docs/main/welcome',
-        },
-        {
-          label: 'Getting Started',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/docs/main/getting-started',
-        },
-        {
-          label: 'Components',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/docs/main/components',
-        },
-        {
-          label: 'Layouts',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/docs/main/layouts',
-        },
-        {
-          label: 'Routing',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/docs/main/routing',
-        },
-      ],
-    },
-    {
-      label: 'Resources',
-      items: [
-        {
-          label: 'Blog',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-          href: '/blog',
-        },
-      ],
-    },
-  ],
+  navbar: {
+    github: 'https://github.com/LeadcodeDev/explainer',
+    items: [
+      {
+        label: 'Docs',
+        items: [
+          {
+            label: 'Welcome',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            href: '/docs/main/welcome',
+          },
+          {
+            label: 'Getting Started',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            href: '/docs/main/getting-started',
+          },
+          {
+            label: 'Components',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            href: '/docs/main/components',
+          },
+          {
+            label: 'Layouts',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            href: '/docs/main/layouts',
+          },
+          {
+            label: 'Routing',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            href: '/docs/main/routing',
+          },
+        ],
+      },
+    ]
+  },
 })

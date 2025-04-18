@@ -38,7 +38,6 @@ h6 {
 
 .prose {
   color: var(--paragraph-color);
-  max-width: 65ch;
 
   >*+* {
     margin-top: 1.25em;

@@ -33,6 +33,9 @@ type ExplainerDocs = {
 }
 
 type ExplainerBlog = {
+  defaults: {
+    thumbnail?: string
+  }
   authors: {
     [key: string]: {
       name: string
@@ -45,7 +48,10 @@ type ExplainerBlog = {
 type ExplainerConfig = {
   meta: ExplainerMeta
   docs: { [key in CollectionKey]?: ExplainerDocs }
-  navbar: NavbarCollection[],
+  navbar: {
+    github: string
+    items: NavbarCollection[],
+  }
   blog: ExplainerBlog
 }
 

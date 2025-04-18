@@ -2,9 +2,11 @@ export default function HomeBentogrid() {
   return (
     <div className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-base/7 font-semibold text-primary">Deploy faster</h2>
+        <h2 className="text-base/7 font-semibold text-primary">
+          What we offer
+        </h2>
         <p className="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 dark:text-accent-foreground sm:text-5xl">
-          Everything you need to deploy your app
+          Discover all features that we provide
         </p>
         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <div className="relative lg:col-span-3">

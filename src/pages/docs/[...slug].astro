@@ -38,8 +38,7 @@ const { Content, headings } = await render(element);
 const availableHeadings = headings.filter((heading) =>
 	[2, 3].includes(heading.depth),
 );
-console.log(availableHeadings);
-// Create a tree structure from headings
+
 type HeadingNode = {
 	depth: number;
 	slug: string;
@@ -71,7 +70,6 @@ function buildHeadingTree(headings: typeof availableHeadings): HeadingNode[] {
 }
 
 const headingTree = buildHeadingTree(availableHeadings);
-console.log(headingTree);
 
 function pascalCase(str: string) {
 	return str.charAt(0).toUpperCase() + str.slice(1);

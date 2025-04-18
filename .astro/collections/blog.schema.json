@@ -16,11 +16,17 @@
         "icon": {
           "type": "string"
         },
+        "thumbnail": {
+          "type": "string"
+        },
         "authors": {
           "type": "array",
           "items": {
             "type": "string"
           }
+        },
+        "publishedAt": {
+          "type": "string"
         },
         "$schema": {
           "type": "string"
