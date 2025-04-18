@@ -4,7 +4,6 @@ import {
 	BreadcrumbItem,
 	BreadcrumbLink,
 	BreadcrumbList,
-	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import BlogLayout from "@/layouts/BlogLayout.astro";
@@ -75,12 +74,13 @@ const headingTree = buildHeadingTree(availableHeadings);
 					<Breadcrumb>
 						<BreadcrumbList>
 							<BreadcrumbItem>
-								<BreadcrumbPage
+								<BreadcrumbLink
 									className="flex items-center gap-2 text-muted-foreground"
+									href="/blog"
 								>
 									<NewspaperIcon className="size-4" />
 									Blog
-								</BreadcrumbPage>
+								</BreadcrumbLink>
 							</BreadcrumbItem>
 							<BreadcrumbSeparator />
 							<BreadcrumbItem>
@@ -119,7 +119,7 @@ const headingTree = buildHeadingTree(availableHeadings);
 						{element.data.title}
 					</h1>
 				</div>
-				<div class="text-lg text-pretty text-muted-foreground mt-4">
+				<div class="text-lg text-pretty text-muted-foreground max-w-4xl mt-4">
 					{element.data.description}
 				</div>
 				<div class="mt-4 flex flex-wrap items-center gap-6">

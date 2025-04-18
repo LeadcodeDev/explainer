@@ -56,7 +56,7 @@ export default function Navbar() {
         <div className="hidden lg:block">
           <NavigationMenu>
             <NavigationMenuList>
-              {config.navbar.items.map((element) => (
+              {config.navbar.map((element) => (
                 <NavigationMenuItem key={element.label}>
                   <NavigationMenuTrigger>{element.label}</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -116,9 +116,9 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {config.navbar.github && (
+          {config.urls.github && (
             <a
-              href={config.navbar.github}
+              href={config.urls.github}
               rel="noopener noreferrer"
               target="_blank"
               className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"

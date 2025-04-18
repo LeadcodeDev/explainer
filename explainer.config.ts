@@ -7,6 +7,9 @@ export default defineExplainerConfig({
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     thumbnail: 'https://placehold.co/1200x630',
   },
+  urls: {
+    github: 'https://github.com/LeadcodeDev/explainer',
+  },
   docs: {
     main: {
       icon: BookDashedIcon,
@@ -33,39 +36,21 @@ export default defineExplainerConfig({
       },
     }
   },
-  navbar: {
-    github: 'https://github.com/LeadcodeDev/explainer',
-    items: [
-      {
-        label: 'Docs',
-        items: [
-          {
-            label: 'Welcome',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            href: '/docs/main/welcome',
-          },
-          {
-            label: 'Getting Started',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            href: '/docs/main/getting-started',
-          },
-          {
-            label: 'Components',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            href: '/docs/main/components',
-          },
-          {
-            label: 'Layouts',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            href: '/docs/main/layouts',
-          },
-          {
-            label: 'Routing',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            href: '/docs/main/routing',
-          },
-        ],
-      },
-    ]
-  },
+  navbar: [
+    {
+      label: 'Docs',
+      items: [
+        {
+          label: 'Main documentation',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+          href: '/docs/main/welcome',
+        },
+        {
+          label: 'Test documentation',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+          href: '/docs/test/welcome',
+        },
+      ],
+    },
+  ]
 })

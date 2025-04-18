@@ -8,7 +8,7 @@
   --color-warning: rgba(187, 142, 5, 0.75);
   --bg-diff-remove: rgba(244, 63, 94, .20);
   --bg-diff-add: rgba(16, 185, 129, .20);
-  --bg-highlight: rgba(51, 79, 110, 0.10);
+  --bg-highlight: rgba(0, 51, 90, 0.1);
   --callout-success: #00c16a;
   --callout-warning: var(--color-warning);
   --callout-note: #3b82f6;
@@ -224,18 +224,13 @@ h6 {
 }
 
 
-html .astro-code,
-html .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
-  background-color: var(--bg-default) !important;
+html .prose .astro-code,
+html .prose .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
+  background-color: var(--muted) !important;
 }
 
-html.dark .astro-code,
-html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) {
-  color: var(--shiki-dark) !important;
-}
-
-html.dark .astro-code,
-html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
+html.dark .prose .astro-code,
+html.dark .prose .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
 }
@@ -246,6 +241,7 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
   border-radius: 0.5rem;
   font-size: 0.875rem;
   position: relative;
+  border: 1px solid var(--color-border-tab) !important;
 
   &.has-focused .line:not(.focused) {
     opacity: .7;
@@ -270,7 +266,6 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
 
   &.highlighted {
     background-color: var(--bg-highlight);
-    border-radius: 0.25rem;
 
     &.error {
       background-color: rgba(244, 63, 94, .20);
@@ -360,17 +355,18 @@ html.dark .astro-code span:not(.highlighted, .highlighted-word, .diff) * {
       padding: 0.2rem 0.5rem;
 
       &.active {
-        background-color: var(--bg-tab-item) !important;
+        background-color: var(--muted) !important;
         font-weight: 500;
       }
     }
   }
 
   .content-container {
-    padding: 1rem;
 
     >* {
       margin: 0 !important;
+      border-radius: 0 0 initial initial !important;
+      border: none !important;
     }
   }
 }

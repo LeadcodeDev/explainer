@@ -48,10 +48,10 @@ type ExplainerBlog = {
 type ExplainerConfig = {
   meta: ExplainerMeta
   docs: { [key in CollectionKey]?: ExplainerDocs }
-  navbar: {
-    github: string
-    items: NavbarCollection[],
-  }
+  urls: {
+    github?: string
+  },
+  navbar: NavbarCollection[],
   blog: ExplainerBlog
 }
 
