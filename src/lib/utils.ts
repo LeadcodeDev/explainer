@@ -32,10 +32,21 @@ type ExplainerDocs = {
   baseUrl: string
 }
 
+type ExplainerBlog = {
+  authors: {
+    [key: string]: {
+      name: string
+      avatar: string
+      href: string
+    }
+  }
+}
+
 type ExplainerConfig = {
   meta: ExplainerMeta
   docs: { [key in CollectionKey]?: ExplainerDocs }
   navbar: NavbarCollection[],
+  blog: ExplainerBlog
 }
 
 export function defineExplainerConfig(config: ExplainerConfig) {

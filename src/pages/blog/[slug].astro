@@ -1,0 +1,120 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import config from "../../../explainer.config";
+
+interface Props {
+	element: CollectionEntry<"blog">;
+}
+
+export async function getStaticPaths() {
+	const contents = await getCollection("blog");
+	return contents.map((item) => ({
+		params: { slug: item.data.permalink },
+		props: { element: item },
+	}));
+}
+
+const { element } = Astro.props;
+const { Content } = await render(element);
+---
+
+<BlogLayout>
+	<div class="flex flex-col gap-4">
+		<div class="relative border-b py-8">
+			<div
+				class="mb-2.5 text-sm font-semibold gap-1.5 flex flex-col gap-y-8 items-start"
+			>
+				<nav aria-label="breadcrumb" class="relative min-w-0 max-w-full">
+					<ol class="flex items-center gap-1.5">
+						<li class="flex min-w-0">
+							<a
+								href="/blog"
+								class="group relative flex items-center gap-1.5 text-sm min-w-0 focus-visible:outline-(--ui-primary) text-(--ui-text-muted) font-medium hover:text-(--ui-text) transition-colors"
+							>
+								<span
+									class="iconify i-lucide:newspaper shrink-0 size-5"
+									aria-hidden="true"></span>
+								<span class="truncate">Blog</span>
+							</a>
+						</li>
+						<li role="presentation" aria-hidden="true" class="flex">
+							<span
+								class="iconify i-lucide:chevron-right shrink-0 size-5 text-(--ui-text-muted)"
+								aria-hidden="true"></span>
+						</li>
+						<li class="flex min-w-0">
+							<span
+								class="group relative flex items-center gap-1.5 text-sm min-w-0 focus-visible:outline-(--ui-primary) text-(--ui-primary) font-semibold"
+							>
+								<span class="truncate">Nuxt UI v3</span>
+							</span>
+						</li>
+					</ol>
+				</nav>
+				<div class="flex items-center space-x-2">
+					<span>Release</span>
+					<span class="text-(--ui-text-muted)"
+						>·&nbsp;&nbsp;<time>March 12, 2025</time></span
+					>
+				</div>
+			</div>
+			<div class="">
+				<div
+					class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+				>
+					<h1 class="text-4xl sm:text-4xl text-pretty font-medium">
+						{element.data.title}
+					</h1>
+				</div>
+				<div class="text-lg text-pretty text-muted-foreground mt-4">
+					{element.data.description}
+				</div>
+				<div class="mt-4 flex flex-wrap items-center gap-6">
+					{
+						element.data.authors?.map((key) => {
+							const currentAuthor = config.blog.authors[key];
+							return (
+								<div
+									data-orientation="horizontal"
+									class="relative group/user flex items-center gap-2"
+								>
+									<span class="inline-flex items-center justify-center select-none overflow-hidden rounded-full align-middle bg-(--ui-bg-elevated) size-8 text-base shrink-0 transform transition-transform duration-200 group-hover/user:scale-115">
+										<img
+											width="32"
+											height="32"
+											alt={currentAuthor.name}
+											class="h-full w-full rounded-[inherit] object-cover"
+											src={currentAuthor.avatar}
+										/>
+									</span>
+									<div class="">
+										<a
+											href={currentAuthor.href}
+											tabindex="-1"
+											rel="noopener noreferrer"
+											aria-label={currentAuthor.name}
+											class="focus:outline-none peer"
+										>
+											<span class="absolute inset-0" aria-hidden="true" />
+										</a>
+										<p class="font-medium text-(--ui-text) peer-hover:text-(--ui-text-highlighted) transition-colors text-sm">
+											{currentAuthor.name}
+										</p>
+										<p class="text-muted-foreground transition-colors text-xs">
+											@{key}
+										</p>
+									</div>
+								</div>
+							);
+						})
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="prose">
+			<Content />
+		</div>
+	</div>
+</BlogLayout>

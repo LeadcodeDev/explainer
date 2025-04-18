@@ -42,7 +42,7 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div className="sticky top-0 z-50 w-full p-2 border-b bg-background/60 backdrop-blur-sm">
+    <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/60 backdrop-blur-sm">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         {/* Logo and brand */}
         <a href="/" className="flex items-center space-x-2">
@@ -76,7 +76,7 @@ export default function Navbar() {
               ))}
 
               <NavigationMenuItem>
-                <NavigationMenuLink className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
+                <NavigationMenuLink href="/blog" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
                   Blog
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -117,6 +117,6 @@ export default function Navbar() {
           </DropdownMenu>
         </div>
       </div>
-    </div >
+    </div>
   )
 }

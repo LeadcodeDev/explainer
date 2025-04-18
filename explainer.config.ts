@@ -21,6 +21,15 @@ export default defineExplainerConfig({
       baseUrl: '/docs/test',
     },
   },
+  blog: {
+    authors: {
+      leadcode_dev: {
+        name: 'LeadcodeDev',
+        avatar: 'https://avatars.githubusercontent.com/u/8946317?v=4',
+        href: 'https://github.com/LeadcodeDev',
+      },
+    }
+  },
   navbar: [
     {
       label: 'Docs',

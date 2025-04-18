@@ -1,20 +1,20 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
-import tailwindcss from '@tailwindcss/vite';
-import rehypeMermaid from 'rehype-mermaid';
-import rehypeCodeGroup from 'rehype-code-group';
-import rehypeCallouts from 'rehype-callouts'
+import react from '@astrojs/react';
 import {
+  transformerMetaHighlight,
   transformerNotationDiff,
+  transformerNotationErrorLevel,
+  transformerNotationFocus,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
-  transformerNotationFocus,
-  transformerNotationErrorLevel,
-  transformerMetaHighlight,
-} from '@shikijs/transformers'
+} from '@shikijs/transformers';
+import tailwindcss from '@tailwindcss/vite';
+import rehypeCallouts from 'rehype-callouts';
+import rehypeCodeGroup from 'rehype-code-group';
+import rehypeMermaid from 'rehype-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
