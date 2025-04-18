@@ -10,7 +10,8 @@ export function cn(...inputs: ClassValue[]) {
 
 type NavbarCollection = {
   label: string
-  items: NavbarItem[]
+  items?: NavbarItem[]
+  href?: string
 }
 
 type NavbarItem = {

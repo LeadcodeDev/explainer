@@ -56,30 +56,35 @@ export default function Navbar() {
         <div className="hidden lg:block">
           <NavigationMenu>
             <NavigationMenuList>
-              {config.navbar.map((element) => (
-                <NavigationMenuItem key={element.label}>
-                  <NavigationMenuTrigger>{element.label}</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                      {element.items.map((item) => (
-                        <ListItem
-                          key={item.label}
-                          title={item.label}
-                          href={item.href}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ))}
-
-              <NavigationMenuItem>
-                <NavigationMenuLink href="/blog" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
-                  Blog
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              {config.navbar.map((element) => {
+                if (element.href) {
+                  return (
+                    <NavigationMenuItem key={element.label}>
+                      <NavigationMenuLink href={element.href} className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md cursor-pointer">
+                        {element.label}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  )
+                }
+                return (
+                  <NavigationMenuItem key={element.label}>
+                    <NavigationMenuTrigger>{element.label}</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                        {element.items?.map((item) => (
+                          <ListItem
+                            key={item.label}
+                            title={item.label}
+                            href={item.href}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )
+              })}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
