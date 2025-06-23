@@ -9,7 +9,7 @@ import {
 	type MarqueeProps,
 } from "@/components/elements/home-marquee";
 import { BackgroundAnimation } from "@/components/ui/background-animation";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -21,6 +21,7 @@ import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { BookIcon, RocketIcon } from "lucide-react";
 import config from "../../explainer.config";
+import { cn } from "../lib/utils";
 
 const posts = await getCollection("blog", (post) => {
 	if (import.meta.env.DEV) {
@@ -176,7 +177,10 @@ const bentogrid: BentoGridProps = {
 							<Button client:only asChild>
 								<a
 									href={action.href}
-									class="flex items-center gap-2 cursor-pointer"
+									class={cn(
+										buttonVariants({ variant: "default", size: "default" }),
+										"flex items-center gap-2 cursor-pointer",
+									)}
 								>
 									<action.icon className="w-5 h-5" />
 									{action.label}
