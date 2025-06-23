@@ -173,7 +173,7 @@ const bentogrid: BentoGridProps = {
 				<div class="flex flex-col justify-center md:flex-row gap-5 w-full">
 					{
 						header.actions.map((action) => (
-							<Button>
+							<Button client:only>
 								<a
 									href={action.href}
 									class="flex items-center gap-2 cursor-pointer"
@@ -184,7 +184,7 @@ const bentogrid: BentoGridProps = {
 							</Button>
 						))
 					}
-					<Button variant="outline">
+					<Button client:only variant="outline">
 						<a
 							href={config.urls.github}
 							target="_blank"
@@ -213,7 +213,7 @@ const bentogrid: BentoGridProps = {
 		>
 			{
 				cards.map((card) => (
-					<Card>
+					<Card client:only>
 						<CardHeader>
 							<CardTitle>{card.title}</CardTitle>
 							<CardDescription>{card.description}</CardDescription>
@@ -226,17 +226,17 @@ const bentogrid: BentoGridProps = {
 		</div>
 
 		<div class="max-w-screen-xl mx-auto">
-			<HomeBentogrid {...bentogrid} />
+			<HomeBentogrid client:load {...bentogrid} />
 		</div>
 
 		<div class="max-w-screen-xl mx-auto">
-			<HomeMarquee {...marquee} client:visible />
+			<HomeMarquee {...marquee} client:load />
 		</div>
 
 		{
 			posts.length && (
 				<div class="max-w-screen-xl mx-auto">
-					<HomeBlog posts={posts} client:visible />
+					<HomeBlog posts={posts} client:load />
 				</div>
 			)
 		}

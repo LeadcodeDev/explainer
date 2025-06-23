@@ -40,9 +40,6 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem"
 
 export default function Navbar() {
-  const { theme, setTheme } = useTheme()
-  const [open, setOpen] = React.useState(false)
-
   return (
     <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/60 backdrop-blur-sm">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
