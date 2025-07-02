@@ -511,7 +511,7 @@ html.dark .prose>.astro-code {
     .callout-content {
       &::before {
         content: "⚠︎";
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: var(--callout-warning);
       }
     }
