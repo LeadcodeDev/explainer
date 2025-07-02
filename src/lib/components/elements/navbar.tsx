@@ -44,12 +44,12 @@ export default function Navbar() {
     <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/70 backdrop-blur-sm">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between">
         <a href="/" className="flex sm:hidden items-center space-x-2">
-          <span className="font-bold text-primary text-lg">{config.meta.title}</span>
+          <span className="font-bold text-primary text-lg">💧 {config.meta.title}</span>
         </a>
 
         <div className="hidden lg:flex items-center justify-between w-full">
           <a href="/" className="flex items-center space-x-2">
-            <span className="font-bold text-primary text-lg">{config.meta.title}</span>
+            <span className="font-bold text-primary text-lg">💧 {config.meta.title}</span>
           </a>
           <NavigationMenu>
             <NavigationMenuList>
