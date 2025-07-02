@@ -2,7 +2,7 @@ import { defineExplainerConfig } from '@/utils'
 
 export default defineExplainerConfig({
   meta: {
-    title: 'Explainer',
+    title: '💧 Explainer',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     thumbnail: 'https://placehold.co/1200x630',
   },

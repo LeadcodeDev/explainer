@@ -171,14 +171,14 @@ const bentogrid: BentoGridProps = {
 					{header.description}
 				</p>
 
-				<div class="flex flex-col justify-center md:flex-row gap-5 w-full">
+				<div class="flex flex-col justify-center md:flex-row gap-3 w-full">
 					{
 						header.actions.map((action) => (
 							<Button client:only asChild>
 								<a
 									href={action.href}
 									class={cn(
-										buttonVariants({ variant: "default", size: "default" }),
+										buttonVariants({ variant: "default", size: "lg" }),
 										"flex items-center gap-2 cursor-pointer",
 									)}
 								>
@@ -188,11 +188,14 @@ const bentogrid: BentoGridProps = {
 							</Button>
 						))
 					}
-					<Button client:only variant="outline">
+					<Button client:only variant="outline" asChild>
 						<a
 							href={config.urls.github}
 							target="_blank"
-							class="flex items-center gap-2 cursor-pointer"
+							class={cn(
+								buttonVariants({ variant: "outline", size: "lg" }),
+								"flex items-center gap-2 cursor-pointer",
+							)}
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

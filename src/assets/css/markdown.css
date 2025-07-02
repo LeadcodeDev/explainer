@@ -10,9 +10,20 @@
   --bg-diff-add: rgba(16, 185, 129, .20);
   --bg-highlight: rgba(0, 51, 90, 0.1);
   --callout-success: #00c16a;
-  --callout-warning: var(--color-warning);
-  --callout-note: #3b82f6;
+  --callout-success-bg: oklab(0.97 -0.07 0.07 / 0.4);
+  --callout-success-border: #00c16a;
+  --callout-important: #8b5cf6;
+  --callout-important-bg: oklab(0.97 0.06 -0.06 / 0.5);
+  --callout-important-border: #8b5cf6;
+  --callout-warning: #eab308;
+  --callout-warning-bg: oklab(0.98 0.01 0.11 / 0.2);
+  --callout-warning-border: #eab308;
   --callout-error: #ef4444;
+  --callout-error-bg: oklab(0.97 0.08 0.02 / 0.5);
+  --callout-error-border: #ef4444;
+  --callout-note: #3b82f6;
+  --callout-note-bg: oklab(0.97 0.01 -0.06 / 0.5);
+  --callout-note-border: #3b82f6;
   --title-color: oklch(0.372 0.044 257.287);
   --paragraph-color: oklch(0.372 0.044 257.287);
 }
@@ -24,6 +35,21 @@
   --color-border-tab: oklch(0.372 0.044 257.287);
   --title-color: oklch(0.968 0.007 247.896);
   --paragraph-color: oklch(0.968 0.007 247.896 /0.8);
+  --callout-note: #60a5fa;
+  --callout-note-bg: #22304a;
+  --callout-note-border: #3b82f6;
+  --callout-success: #34d399;
+  --callout-success-bg: #133524;
+  --callout-success-border: #10b981;
+  --callout-important: #a78bfa;
+  --callout-important-bg: #2d224a;
+  --callout-important-border: #8b5cf6;
+  --callout-warning: #facc15;
+  --callout-warning-bg: #3a320a;
+  --callout-warning-border: #eab308;
+  --callout-error: #f87171;
+  --callout-error-bg: #3a1a1a;
+  --callout-error-border: #ef4444;
 }
 
 h1,
@@ -270,6 +296,7 @@ html.dark .prose>.astro-code {
 
   .line {
     font-size: 0.9rem;
+    color: var(--color-foreground) !important;
   }
 
   &.has-focused .line:not(.focused) {
@@ -285,6 +312,7 @@ html.dark .prose>.astro-code {
   &[data-language="plaintext"] code .line {
     margin: -2px 0;
     padding: 0;
+    color: oklch(37.1% 0 0);
   }
 }
 
@@ -410,79 +438,20 @@ html.dark .prose>.astro-code {
 
 .callout {
   margin: 1rem 0;
-  padding: 1rem;
+  padding: 0.5rem 0;
   border-radius: 0.5rem;
 
-  .callout-title-icon {
+  .callout-title {
     display: none;
   }
 
-  &[data-callout="note"] {
-    background-color: color-mix(in oklab, var(--callout-note)30%, transparent);
-    border: 1px solid color-mix(in oklab, var(--callout-note)25%, transparent);
-    color: var(--callout-note);
-
-    .callout-title {
-      &::before {
-        content: "ⓘ";
-        font-weight: bold;
-        color: var(--callout-note);
-      }
-    }
-  }
-
-  &[data-callout="success"] {
-    background-color: color-mix(in oklab, var(--callout-success)30%, transparent);
-    border: 1px solid color-mix(in oklab, var(--callout-success)40%, transparent);
-    color: var(--callout-success);
-
-    .callout-title {
-      &::before {
-        content: "✓";
-        font-weight: bold;
-        color: var(--callout-success);
-      }
-    }
-  }
-
-  &[data-callout="warning"] {
-    background-color: color-mix(in oklab, var(--callout-warning)30%, transparent);
-    border: 1px solid color-mix(in oklab, var(--callout-warning)40%, transparent);
-    color: var(--callout-warning);
-
-    .callout-title {
-      &::before {
-        content: "⚠︎";
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--callout-warning);
-      }
-    }
-  }
-
-  &[data-callout="error"] {
-    background-color: color-mix(in oklab, var(--callout-error)30%, transparent);
-    border: 1px solid color-mix(in oklab, var(--callout-error)40%, transparent);
-    color: var(--callout-error);
-
-    .callout-title {
-      &::before {
-        content: "✗";
-        font-weight: bold;
-        color: var(--callout-error);
-      }
-    }
-  }
-
-  .callout-title {
+  .callout-content {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .callout-content {
     padding-left: 1.5rem;
     opacity: 0.8;
+    font-size: var(--text-sm);
 
     >*:first-child {
       margin-top: 0;
@@ -490,6 +459,76 @@ html.dark .prose>.astro-code {
 
     >*:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  &[data-callout="note"] {
+    background-color: var(--callout-note-bg);
+    border: 1px solid color-mix(in oklab, var(--callout-note-border) 25%, transparent);
+    color: var(--callout-note);
+
+    .callout-content {
+      &::before {
+        content: "ⓘ";
+        font-size: 1.2rem;
+        color: var(--callout-note);
+      }
+    }
+  }
+
+  &[data-callout="success"] {
+    background-color: var(--callout-success-bg);
+    border: 1px solid color-mix(in oklab, var(--callout-success-border) 25%, transparent);
+    color: var(--callout-success);
+
+    .callout-content {
+      &::before {
+        content: "✓";
+        font-size: 1.2rem;
+        color: var(--callout-success);
+      }
+    }
+  }
+
+  &[data-callout="important"] {
+    background-color: var(--callout-important-bg);
+    border: 1px solid color-mix(in oklab, var(--callout-important-border) 25%, transparent);
+    color: var(--callout-important);
+
+    .callout-content {
+      &::before {
+        content: "✧";
+        font-size: 1.5rem;
+        color: var(--callout-important);
+      }
+    }
+  }
+
+  &[data-callout="warning"] {
+    background-color: var(--callout-warning-bg);
+    border: 1px solid color-mix(in oklab, var(--callout-warning-border) 25%, transparent);
+    color: var(--callout-warning);
+
+    .callout-content {
+      &::before {
+        content: "⚠︎";
+        font-size: 1.2rem;
+        color: var(--callout-warning);
+      }
+    }
+  }
+
+  &[data-callout="error"] {
+    background-color: var(--callout-error-bg);
+    border: 1px solid color-mix(in oklab, var(--callout-error-border) 25%, transparent);
+    color: var(--callout-error);
+
+    .callout-content {
+      &::before {
+        content: "✗";
+        font-size: 1.2em;
+        color: var(--callout-error);
+      }
     }
   }
 }
