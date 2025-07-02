@@ -17,12 +17,14 @@ export default defineExplainerConfig({
       label: 'Framework',
       href: '/docs/framework/getting-started',
       baseUrl: '/docs/framework',
+      baseRepositoryUrl: 'https://github.com/LeadcodeDev/explainer',
     },
     syntax: {
       icon: 'lucide:pencil-line',
       label: 'Syntax',
       href: '/docs/syntax/texts',
       baseUrl: '/docs/syntax',
+      baseRepositoryUrl: 'https://github.com/LeadcodeDev/explainer',
     },
   },
   blog: {

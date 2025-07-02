@@ -36,6 +36,10 @@ export async function getStaticPaths() {
 const { element } = Astro.props;
 const { Content, headings } = await render(element);
 
+const currentDoc = config.docs[element.collection];
+const issueUrl = currentDoc?.baseRepositoryUrl + "/issues/new";
+const repositoryUrl = currentDoc?.baseRepositoryUrl + "/" + element.filePath;
+
 const availableHeadings = headings.filter((heading) =>
 	[2, 3].includes(heading.depth),
 );
@@ -103,11 +107,42 @@ function pascalCase(str: string) {
 				<div class="prose">
 					<Content components={{ CodeGroupWrapper }} />
 				</div>
+
+				<div
+					data-orientation="horizontal"
+					role="separator"
+					class="flex items-center align-center text-center w-full flex-row pt-20"
+				>
+					<div class="border-default w-full border-solid border-t"></div><div
+						class="font-medium text-default flex mx-3 whitespace-nowrap"
+					>
+						<div class="flex items-center gap-2 text-sm text-muted-foreground">
+							<a
+								href={issueUrl}
+								rel="noopener noreferrer"
+								target="_blank"
+								class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
+							>
+								Report an issue
+							</a>
+							or
+							<a
+								href={repositoryUrl}
+								rel="noopener noreferrer"
+								target="_blank"
+								class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
+							>
+								Edit this page on GitHub
+							</a>
+						</div>
+					</div>
+					<div class="border-default w-full border-solid border-t"></div>
+				</div>
 			</div>
 
 			{/* Table of contents */}
 			<aside class="hidden xl:block w-64">
-				<div class="sticky top-14 p-4 overflow-y-auto h-[calc(100vh-4rem)]">
+				<div class="fixed top-14 p-4 overflow-y-auto h-[calc(100vh-4rem)]">
 					<p
 						class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex"
 					>

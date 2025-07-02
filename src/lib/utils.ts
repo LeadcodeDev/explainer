@@ -36,6 +36,7 @@ type ExplainerDocs = {
   label: string
   href: string
   baseUrl: string
+  baseRepositoryUrl: string
 }
 
 type ExplainerBlog = {
