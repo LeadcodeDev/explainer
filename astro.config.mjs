@@ -1,8 +1,8 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import mdx from '@astrojs/mdx';
-import react from '@astrojs/react';
+import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
 import {
   transformerMetaHighlight,
   transformerNotationDiff,
@@ -10,30 +10,29 @@ import {
   transformerNotationFocus,
   transformerNotationHighlight,
   transformerNotationWordHighlight,
-} from '@shikijs/transformers';
-import tailwindcss from '@tailwindcss/vite';
+} from "@shikijs/transformers";
+import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
-import rehypeCallouts from 'rehype-callouts';
-import rehypeMermaid from 'rehype-mermaid';
-import rehypeCodeGroupReact from './src/lib/plugins/code-group/plugin';
-import rehypeReadMoreReact from './src/lib/plugins/read-more/plugin';
-import { default as remarkDirective, default as remarkReadMoreDirective } from './src/lib/plugins/read-more/remark-directive';
+import rehypeCallouts from "rehype-callouts";
+import rehypeMermaid from "rehype-mermaid";
+import rehypeCodeGroupReact from "./src/lib/plugins/code-group/plugin";
+import rehypeReadMoreReact from "./src/lib/plugins/read-more/plugin";
+import {
+  default as remarkDirective,
+  default as remarkReadMoreDirective,
+} from "./src/lib/plugins/read-more/remark-directive";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: "static",
   prefetch: true,
-  integrations: [
-    react(),
-    mdx(),
-    icon()
-  ],
+  integrations: [react(), mdx(), icon()],
 
   markdown: {
     shikiConfig: {
       themes: {
-        light: 'github-light',
-        dark: 'catppuccin-frappe',
+        light: "github-light",
+        dark: "catppuccin-frappe",
       },
       transformers: [
         transformerNotationDiff(),
@@ -42,25 +41,25 @@ export default defineConfig({
         transformerNotationFocus(),
         transformerNotationErrorLevel(),
         transformerMetaHighlight(),
-      ]
+      ],
     },
     syntaxHighlight: {
-      type: 'shiki',
-      excludeLangs: ['mermaid'],
+      type: "shiki",
+      excludeLangs: ["mermaid"],
     },
-    remarkPlugins: [
-      remarkDirective,
-      remarkReadMoreDirective,
-    ],
+    remarkPlugins: [remarkDirective, remarkReadMoreDirective],
     rehypePlugins: [
       rehypeMermaid,
-      [rehypeCallouts, {
-        customClassNames: {
-          calloutClass: "callout",
-          calloutTitleClass: "callout-title",
-          calloutContentClass: "callout-content",
-        }
-      }],
+      [
+        rehypeCallouts,
+        {
+          customClassNames: {
+            calloutClass: "callout",
+            calloutTitleClass: "callout-title",
+            calloutContentClass: "callout-content",
+          },
+        },
+      ],
       rehypeCodeGroupReact,
       rehypeReadMoreReact,
     ],
@@ -68,5 +67,5 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-  }
+  },
 });
