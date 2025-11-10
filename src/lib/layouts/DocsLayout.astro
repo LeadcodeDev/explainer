@@ -10,8 +10,9 @@ import "../../assets/css/global.css";
 import "../../assets/css/markdown.css";
 import BaseLayout from "./BaseLayout.astro";
 import { useDocumentation } from "@/utils";
+import * as astroContent from "astro:content";
 
-const { load } = useDocumentation();
+const { load } = useDocumentation(astroContent);
 const derived = await load();
 
 const currentCollection = derived.find((element) => {

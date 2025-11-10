@@ -21,12 +21,13 @@ import {
   default as remarkDirective,
   default as remarkReadMoreDirective,
 } from "./src/lib/plugins/read-more/remark-directive";
+import sitemap from "@astrojs/sitemap";
 
-// https://astro.build/config
 export default defineConfig({
+  site: "https://example.com",
   output: "static",
   prefetch: true,
-  integrations: [react(), mdx(), icon()],
+  integrations: [react(), mdx(), icon(), sitemap()],
 
   markdown: {
     shikiConfig: {

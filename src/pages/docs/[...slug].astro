@@ -8,22 +8,18 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import type { CollectionKey } from "astro:content";
-import {
-  getCollection,
-  getEntry,
-  render,
-  type CollectionEntry,
-} from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 import config from "../../../explainer.config";
 import CodeGroupWrapper from "../../lib/plugins/code-group/CodeGroupWrapper.astro";
 import { useDocumentation, type HeadingNode } from "../../lib/utils";
+import * as astroContent from "astro:content";
+
 interface Props {
   element: CollectionEntry<"blog">;
 }
 
 export async function getStaticPaths() {
-  const { generateStaticPaths } = useDocumentation();
+  const { generateStaticPaths } = useDocumentation(astroContent);
   return generateStaticPaths();
 }
 

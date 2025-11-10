@@ -5,10 +5,11 @@ import { ClientRouter } from "astro:transitions";
 import config from "../../../explainer.config";
 import "../../assets/css/global.css";
 import { useDocumentation } from "@/utils";
+import * as astroContent from "astro:content";
 
 const { title = config.seo.title } = Astro.props;
 
-const { load } = useDocumentation();
+const { load } = useDocumentation(astroContent);
 const derivedDocs = await load();
 ---
 
@@ -34,6 +35,7 @@ const derivedDocs = await load();
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
 
     <script>

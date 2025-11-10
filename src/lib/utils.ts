@@ -1,4 +1,4 @@
-import type { CollectionKey } from "astro:content";
+import type { getCollection, getEntry } from "astro:content";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -60,9 +60,12 @@ export function defineExplainerConfig(config: ExplainerConfig) {
   return config;
 }
 
-export function useDocumentation() {
+export function useDocumentation(astro: {
+  getCollection: typeof getCollection;
+  getEntry: typeof getEntry;
+}) {
   async function load() {
-    const { getCollection, getEntry } = await import("astro:content");
+    const { getCollection, getEntry } = astro;
     const defaults = await getCollection("docDefaults");
 
     return Promise.all(
@@ -71,8 +74,8 @@ export function useDocumentation() {
           entry.data.collection.map(async (child) => {
             const [filename, visible] = Object.entries(child)[0];
             const element = await getEntry(
-              entry.data.directory as unknown as CollectionKey,
-              filename as unknown as CollectionKey,
+              entry.data.directory as any,
+              filename as any,
             );
 
             if (!element) {

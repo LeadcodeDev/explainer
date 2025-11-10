@@ -4,9 +4,8 @@ import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
-import BlogCard from "@/components/elements/blog-card";
-import { Badge } from "lucide-react";
 import config from "../../explainer.config";
+import { Badge } from "@/components/ui/badge";
 
 const posts = await getCollection("blog", (post) => {
   if (import.meta.env.DEV) {
@@ -196,7 +195,7 @@ const posts = await getCollection("blog", (post) => {
             >
               {import.meta.env.DEV && !post.data.publishedAt && (
                 <div class="absolute z-50 top-1 right-2">
-                  <Badge>Invisible in production mode</Badge>
+                  <Badge variant="outline">Invisible in production mode</Badge>
                 </div>
               )}
               <div class="overflow-hidden rounded-lg">
