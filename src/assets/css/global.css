@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -15,7 +17,7 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --muted: oklch(0.552 0.016 285.938);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
@@ -37,6 +39,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --tab-container: oklch(0.967 0.001 286.375);
+  --container-width: 90rem;
 }
 
 .dark {
@@ -115,6 +118,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  *:not(has(code)) {
+    font-family: "Public Sans";
   }
 
   body {

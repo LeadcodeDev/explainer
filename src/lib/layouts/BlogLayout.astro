@@ -6,10 +6,10 @@ import BaseLayout from "./BaseLayout.astro";
 ---
 
 <BaseLayout>
-	<main class="relative flex-1">
-		<Separator />
-		<div class="mx-auto px-4 sm:px-0 max-w-screen-xl">
-			<slot />
-		</div>
-	</main>
+  <main class="relative flex-1">
+    <Separator />
+    <div class="mx-auto px-4 sm:px-0 max-w-[var(--container-width)]">
+      <slot />
+    </div>
+  </main>
 </BaseLayout>

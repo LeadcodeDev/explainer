@@ -24,6 +24,7 @@
     "@types/hast": "^3.0.4",
     "@types/luxon": "^3.6.2",
     "@types/mdast": "^4.0.4",
+    "@types/node": "^24.10.0",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "astro": "^5.5.5",

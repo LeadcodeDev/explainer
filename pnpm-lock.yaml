@@ -10,7 +10,7 @@ dependencies:
     version: 4.3.0(astro@5.10.2)
   '@astrojs/react':
     specifier: ^4.2.2
-    version: 4.3.0(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0)
+    version: 4.3.0(@types/node@24.10.0)(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0)
   '@expressive-code/plugin-line-numbers':
     specifier: ^0.40.2
     version: 0.40.2
@@ -50,6 +50,9 @@ dependencies:
   '@types/mdast':
     specifier: ^4.0.4
     version: 4.0.4
+  '@types/node':
+    specifier: ^24.10.0
+    version: 24.10.0
   '@types/react':
     specifier: ^19.0.12
     version: 19.1.8
@@ -58,7 +61,7 @@ dependencies:
     version: 19.1.6(@types/react@19.1.8)
   astro:
     specifier: ^5.5.5
-    version: 5.10.2(typescript@5.8.3)
+    version: 5.10.2(@types/node@24.10.0)(typescript@5.8.3)
   astro-icon:
     specifier: ^1.1.5
     version: 1.1.5
@@ -209,7 +212,7 @@ packages:
       '@astrojs/markdown-remark': 6.3.2
       '@mdx-js/mdx': 3.1.0(acorn@8.15.0)
       acorn: 8.15.0
-      astro: 5.10.2(typescript@5.8.3)
+      astro: 5.10.2(@types/node@24.10.0)(typescript@5.8.3)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -231,7 +234,7 @@ packages:
       prismjs: 1.30.0
     dev: false
 
-  /@astrojs/react@4.3.0(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0):
+  /@astrojs/react@4.3.0(@types/node@24.10.0)(@types/react-dom@19.1.6)(@types/react@19.1.8)(react-dom@19.1.0)(react@19.1.0):
     resolution: {integrity: sha512-N02aj52Iezn69qHyx5+XvPqgsPMEnel9mI5JMbGiRMTzzLMuNaxRVoQTaq2024Dpr7BLsxCjqMkNvelqMDhaHA==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
@@ -246,7 +249,7 @@ packages:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       ultrahtml: 1.6.0
-      vite: 6.3.5
+      vite: 6.3.5(@types/node@24.10.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -1322,7 +1325,7 @@ packages:
     peerDependencies:
       astro: ^4 || ^5
     dependencies:
-      astro: 5.10.2(typescript@5.8.3)
+      astro: 5.10.2(@types/node@24.10.0)(typescript@5.8.3)
     dev: false
 
   /@marijn/find-cluster-break@1.0.2:
@@ -2687,7 +2690,7 @@ packages:
       '@tailwindcss/node': 4.1.11
       '@tailwindcss/oxide': 4.1.11
       tailwindcss: 4.1.11
-      vite: 7.0.0
+      vite: 7.0.0(@types/node@24.10.0)
     dev: false
 
   /@tanstack/virtual-core@3.13.12:
@@ -2935,7 +2938,7 @@ packages:
   /@types/fontkit@2.0.8:
     resolution: {integrity: sha512-wN+8bYxIpJf+5oZdrdtaX04qUuWHcKxcDEgRS9Qm9ZClSHjzEn13SxUC+5eRM+4yXIeTYk8mTzLAWGF64847ew==}
     dependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.10.0
     dev: false
 
   /@types/geojson@7946.0.16:
@@ -2976,10 +2979,10 @@ packages:
       undici-types: 6.21.0
     dev: false
 
-  /@types/node@24.0.10:
-    resolution: {integrity: sha512-ENHwaH+JIRTDIEEbDK6QSQntAYGtbvdDXnMXnZaZ6k13Du1dPMmprkEHIL7ok2Wl2aZevetwTAb5S+7yIF+enA==}
+  /@types/node@24.10.0:
+    resolution: {integrity: sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==}
     dependencies:
-      undici-types: 7.8.0
+      undici-types: 7.16.0
     dev: false
 
   /@types/react-dom@19.1.6(@types/react@19.1.8):
@@ -2999,7 +3002,7 @@ packages:
   /@types/tar@6.1.13:
     resolution: {integrity: sha512-IznnlmU5f4WcGTh2ltRu/Ijpmk8wiWXfF0VA4s+HPjHZgvFggk1YaIkbo5krX/zUCzWF8N/l4+W/LNxnvAJ8nw==}
     dependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.10.0
       minipass: 4.2.8
     dev: false
 
@@ -3028,7 +3031,7 @@ packages:
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
     requiresBuild: true
     dependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.10.0
     dev: false
     optional: true
 
@@ -3080,7 +3083,7 @@ packages:
       '@rolldown/pluginutils': 1.0.0-beta.19
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.3.5
+      vite: 6.3.5(@types/node@24.10.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3374,7 +3377,7 @@ packages:
       - supports-color
     dev: false
 
-  /astro@5.10.2(typescript@5.8.3):
+  /astro@5.10.2(@types/node@24.10.0)(typescript@5.8.3):
     resolution: {integrity: sha512-CCBU+e/Apk6NWEMnc/R9dVZD/+FaCnNqWJicX1Oe6T18vLKop+LPs/m/88ekJk4zxP1g1N/GfUq4wEedUSk1Wg==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
@@ -3432,7 +3435,7 @@ packages:
       unist-util-visit: 5.0.0
       unstorage: 1.16.0
       vfile: 6.0.3
-      vite: 6.3.5
+      vite: 6.3.5(@types/node@24.10.0)
       vitefu: 1.0.7(vite@6.3.5)
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
@@ -7343,8 +7346,8 @@ packages:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
     dev: false
 
-  /undici-types@7.8.0:
-    resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
+  /undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
     dev: false
 
   /undici@6.21.3:
@@ -7608,7 +7611,7 @@ packages:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  /vite@6.3.5:
+  /vite@6.3.5(@types/node@24.10.0):
     resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
@@ -7648,6 +7651,7 @@ packages:
       yaml:
         optional: true
     dependencies:
+      '@types/node': 24.10.0
       esbuild: 0.25.5
       fdir: 6.4.6(picomatch@4.0.2)
       picomatch: 4.0.2
@@ -7658,7 +7662,7 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /vite@7.0.0:
+  /vite@7.0.0(@types/node@24.10.0):
     resolution: {integrity: sha512-ixXJB1YRgDIw2OszKQS9WxGHKwLdCsbQNkpJN171udl6szi/rIySHL6/Os3s2+oE4P/FLD4dxg4mD7Wust+u5g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -7698,6 +7702,7 @@ packages:
       yaml:
         optional: true
     dependencies:
+      '@types/node': 24.10.0
       esbuild: 0.25.5
       fdir: 6.4.6(picomatch@4.0.2)
       picomatch: 4.0.2
@@ -7716,7 +7721,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 6.3.5
+      vite: 6.3.5(@types/node@24.10.0)
     dev: false
 
   /vscode-jsonrpc@8.2.0:

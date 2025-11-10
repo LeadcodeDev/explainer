@@ -4,8 +4,12 @@ import Navbar from "@/components/elements/navbar";
 import { ClientRouter } from "astro:transitions";
 import config from "../../../explainer.config";
 import "../../assets/css/global.css";
+import { useDocumentation } from "@/utils";
 
 const { title = config.meta.title } = Astro.props;
+
+const { load } = useDocumentation();
+const derivedDocs = await load();
 ---
 
 <!doctype html>
@@ -49,7 +53,7 @@ const { title = config.meta.title } = Astro.props;
   </head>
   <body class="relative min-h-screen">
     <div class="min-h-screen flex flex-col">
-      <Navbar client:only />
+      <Navbar docs={derivedDocs} client:only />
       <slot />
       <Footer client:only />
     </div>

@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/docDefaults",
+  "definitions": {
+    "docDefaults": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "permalink": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "collection": {
+          "type": "array"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "description",
+        "permalink",
+        "directory",
+        "collection"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

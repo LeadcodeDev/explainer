@@ -274,7 +274,7 @@ html:not(.dark)
   .astro-code
   span:not(.highlighted, .highlighted-word, .diff)
   * {
-  background-color: var(--muted) !important;
+  background-color: oklch(0.985 0 0) !important;
 }
 
 html.dark .prose .astro-code,
