@@ -15,22 +15,24 @@ const { load } = useDocumentation();
 const derived = await load();
 
 const currentCollection = derived.find((element) => {
-  return Astro.url.pathname.startsWith(`docs/${element.permalink}`);
+  return element.collection.find((item) =>
+    Astro.url.pathname.startsWith((item as any).href),
+  );
 });
 
-// const currentCollectionItems = collection
-//   .sort(
-//     (a, b) =>
-//       (a.data as z.infer<typeof docSchema>).order -
-//       (b.data as z.infer<typeof docSchema>).order,
-//   )
-//   .map((item) => {
-//     return {
-//       label: item.data.title,
-//       href: `/docs/${item.collection}/${item.data.permalink}`,
-//       icon: (item.data as z.infer<typeof docSchema>).icon,
-//     };
-//   });
+const currentCollectionItems = currentCollection?.collection
+  ?.sort(
+    (a, b) =>
+      (a!.data as z.infer<typeof docSchema>).order -
+      (b!.data as z.infer<typeof docSchema>).order,
+  )
+  .map((item) => {
+    return {
+      label: (item as any).data?.title,
+      href: `/docs/${(item as any).collection}/${(item as any).data.permalink}`,
+      icon: ((item as any).data as z.infer<typeof docSchema>).icon,
+    };
+  });
 ---
 
 <BaseLayout>
@@ -40,34 +42,40 @@ const currentCollection = derived.find((element) => {
       <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
         <aside class="hidden sm:block lg:col-span-2 pr-2">
           <div
-            class="fixed top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)]"
+            class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)]"
           >
             <nav>
               <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0">
                 {
-                  Object.entries(config.docs).map(([key, element]) => (
+                  derived.map((element) => (
                     <a
                       class="flex items-center gap-2 group text-primary font-medium"
-                      href={element.href}
+                      href={element?.collection?.[0]?.href}
                     >
                       <div
                         class={clsx(
                           "rounded-sm p-1 inline-flex ring-inset ring-1",
-                          Astro.url.pathname.startsWith(element.baseUrl)
+                          Astro.url.pathname.startsWith(
+                            `/docs/${element.permalink}`,
+                          )
                             ? "bg-primary ring-primary text-white"
                             : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
                         )}
                       >
-                        <Icon
-                          client:only
-                          icon={element.icon}
-                          className="size-4"
-                        />
+                        {element.icon && (
+                          <Icon
+                            client:only
+                            icon={element.icon}
+                            className="size-4"
+                          />
+                        )}
                       </div>
                       <span
                         class={clsx(
                           "text-sm relative",
-                          Astro.url.pathname.startsWith(element.baseUrl)
+                          Astro.url.pathname.startsWith(
+                            `/docs/${element.permalink}`,
+                          )
                             ? "text-primary"
                             : "text-muted-foreground",
                         )}
@@ -84,9 +92,9 @@ const currentCollection = derived.find((element) => {
               class="my-5 border-dashed border-gray-200 dark:border-gray-700"
             />
 
-            <!-- <div class="space-y-1">
+            <div class="space-y-1">
               {
-                currentCollectionItems.map((item) => (
+                currentCollectionItems?.map((item) => (
                   <a
                     href={item.href}
                     class="group block py-1.5 px-1.5 text-sm rounded-md transition-colors hover:text-primary"
@@ -120,7 +128,7 @@ const currentCollection = derived.find((element) => {
                   </a>
                 ))
               }
-            </div> -->
+            </div>
           </div>
         </aside>
         <div
@@ -148,33 +156,39 @@ const currentCollection = derived.find((element) => {
               </div>
             </summary>
             <div class="mt-2">
-              <div class="px-4 sm:px-0 py-5 overflow-y-auto">
+              <div class="sm:px-0 py-5 overflow-y-auto">
                 <nav>
-                  <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0">
+                  <div class="space-y-3 mb-3 lg:mb-6 lg:mx-0">
                     {
-                      Object.entries(config.docs).map(([key, element]) => (
+                      derived?.map((element) => (
                         <a
                           class="flex items-center gap-2 group text-primary font-medium"
-                          href={element.href}
+                          href={element?.collection?.[0]?.href}
                         >
                           <div
                             class={clsx(
                               "rounded-sm p-1 inline-flex ring-inset ring-1",
-                              Astro.url.pathname.startsWith(element.baseUrl)
+                              Astro.url.pathname.startsWith(
+                                `/docs/${element.permalink}`,
+                              )
                                 ? "bg-primary ring-primary text-white"
                                 : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
                             )}
                           >
-                            <Icon
-                              client:only
-                              icon={element.icon}
-                              className="size-4"
-                            />
+                            {element.icon && (
+                              <Icon
+                                client:only
+                                icon={element.icon}
+                                className="size-4"
+                              />
+                            )}
                           </div>
                           <span
                             class={clsx(
                               "text-sm relative",
-                              Astro.url.pathname.startsWith(element.baseUrl)
+                              Astro.url.pathname.startsWith(
+                                `/docs/${element.permalink}`,
+                              )
                                 ? "text-primary"
                                 : "text-muted-foreground",
                             )}
@@ -191,9 +205,9 @@ const currentCollection = derived.find((element) => {
                   class="my-5 border-dashed border-gray-200 dark:border-gray-700"
                 />
 
-                <!-- <div class="space-y-1">
+                <div class="space-y-1">
                   {
-                    currentCollectionItems.map((item) => (
+                    currentCollectionItems?.map((item) => (
                       <a
                         href={item.href}
                         class="group block py-1.5 px-1.5 text-sm rounded-md transition-colors hover:text-primary"
@@ -227,7 +241,7 @@ const currentCollection = derived.find((element) => {
                       </a>
                     ))
                   }
-                </div> -->
+                </div>
               </div>
             </div>
           </details>

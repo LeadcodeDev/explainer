@@ -68,21 +68,21 @@ export default function Navbar(props: NavbarProps) {
       <div className="max-w-[var(--container-width)] mx-auto flex items-center justify-between">
         <a href="/" className="flex sm:hidden items-center space-x-2">
           <span className="font-bold text-primary text-lg">
-            💧 {config.meta.title}
+            💧 {config.projectName}
           </span>
         </a>
 
-        <div className="hidden lg:flex items-center justify-between w-full">
+        <div className="hidden md:flex items-center justify-between w-full">
           <a href="/" className="flex items-center space-x-2">
             <span className="font-bold text-primary text-lg">
-              💧 {config.meta.title}
+              💧 {config.projectName}
             </span>
           </a>
           <div className="flex gap-3">
             <NavigationMenu>
               <NavigationMenuList>
-                {props.docs.map((element) => (
-                  <NavigationMenuItem key={element.id}>
+                {props.docs.map((element, index) => (
+                  <NavigationMenuItem key={index}>
                     <NavigationMenuTrigger className="flex items-center">
                       <Icon icon={element.icon} className="size-4 mr-2" />
                       {element.label}
@@ -126,9 +126,9 @@ export default function Navbar(props: NavbarProps) {
           <div className="flex items-center space-x-2">
             <ThemeToggle />
 
-            {config.urls.github && (
+            {config.socials.media.github && (
               <a
-                href={config.urls.github}
+                href={config.socials.media.github}
                 rel="noopener noreferrer"
                 target="_blank"
                 className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"
@@ -144,7 +144,7 @@ export default function Navbar(props: NavbarProps) {
                     d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
                   ></path>
                 </svg>
-                <span className="sr-only">{config.meta.title} on GitHub</span>
+                <span className="sr-only">{config.seo.title} on GitHub</span>
               </a>
             )}
           </div>
@@ -164,7 +164,7 @@ export default function Navbar(props: NavbarProps) {
             >
               <div>
                 <SheetHeader>
-                  <SheetTitle>{config.meta.title}</SheetTitle>
+                  <SheetTitle>{config.seo.title}</SheetTitle>
                 </SheetHeader>
                 <SheetDescription />
                 <div className="flex flex-col items-start gap-2">
@@ -186,34 +186,40 @@ export default function Navbar(props: NavbarProps) {
                         </a>
                       );
                     }
-
-                    return (
-                      <div key={element.label}>
-                        <p className="text-sm font-medium">{element.label}</p>
-                        <ul className="flex flex-col items-start gap-5 pt-2 pb-5">
-                          {element.items?.map((item) => (
-                            <a
-                              key={item.label}
-                              href={item.href}
-                              className="flex flex-col px-3 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
-                            >
-                              <span>{item.label}</span>
-                              <span className="text-xs text-muted-foreground">
-                                {item.description}
-                              </span>
-                            </a>
-                          ))}
-                        </ul>
-                      </div>
-                    );
                   })}
+
+                  <div className="flex flex-col gap-6 pt-5">
+                    {props.docs.map((element, index) => (
+                      <div key={index}>
+                        <div className="flex items-center font-medium">
+                          <Icon icon={element.icon} className="size-4 mr-2" />
+                          {element.label}
+                        </div>
+                        <div>
+                          <ul className="grid w-[400px] gap-2 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                            {element.collection
+                              .filter((item: any) => item.visible)
+                              .map((item: any) => (
+                                <a
+                                  key={item.id}
+                                  href={item.href}
+                                  className="text-sm"
+                                >
+                                  {item.data.title}
+                                </a>
+                              ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <SheetFooter>
-                {config.urls.github && (
+                {config.socials.media.github && (
                   <Button variant="outline" asChild>
                     <a
-                      href={config.urls.github}
+                      href={config.socials.media.github}
                       rel="noopener noreferrer"
                       target="_blank"
                       className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"

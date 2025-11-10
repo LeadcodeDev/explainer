@@ -300,7 +300,7 @@ html.dark .prose > .astro-code {
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
     font-size: 0.9rem;
-    color: var(--color-foreground) !important;
+    color: var(--muted-foreground) !important;
   }
 
   &.has-focused .line:not(.focused) {

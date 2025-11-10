@@ -1,28 +1,20 @@
 import { defineExplainerConfig } from "@/utils";
 
 export default defineExplainerConfig({
+  repository: "https://github.com/LeadcodeDev/explainer",
+  projectName: "Explainer",
   seo: {
-    title: "Explainer",
-    titleTemplate: "{} - {title}",
+    title: "Explainer • Make your own documentation easily",
     description:
       "Quickly design your documentation and optimise it for search engine optimisation to showcase your products.",
     thumbnail: "https://placehold.co/1200x630",
   },
   socials: {
-    github: "https://github.com/LeadcodeDev/explainer",
-    twitter: "https://twitter.com/LeadcodeDev",
-  },
-  docs: {},
-
-  meta: {
-    title: "Explainer",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    thumbnail: "https://placehold.co/1200x630",
-  },
-  urls: {
-    github: "https://github.com/LeadcodeDev/explainer",
-    getStarted: "/docs/framework/getting-started",
-    documentation: "/docs/framework/installation",
+    media: {
+      github: "https://github.com/LeadcodeDev/explainer",
+      twitter: "https://twitter.com/LeadcodeDev",
+      linkedin: "https://linkedin.com/in/leadcode-dev",
+    },
   },
   blog: {
     defaults: {
@@ -46,10 +38,4 @@ export default defineExplainerConfig({
       href: "/blog",
     },
   ],
-  social: {
-    github: {
-      href: "https://github.com/LeadcodeDev/explainer",
-      icon: "mdi:github",
-    },
-  },
 });
