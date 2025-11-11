@@ -5,7 +5,8 @@ permalink: docs
 icon: lucide:book
 order: 5
 ---
-import config from '../../../../explainer.config';
+
+import config from "explainer.config";
 
 # Documentation
 
@@ -25,8 +26,8 @@ First you need to declare a new collection.
 ```ts
 const foo = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/docs/foo" }),
-  schema: docSchema
-})
+  schema: docSchema,
+});
 
 export const collections = { foo };
 ```
@@ -36,14 +37,15 @@ export const collections = { foo };
 ```ts
 export default defineExplainerConfig({
   docs: {
-    foo: { // [!code ++]
-      icon: 'lucide:cuboid', // [!code ++]
-      label: 'Foo', // [!code ++]
-      href: '/docs/foo/getting-started', // [!code ++]
-      baseUrl: '/docs/foo', // [!code ++]
+    foo: {
+      // [!code ++]
+      icon: "lucide:cuboid", // [!code ++]
+      label: "Foo", // [!code ++]
+      href: "/docs/foo/getting-started", // [!code ++]
+      baseUrl: "/docs/foo", // [!code ++]
     },
   },
-})
+});
 ```
 
 > [!SUCCESS]

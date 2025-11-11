@@ -23,12 +23,12 @@ export const docDefaultSchema = z.object({
 export const docDefaults = defineCollection({
   loader: glob({
     pattern: "**/_default.{md,mdx}",
-    base: "./src/content/docs",
+    base: "./content/docs",
   }),
   schema: docDefaultSchema,
 });
 
-const directories = readdirSync(join(process.cwd(), "src/content/docs"));
+const directories = readdirSync(join(process.cwd(), "content/docs"));
 const documentations = {
   ...directories.reduce((acc, directory) => {
     return {
@@ -36,7 +36,7 @@ const documentations = {
       [directory]: defineCollection({
         loader: glob({
           pattern: "**/[^_]*.{md,mdx}",
-          base: `./src/content/docs/${directory}`,
+          base: `./content/docs/${directory}`,
         }),
         schema: docSchema,
       }),
@@ -45,7 +45,7 @@ const documentations = {
 };
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

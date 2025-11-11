@@ -5,7 +5,8 @@ permalink: blog
 icon: lucide:newspaper
 order: 6
 ---
-import config from '../../../../explainer.config';
+
+import config from "explainer.config";
 
 # Blog
 
@@ -21,6 +22,7 @@ You should use the frontmatter on top of the file to define the article metadata
 > The `permalink` property is required. If you modify it, the URL of the article will change.
 
 :::code-group labels=[frontmatter, schema]
+
 ```mdx
 ---
 title: "Article title"
@@ -33,6 +35,7 @@ thumbnail: path/to/thumbnail.png
 publishedAt: 2024-01-01:23:00:00
 ---
 ```
+
 ```ts
 const schema = z.object({
   title: z.string(),
@@ -41,9 +44,10 @@ const schema = z.object({
   icon: z.string().optional(),
   thumbnail: z.string().optional(),
   authors: z.array(z.string()).optional(),
-  publishedAt: z.string().optional()
-}),
+  publishedAt: z.string().optional(),
+});
 ```
+
 :::
 
 ### Article visibility
@@ -60,43 +64,41 @@ In the blog index page, the articles are sorted by `publishedAt` date and displa
 The `authors` property is an array of author names.
 
 <div class="mt-4 flex flex-wrap items-center gap-6">
-  {
-    Object.entries(config.blog.authors).map(([key, author]) => {
-      return (
-        <div
-          data-orientation="horizontal"
-          class="relative group/user flex items-center gap-2"
-        >
-          <span class="inline-flex items-center justify-center select-none overflow-hidden rounded-full align-middle bg-(--ui-bg-elevated) size-8 text-base shrink-0 transform transition-transform duration-200 group-hover/user:scale-115">
-            <img
-              width="32"
-              height="32"
-              alt={author.name}
-              class="h-full w-full rounded-[inherit] object-cover"
-              src={author.avatar}
-            />
-          </span>
-          <div class="">
-            <a
-              href={author.href}
-              tabindex="-1"
-              rel="noopener noreferrer"
-              aria-label={author.name}
-              class="focus:outline-none peer"
-            >
-              <span class="absolute inset-0" aria-hidden="true" />
-            </a>
-            <p class="font-medium text-(--ui-text) peer-hover:text-(--ui-text-highlighted) transition-colors text-sm !p-0">
-              {author.name}
-            </p>
-            <p class="text-muted-foreground transition-colors text-xs !p-0">
-              @{key}
-            </p>
-          </div>
+  {Object.entries(config.blog.authors).map(([key, author]) => {
+    return (
+      <div
+        data-orientation="horizontal"
+        class="relative group/user flex items-center gap-2"
+      >
+        <span class="inline-flex items-center justify-center select-none overflow-hidden rounded-full align-middle bg-(--ui-bg-elevated) size-8 text-base shrink-0 transform transition-transform duration-200 group-hover/user:scale-115">
+          <img
+            width="32"
+            height="32"
+            alt={author.name}
+            class="h-full w-full rounded-[inherit] object-cover"
+            src={author.avatar}
+          />
+        </span>
+        <div class="">
+          <a
+            href={author.href}
+            tabindex="-1"
+            rel="noopener noreferrer"
+            aria-label={author.name}
+            class="focus:outline-none peer"
+          >
+            <span class="absolute inset-0" aria-hidden="true" />
+          </a>
+          <p class="font-medium text-(--ui-text) peer-hover:text-(--ui-text-highlighted) transition-colors text-sm !p-0">
+            {author.name}
+          </p>
+          <p class="text-muted-foreground transition-colors text-xs !p-0">
+            @{key}
+          </p>
         </div>
-      );
-    })
-  }
+      </div>
+    );
+  })}
 </div>
 
 ### Add new authors
@@ -108,18 +110,19 @@ export default defineExplainerConfig({
   blog: {
     authors: {
       leadcode_dev: {
-        name: 'LeadcodeDev',
-        avatar: 'https://avatars.githubusercontent.com/u/8946317?v=4',
-        href: 'https://github.com/LeadcodeDev',
+        name: "LeadcodeDev",
+        avatar: "https://avatars.githubusercontent.com/u/8946317?v=4",
+        href: "https://github.com/LeadcodeDev",
       },
-      nathaelb: { // [!code ++]
-        name: 'NathaelB', // [!code ++]
-        avatar: 'https://avatars.githubusercontent.com/u/64804778?v=4', // [!code ++]
-        href: 'https://github.com/NathaelB', // [!code ++]
+      nathaelb: {
+        // [!code ++]
+        name: "NathaelB", // [!code ++]
+        avatar: "https://avatars.githubusercontent.com/u/64804778?v=4", // [!code ++]
+        href: "https://github.com/NathaelB", // [!code ++]
       }, // [!code ++]
-    }
+    },
   },
-})
+});
 ```
 
 The `authors` property is an object where the key is the author name and the value is an object with the following properties:
