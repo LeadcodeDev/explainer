@@ -7,6 +7,8 @@ import BaseLayout from "./BaseLayout.astro";
 <BaseLayout>
   <div class="relative">
     <Separator accent />
-    <slot />
+    <div class="mx-auto max-w-[var(--container-width)]">
+      <slot />
+    </div>
   </div>
 </BaseLayout>

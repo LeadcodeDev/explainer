@@ -1,0 +1,21 @@
+---
+import Separator from "@/components/elements/separator";
+import "../../assets/css/global.css";
+import BaseLayout from "./BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog", (post) => {
+  if (import.meta.env.DEV) {
+    return true;
+  }
+
+  return post.data.publishedAt && new Date(post.data.publishedAt) <= new Date();
+});
+---
+
+<BaseLayout>
+  <div class="relative">
+    <Separator accent />
+    <slot />
+  </div>
+</BaseLayout>

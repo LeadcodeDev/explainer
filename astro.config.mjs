@@ -17,6 +17,7 @@ import rehypeCallouts from "rehype-callouts";
 import rehypeMermaid from "rehype-mermaid";
 import rehypeCodeGroupReact from "./src/lib/plugins/code-group/plugin";
 import rehypeReadMoreReact from "./src/lib/plugins/read-more/plugin";
+import rehypeBlogListReact from "./src/lib/plugins/blog-list/plugin";
 import {
   default as remarkDirective,
   default as remarkReadMoreDirective,
@@ -63,6 +64,7 @@ export default defineConfig({
       ],
       rehypeCodeGroupReact,
       rehypeReadMoreReact,
+      rehypeBlogListReact,
     ],
   },
 

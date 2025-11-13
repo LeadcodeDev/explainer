@@ -3,6 +3,7 @@ import BlogCard from "@/components/elements/blog-card";
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import { getCollection } from "astro:content";
 import config from "../../../explainer.config";
+import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
 
 const posts = await getCollection("blog", (post) => {
   if (import.meta.env.DEV) return true;
@@ -20,7 +21,7 @@ const posts = await getCollection("blog", (post) => {
         <h2
           class="mt-2 text-5xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
         >
-          The {config.seo.title} Blog
+          The {config.projectName} Blog
         </h2>
         <p
           class="text-lg sm:text-xl/8 text-muted-foreground text-pretty font-light mt-6"
@@ -32,9 +33,5 @@ const posts = await getCollection("blog", (post) => {
     </div>
   </div>
 
-  <div class="text-lg sm:text-xl/8 text-(--ui-text-muted) text-pretty mt-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {posts.map((post) => <BlogCard post={post} />)}
-    </div>
-  </div></BlogLayout
->
+  <BlogListWrapper perLine={4} />
+</BlogLayout>

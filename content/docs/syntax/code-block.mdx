@@ -5,12 +5,14 @@ permalink: code-blocks
 icon: lucide:code
 order: 4
 ---
+
 # Code blocks
 
 Code blocks are a way to display code in a readable format.
 Explainer implements [`Shiki`](https://github.com/shikijs/shiki) for syntax highlighting, you can read the [Shiki documentation](https://shiki.style) for more information on how to customize the syntax highlighting.
 
 ## Highlighting
+
 Highlighting can be done before or after the declaration with the `[!code highlight]` syntax.
 
 ### Single line
@@ -109,28 +111,31 @@ impl User {
 
 ## Group code blocks
 
-Group code blocks can be done with the `:::code-group labels=[...labels]` syntax.
+Group code blocks can be done with the `:::codegroup labels=[...labels]` syntax.
 
 > [!warning] This is a **collapsible** callout
 > Only code blocks can be used in a group.
 
-:::code-group labels=[Without labels, With labels]
+:::codegroup labels=[Without labels, With labels]
+
 ```
-:::code-group auto
+:::codegroup auto
 // Code block without labels
 :::
 ```
 
 ```
-:::code-group labels=[first,, third]
+:::codegroup labels=[first,, third]
 // First code block (named)
 // Second code block
 // Third code block (named)
 :::
 ```
+
 :::
 
-:::code-group labels=[struct, impl]
+:::codegroup labels=[struct, impl]
+
 ```rust
 pub struct User {
   pub firstname: String, // [!code highlight]
@@ -150,4 +155,5 @@ impl User {
   }
 }
 ```
+
 :::

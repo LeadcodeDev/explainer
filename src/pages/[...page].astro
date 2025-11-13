@@ -1,0 +1,50 @@
+---
+import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
+import { render, getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const allPages = await getCollection("pages");
+
+  function pathToSlug(entry: { id: string }) {
+    const parts = entry.id.split("/");
+    const lastPart = parts.at(-1);
+
+    if (lastPart === "index") {
+      parts.splice(parts.length - 1, 1, "/");
+    }
+
+    return parts.length > 0 ? parts.join("/") : "/";
+  }
+
+  return allPages.map((p) => {
+    return {
+      params: { page: pathToSlug(p) },
+      props: { page: p },
+    };
+  });
+}
+
+const allPages = await getCollection("pages");
+const slug = Astro.params.page ? Astro.params.page.split("/") : ["/"];
+
+const page = allPages.find((p) => {
+  const parts = p.id.split("/");
+  const lastPart = parts.at(-1);
+
+  if (lastPart === "index") {
+    parts.splice(parts.length - 1, 1, "/");
+  }
+
+  const currentPage = parts.length > 0 ? parts.join("/") : "/";
+  return currentPage === slug.join("/");
+});
+
+if (!page) throw Astro.redirect("/404");
+
+const { Content } = await render(page);
+---
+
+<Layout>
+  <Content components={{ BlogListWrapper }} />
+</Layout>

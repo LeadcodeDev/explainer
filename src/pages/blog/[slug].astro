@@ -13,6 +13,7 @@ import { NewspaperIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import config from "../../../explainer.config";
 import ReadMoreWrapper from "../../lib/plugins/read-more/ReadMoreWrapper.astro";
+import BlogListWrapper from "../../lib/plugins/blog-list/BlogListWrapper.astro";
 interface Props {
   element: CollectionEntry<"blog">;
 }
@@ -141,7 +142,7 @@ const headingTree = buildHeadingTree(availableHeadings);
                       src={currentAuthor.avatar}
                     />
                   </span>
-                  <div class="">
+                  <div>
                     <a
                       href={currentAuthor.href}
                       tabindex="-1"
@@ -166,14 +167,20 @@ const headingTree = buildHeadingTree(availableHeadings);
       </div>
     </div>
 
-    <div class="flex gap-20 w-full">
+    <div class="relative pt-5 flex justify-between w-full">
       <div class="w-full max-w-4xl">
         <div class="prose">
-          <Content components={{ CodeGroupWrapper, ReadMoreWrapper }} />
+          <Content
+            components={{ CodeGroupWrapper, ReadMoreWrapper, BlogListWrapper }}
+          />
         </div>
+
+        <BlogListWrapper perLine={3} current={element.id} />
       </div>
-      <aside class="hidden xl:block w-64">
-        <div class="sticky top-14 p-4 overflow-y-auto h-[calc(100vh-4rem)]">
+      <aside class="hidden xl:block">
+        <div
+          class="sticky top-14 p-4 w-64 overflow-y-auto h-[calc(100vh-4rem)]"
+        >
           <p
             class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex"
           >

@@ -13,7 +13,9 @@ import config from "../../../explainer.config";
 import CodeGroupWrapper from "../../lib/plugins/code-group/CodeGroupWrapper.astro";
 import { useDocumentation, type HeadingNode } from "../../lib/utils";
 import * as astroContent from "astro:content";
-
+import DocNavigationWrapper from "@/components/elements/DocNavigationWrapper.astro";
+import { Icon } from "@iconify/react";
+import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
 interface Props {
   element: CollectionEntry<"blog">;
 }
@@ -94,7 +96,7 @@ function pascalCase(str: string) {
         </div>
 
         <div class="prose">
-          <Content components={{ CodeGroupWrapper }} />
+          <Content components={{ CodeGroupWrapper, BlogListWrapper }} />
         </div>
 
         <div
@@ -112,6 +114,11 @@ function pascalCase(str: string) {
                 target="_blank"
                 class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
               >
+                <Icon
+                  client:load
+                  icon="lucide:circle-alert"
+                  className="size-4"
+                />
                 Report an issue
               </a>
               or
@@ -121,12 +128,14 @@ function pascalCase(str: string) {
                 target="_blank"
                 class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
               >
+                <Icon client:load icon="lucide:pencil" className="size-4" />
                 Edit this page on GitHub
               </a>
             </div>
           </div>
           <div class="border-default w-full border-solid border-t"></div>
         </div>
+        <DocNavigationWrapper />
       </div>
 
       {/* Table of contents */}

@@ -28,6 +28,20 @@ export const docDefaults = defineCollection({
   schema: docDefaultSchema,
 });
 
+const pages = defineCollection({
+  loader: glob({
+    pattern: [
+      "**/*.{md,mdx}", // inclut tout
+      "!blog/**/*", // exclut blog/
+      "!docs/**/*", // exclut docs/
+    ],
+    base: "./content",
+  }),
+  schema: z.object({
+    layout: z.string().optional(),
+  }),
+});
+
 const directories = readdirSync(join(process.cwd(), "content/docs"));
 const documentations = {
   ...directories.reduce((acc, directory) => {
@@ -56,4 +70,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { docDefaults, blog, ...documentations };
+export const collections = { pages, docDefaults, blog, ...documentations };

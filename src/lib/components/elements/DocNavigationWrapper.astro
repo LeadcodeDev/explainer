@@ -1,0 +1,60 @@
+---
+import { useDocumentation } from "@/utils";
+import { Icon } from "@iconify/react";
+import * as astroContent from "astro:content";
+
+const { slug } = Astro.params;
+
+const { getPages } = useDocumentation(astroContent);
+const pages = await getPages();
+
+const currentPageIndex = pages.findIndex(
+  (page) => page.href === `/docs/${slug}`,
+);
+
+const previousPage = pages[currentPageIndex - 1];
+const nextPage = pages[currentPageIndex + 1];
+
+const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
+---
+
+<div
+  class:list={[
+    "flex py-10 gap-5 justify-items-end w-full",
+    !previousPage && "justify-end",
+  ]}
+>
+  {
+    previousPage && (
+      <a href={previousPage.href} class:list={[container]}>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 border">
+            <Icon client:load icon={previousPage.data.icon} />
+          </div>
+        </div>
+        <div class="mt-4">
+          <h3 class="font-semibold text-gray-900">{previousPage.data.title}</h3>
+          <p class="text-sm text-gray-500 mt-1">
+            {previousPage.data.description}
+          </p>
+        </div>
+      </a>
+    )
+  }
+
+  {
+    nextPage && (
+      <a href={nextPage.href} class:list={[container]}>
+        <div class="flex items-center justify-end">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 border">
+            <Icon client:load icon={nextPage.data.icon} />
+          </div>
+        </div>
+        <div class="mt-4 text-right">
+          <h3 class="font-semibold text-gray-900">{nextPage.data.title}</h3>
+          <p class="text-sm text-gray-500 mt-1">{nextPage.data.description}</p>
+        </div>
+      </a>
+    )
+  }
+</div>

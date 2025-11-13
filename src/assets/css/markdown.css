@@ -225,7 +225,7 @@ h6 {
   thead {
     border: 1px solid var(--color-border-tab);
     border-radius: 0.5rem !important;
-    background-color: var(--muted);
+    background-color: var(--tab-container);
   }
 
   thead th {

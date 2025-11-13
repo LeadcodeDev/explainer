@@ -1,5 +1,6 @@
-import type { getCollection, getEntry } from "astro:content";
+import type { getCollection, getEntry, z } from "astro:content";
 import { clsx, type ClassValue } from "clsx";
+import type { docSchema } from "src/content.config";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -96,6 +97,46 @@ export function useDocumentation(astro: {
     );
   }
 
+  async function getPages() {
+    const { getCollection, getEntry } = astro;
+    const defaults = await getCollection("docDefaults");
+
+    const pages = [];
+
+    for (const entry of defaults) {
+      let children = await Promise.all(
+        entry.data.collection.flatMap(async (child) => {
+          const [filename, visible] = Object.entries(child)[0];
+          const element = await getEntry(
+            entry.data.directory as any,
+            filename as any,
+          );
+
+          if (!element) {
+            console.error(`Element not found: ${filename}`);
+            return null;
+          }
+
+          return {
+            ...element,
+            visible,
+            href: `/docs/${entry.data.permalink}/${(element as any).data.permalink}`,
+          };
+        }),
+      );
+
+      pages.push(
+        ...children.sort(
+          (a, b) =>
+            (a!.data as z.infer<typeof docSchema>).order -
+            (b!.data as z.infer<typeof docSchema>).order,
+        ),
+      );
+    }
+
+    return pages;
+  }
+
   async function generateStaticPaths() {
     const derived = await load();
     return derived.flatMap((element) =>
@@ -114,5 +155,6 @@ export function useDocumentation(astro: {
   return {
     load,
     generateStaticPaths,
+    getPages,
   };
 }

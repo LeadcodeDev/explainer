@@ -1,0 +1,105 @@
+---
+import { Badge } from "@/components/ui/badge";
+import { getCollection } from "astro:content";
+import config from "explainer.config";
+
+type Props = {
+  perLine: 1 | 2 | 3 | 4;
+  current?: string;
+};
+
+const { perLine, current } = Astro.props;
+
+const posts = await getCollection("blog", (post) => {
+  if (import.meta.env.DEV) {
+    return true;
+  }
+
+  return post.data.publishedAt && new Date(post.data.publishedAt) <= new Date();
+});
+
+const itemPerLine = {
+  1: "lg:grid-cols-1",
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+};
+---
+
+<div
+  class:list={[
+    "no-prose grid grid-cols-1 md:grid-cols-3 py-10",
+    itemPerLine[perLine ?? 4],
+  ]}
+>
+  {
+    posts
+      .filter((post) => post.id !== current)
+      .map((post) => (
+        <a
+          href={`/blog/${post.data.permalink}`}
+          class="col-span-1 relative flex flex-col gap-2 border border-border bg-background transition-colors duration-200 rounded-lg p-4"
+        >
+          {import.meta.env.DEV && !post.data.publishedAt && (
+            <div class="absolute z-50 top-1 right-2">
+              <Badge variant="outline">Invisible in production mode</Badge>
+            </div>
+          )}
+          <div class="overflow-hidden rounded-lg">
+            <img
+              src={post.data?.thumbnail ?? config.blog.defaults.thumbnail}
+              alt={post.data.title}
+              class="w-full h-48 object-cover rounded-lg"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2 pt-2">
+            <h3 class="text-lg font-semibold">{post.data.title}</h3>
+            <p class="text-sm text-muted-foreground">{post.data.description}</p>
+
+            <div class="pt-2">
+              {post.data.authors && post.data.authors.length > 1 && (
+                <div class="flex -space-x-1 overflow-hidden">
+                  {post.data.authors?.map((author) => {
+                    const authorData = config.blog.authors[author];
+                    return (
+                      <img
+                        alt={authorData.name}
+                        src={authorData.avatar}
+                        class="inline-block size-6 rounded-full ring-2 ring-white"
+                      />
+                    );
+                  })}
+                </div>
+              )}
+
+              {post.data.authors && post.data.authors.length === 1 && (
+                <div
+                  data-orientation="horizontal"
+                  class="relative flex items-center gap-2"
+                >
+                  <span class="inline-flex items-center justify-center select-none overflow-hidden rounded-full align-middle size-8 text-base shrink-0 transform transition-transform duration-200">
+                    <img
+                      width="32"
+                      height="32"
+                      alt={post.data.authors[0]}
+                      class="h-full w-full rounded-[inherit] object-cover"
+                      src={config.blog.authors[post.data.authors[0]].avatar}
+                    />
+                  </span>
+                  <div>
+                    <p class="font-medium text-sm">
+                      {config.blog.authors[post.data.authors[0]].name}
+                    </p>
+                    <p class="text-muted-foreground transition-colors text-xs">
+                      @{post.data.authors[0]}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </a>
+      ))
+  }
+</div>
