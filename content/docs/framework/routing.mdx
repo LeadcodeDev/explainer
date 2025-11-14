@@ -1,0 +1,58 @@
+---
+title: Routing
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: routing
+icon: lucide:signpost
+---
+
+# File based routing
+
+Routing is an important part of any content-driven website, allowing you to create dynamic or static pages for your site.
+
+> [!important]
+> The `blog` and `docs` folders are special collections; they should be considered separate from routing.
+
+---
+
+## Routing Basics
+
+All of your routes must be defined within the `content/` folder.
+
+> [!note]
+> Each file representing a new page must be written in markdown format `md` or `mdx`.
+
+Let us consider the desire to create a new `/about` page within our site, we should create an `about` markdown file in the `content/` folder.
+
+:::codegroup labels=[about.mdx]
+
+```
+https://{hostname}/about
+
+├── content/
+│ └── about.mdx
+```
+
+:::
+
+---
+
+## Nested Routes
+
+It is possible to create nested routes by creating a folder with the same name as the route in the `content/` folder.
+In this example we will create two nested routes `/about` and `/hello/world`.
+
+:::codegroup labels=[about.mdx, world.mdx]
+
+```
+├── content/
+│   └── about/
+│      └── index.mdx
+```
+
+```
+├── content/
+│   └── hello/
+│      └── world.mdx
+```
+
+:::

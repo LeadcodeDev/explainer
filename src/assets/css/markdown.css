@@ -84,6 +84,7 @@ h6 {
     position: relative;
     counter-increment: list-counter;
     padding-left: 1.75em;
+    padding-top: 0.15em;
   }
 
   ol > li::before {
@@ -331,7 +332,7 @@ html.dark .prose > .astro-code {
 .prose li code {
   border: 1px solid var(--color-border-tab);
   border-radius: 0.25rem;
-  padding: 0.3rem 0.3rem;
+  padding: 0.15rem 0.3rem;
   background: color-mix(in srgb, var(--background) 30%, transparent);
 
   &::before,

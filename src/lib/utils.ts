@@ -1,6 +1,5 @@
-import type { getCollection, getEntry, z } from "astro:content";
+import type { getCollection, getEntry } from "astro:content";
 import { clsx, type ClassValue } from "clsx";
-import type { docSchema } from "src/content.config";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -125,13 +124,7 @@ export function useDocumentation(astro: {
         }),
       );
 
-      pages.push(
-        ...children.sort(
-          (a, b) =>
-            (a!.data as z.infer<typeof docSchema>).order -
-            (b!.data as z.infer<typeof docSchema>).order,
-        ),
-      );
+      pages.push(...children);
     }
 
     return pages;

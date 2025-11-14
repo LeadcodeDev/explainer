@@ -20,10 +20,17 @@ interface Props {
 
 export async function getStaticPaths() {
   const contents = await getCollection("blog");
-  return contents.map((item) => ({
-    params: { slug: item.data.permalink, publishedAt: item.data.publishedAt },
-    props: { element: item },
-  }));
+  return contents
+    .filter((item) => item.id !== "index")
+    .map((item) => {
+      return {
+        params: {
+          slug: item.data.permalink,
+          publishedAt: item.data.publishedAt,
+        },
+        props: { element: item },
+      };
+    });
 }
 
 const { element } = Astro.props;
@@ -175,46 +182,58 @@ const headingTree = buildHeadingTree(availableHeadings);
           />
         </div>
 
-        <BlogListWrapper perLine={3} current={element.id} />
-      </div>
-      <aside class="hidden xl:block">
-        <div
-          class="sticky top-14 p-4 w-64 overflow-y-auto h-[calc(100vh-4rem)]"
-        >
-          <p
-            class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex"
-          >
-            <span class="truncate">On this page</span>
-          </p>
+        <div class="pt-20">
+          <div class="flex flex-col gap-5">
+            <h2 class="text-4xl sm:text-4xl text-pretty font-medium">
+              Find our recent articles
+            </h2>
+            <div class="max-w-2xl text-muted-foreground">
+              To make sure you don't miss a thing, check out our latest articles
+              and analyses below. Stay up to date with the latest trends and
+              news.
+            </div>
+          </div>
 
-          <ul class="min-w-0 ms-2.5 ps-4 border-s border-gray-300">
-            {
-              headingTree.map((heading) => (
-                <li>
-                  <a
-                    href={`#${heading.slug}`}
-                    class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {heading.text}
-                  </a>
-                  <ul class="ms-3">
-                    {heading.children.map((child) => (
-                      <li class="min-w-0 -ms-px">
-                        <a
-                          href={`#${child.slug}`}
-                          class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          <span class="truncate">{child.text}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))
-            }
-          </ul>
+          <BlogListWrapper perLine={3} current={element.id} />
         </div>
-      </aside>
+      </div>
+
+      {
+        headingTree.length ? (
+          <aside class="hidden xl:block">
+            <div class="sticky top-14 p-4 w-64 overflow-y-auto h-[calc(100vh-4rem)]">
+              <p class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex">
+                <span class="truncate">On this page</span>
+              </p>
+
+              <ul class="min-w-0 ms-2.5 ps-4 border-s border-gray-300">
+                {headingTree.map((heading) => (
+                  <li>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {heading.text}
+                    </a>
+                    <ul class="ms-3">
+                      {heading.children.map((child) => (
+                        <li class="min-w-0 -ms-px">
+                          <a
+                            href={`#${child.slug}`}
+                            class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            <span class="truncate">{child.text}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        ) : null
+      }
     </div>
   </div>
 </BlogLayout>

@@ -26,10 +26,18 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
 >
   {
     previousPage && (
-      <a href={previousPage.href} class:list={[container]}>
+      <a
+        href={previousPage.href}
+        class:list={[container]}
+        class="group hover:bg-secondary"
+      >
         <div class="flex items-center justify-between">
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 border">
-            <Icon client:load icon={previousPage.data.icon} />
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-secondary border group-hover:bg-primary/10 group-hover:border-primary/60 duration-150">
+            <Icon
+              client:load
+              icon={previousPage.data.icon}
+              className="group-hover:text-primary duration-150"
+            />
           </div>
         </div>
         <div class="mt-4">
@@ -44,10 +52,18 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
 
   {
     nextPage && (
-      <a href={nextPage.href} class:list={[container]}>
+      <a
+        href={nextPage.href}
+        class:list={[container]}
+        class="group hover:bg-secondary"
+      >
         <div class="flex items-center justify-end">
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 border">
-            <Icon client:load icon={nextPage.data.icon} />
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-secondary border group-hover:bg-primary/10 group-hover:border-primary/60 duration-150">
+            <Icon
+              client:load
+              icon={nextPage.data.icon}
+              className="group-hover:text-primary duration-150"
+            />
           </div>
         </div>
         <div class="mt-4 text-right">

@@ -10,14 +10,17 @@ type Props = {
 
 const { perLine, current } = Astro.props;
 
-const posts = await getCollection("blog", (post) => {
-  if (import.meta.env.DEV) {
-    return true;
-  }
+const contents = await getCollection("blog");
+const posts = contents
+  .filter((item) => item.id !== "index")
+  .filter(
+    (item) =>
+      import.meta.env.DEV ||
+      (item.data.publishedAt && new Date(item.data.publishedAt) <= new Date()),
+  )
+  .reverse();
 
-  return post.data.publishedAt && new Date(post.data.publishedAt) <= new Date();
-});
-
+console.log(posts);
 const itemPerLine = {
   1: "lg:grid-cols-1",
   2: "lg:grid-cols-2",
@@ -28,7 +31,7 @@ const itemPerLine = {
 
 <div
   class:list={[
-    "no-prose grid grid-cols-1 md:grid-cols-3 py-10",
+    "no-prose grid grid-cols-1 md:grid-cols-3 gap-5 py-10",
     itemPerLine[perLine ?? 4],
   ]}
 >

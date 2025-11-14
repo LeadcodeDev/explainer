@@ -135,46 +135,47 @@ function pascalCase(str: string) {
           </div>
           <div class="border-default w-full border-solid border-t"></div>
         </div>
+
         <DocNavigationWrapper />
       </div>
 
       {/* Table of contents */}
-      <aside class="hidden xl:block w-64">
-        <div class="fixed top-14 p-4 overflow-y-auto h-[calc(100vh-4rem)]">
-          <p
-            class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex"
-          >
-            <span class="truncate">On this page</span>
-          </p>
+      {
+        headingTree.length ? (
+          <aside class="hidden xl:block w-64">
+            <div class="fixed top-14 p-4 overflow-y-auto h-[calc(100vh-4rem)]">
+              <p class="group text-sm font-semibold flex-1 items-center gap-1.5 py-1.5 -mt-1.5 focus-visible:outline-primary hidden lg:flex">
+                <span class="truncate">On this page</span>
+              </p>
 
-          <ul class="min-w-0 ms-2.5 ps-4 border-s border-gray-300">
-            {
-              headingTree.map((heading) => (
-                <li>
-                  <a
-                    href={`#${heading.slug}`}
-                    class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {heading.text}
-                  </a>
-                  <ul class="ms-3">
-                    {heading.children.map((child) => (
-                      <li class="min-w-0 -ms-px">
-                        <a
-                          href={`#${child.slug}`}
-                          class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          <span class="truncate">{child.text}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </aside>
+              <ul class="min-w-0 ms-2.5 ps-4 border-s border-gray-300">
+                {headingTree.map((heading) => (
+                  <li>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {heading.text}
+                    </a>
+                    <ul class="ms-3">
+                      {heading.children.map((child) => (
+                        <li class="min-w-0 -ms-px">
+                          <a
+                            href={`#${child.slug}`}
+                            class="group relative text-sm flex items-center focus-visible:outline-primary py-1 text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            <span class="truncate">{child.text}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        ) : null
+      }
     </div>
   </div>
 </DocsLayout>

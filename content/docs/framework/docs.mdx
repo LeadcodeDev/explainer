@@ -3,73 +3,105 @@ title: Documentation
 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 permalink: docs
 icon: lucide:book
-order: 5
 ---
-
-import config from "explainer.config";
 
 # Documentation
 
-The documentation section allows you to create and manage your documentation.
+Product documentation plays a fundamental role by serving as a comprehensive guide for users.
 
-> [!important]
-> A collection is a grouping of pages; it can represent a section or a complete documentation.
+Its main purpose is to enable quick and efficient familiarisation, detail features for optimal everyday use, and provide clear solutions for troubleshooting common issues.
 
-## Create new collection
+---
 
-To create a new collection, you need to create a new folder in the `content/docs` folder.
+## Folder Structure
 
-First you need to declare a new collection.
+To organise the documentation, each section or complete documentation must be contained in its own folder. This folder must include a `_default.md` file that acts as the entry point or definition of the section.
 
-#### In the `src/content.config.ts` file
+### Configuration
 
-```ts
-const foo = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/docs/foo" }),
-  schema: docSchema,
-});
+Each documentation folder must contain a configuration file named `_default.md`. This file defines the metadata for the section, and its front matter must follow the following structure :
 
-export const collections = { foo };
+:::codegroup labels=[Tree]
+
+```
+├── content/
+│  ├── [...page]
+│  └── docs/
+│     └── my_doc/
+│        ├── _default.mdx 👈 Configuration file
+│        ├── first_file.mdx
+│        └── second_file.mdx
 ```
 
-#### In the `explainer.config.ts` file
+:::
 
-```ts
-export default defineExplainerConfig({
-  docs: {
-    foo: {
-      // [!code ++]
-      icon: "lucide:cuboid", // [!code ++]
-      label: "Foo", // [!code ++]
-      href: "/docs/foo/getting-started", // [!code ++]
-      baseUrl: "/docs/foo", // [!code ++]
-    },
-  },
-});
-```
+The configuration file is structured in the form of standardised `frontmatter`, which allows various information to be defined.
 
-> [!SUCCESS]
-> The `foo` collection is now available in the `docs` section. 🚀
-
-## Create new page
-
-To create a new page, you need to create a new file in the `content/docs/foo` directory.
-
-Then you need to add the following frontmatter :
+:::codegroup labels=[_example.mdx, Collection]
 
 ```mdx
 ---
-title: Page title
-description: Page description
-permalink: page-slug
-icon: lucide:book
+label: My documentation
+directory: my_doc
+description: My doc description
+permalink: my-doc
+icon: lucide:cuboid
+collection:
+  - first_file: true
+  - second_file: false
 ---
-
-Your content here...
 ```
 
-> [!NOTE]
-> The `icon` property is rendering from [`Iconify`](https://iconify.design) icons.
+```ts
+export const docDefaultSchema = z.object({
+  label: z.string(),
+  description: z.string(),
+  permalink: z.string(),
+  icon: z.string().optional(),
+  directory: z.string(),
+  collection: z.array(z.any()),
+});
+```
 
-> [!SUCCESS]
-> Your page is automatically added to the `foo` collection.
+:::
+
+| Property              | Description                                             |
+| --------------------- | ------------------------------------------------------- |
+| `label`               | Display collection name                                 |
+| `description`         | Description of your collection                          |
+| `permalink`           | Collection url                                          |
+| `icon`                | Icon Using `iconify` library                            |
+| `directory`           | Directory name inside `docs/`                           |
+| `collection`          | Collection items, used to define order                  |
+| `collection[n].key`   | Documentation filename inside directory                 |
+| `collection[n].value` | Hide or show this documentation page inside navbar menu |
+
+---
+
+### Writing content
+
+The other Markdown files (`.md` or `.mdx`) in the same folder represent the individual pages of the documentation. The front matter of each of these files must comply with the following schema :
+
+:::codegroup labels=[first_file.mdx, Collection]
+
+```mdx
+---
+title: First file
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: first-file
+icon: lucide:file
+---
+```
+
+```typescript
+export const docSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  permalink: z.string().optional(),
+  icon: z.string().optional(),
+});
+```
+
+:::
+
+Your file `first_file.md` will be accessible via [`http://localhost:4321/docs/my-doc/first-file`](http://localhost:4321/docs/my-doc/first-file)

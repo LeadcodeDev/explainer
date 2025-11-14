@@ -13,9 +13,6 @@
         "permalink": {
           "type": "string"
         },
-        "order": {
-          "type": "number"
-        },
         "icon": {
           "type": "string"
         },
@@ -25,8 +22,7 @@
       },
       "required": [
         "title",
-        "description",
-        "order"
+        "description"
       ],
       "additionalProperties": false
     }

@@ -7,7 +7,6 @@ export const docSchema = z.object({
   title: z.string(),
   description: z.string(),
   permalink: z.string().optional(),
-  order: z.number(),
   icon: z.string().optional(),
 });
 
@@ -30,16 +29,10 @@ export const docDefaults = defineCollection({
 
 const pages = defineCollection({
   loader: glob({
-    pattern: [
-      "**/*.{md,mdx}", // inclut tout
-      "!blog/**/*", // exclut blog/
-      "!docs/**/*", // exclut docs/
-    ],
+    pattern: ["**/*.{md,mdx}", "blog/index.{md,mdx}", "!docs/**/*"],
     base: "./content",
   }),
-  schema: z.object({
-    layout: z.string().optional(),
-  }),
+  schema: z.object({}),
 });
 
 const directories = readdirSync(join(process.cwd(), "content/docs"));
@@ -59,7 +52,10 @@ const documentations = {
 };
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./content/blog" }),
+  loader: glob({
+    pattern: ["**/*.{md,mdx}", "!blog/index.{md,mdx}"],
+    base: "./content/blog",
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
