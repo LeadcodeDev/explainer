@@ -99,6 +99,7 @@ export const docSchema = z.object({
   description: z.string(),
   permalink: z.string().optional(),
   icon: z.string().optional(),
+  navbar: z.boolean().default(false),
 });
 ```
 
