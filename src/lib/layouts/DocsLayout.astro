@@ -21,19 +21,13 @@ const currentCollection = derived.find((element) => {
   );
 });
 
-const currentCollectionItems = currentCollection?.collection
-  ?.sort(
-    (a, b) =>
-      (a!.data as z.infer<typeof docSchema>).order -
-      (b!.data as z.infer<typeof docSchema>).order,
-  )
-  .map((item) => {
-    return {
-      label: (item as any).data?.title,
-      href: `/docs/${(item as any).collection}/${(item as any).data.permalink}`,
-      icon: ((item as any).data as z.infer<typeof docSchema>).icon,
-    };
-  });
+const currentCollectionItems = currentCollection?.collection.map((item) => {
+  return {
+    label: (item as any).data?.title,
+    href: `/docs/${(item as any).collection}/${(item as any).data.permalink}`,
+    icon: ((item as any).data as z.infer<typeof docSchema>).icon,
+  };
+});
 ---
 
 <BaseLayout>

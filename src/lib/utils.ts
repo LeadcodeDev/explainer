@@ -69,30 +69,32 @@ export function useDocumentation(astro: {
     const defaults = await getCollection("docDefaults");
 
     return Promise.all(
-      defaults.map(async (entry) => {
-        let children = await Promise.all(
-          entry.data.collection.map(async (child) => {
-            const [filename, visible] = Object.entries(child)[0];
-            const element = await getEntry(
-              entry.data.directory as any,
-              filename as any,
-            );
+      defaults
+        .filter((entry) => entry.data.navbar)
+        .map(async (entry) => {
+          let children = await Promise.all(
+            entry.data.collection.map(async (child) => {
+              const [filename, visible] = Object.entries(child)[0];
+              const element = await getEntry(
+                entry.data.directory as any,
+                filename as any,
+              );
 
-            if (!element) {
-              console.error(`Element not found: ${filename}`);
-              return null;
-            }
+              if (!element) {
+                console.error(`Element not found: ${filename}`);
+                return null;
+              }
 
-            return {
-              ...element,
-              visible,
-              href: `/docs/${entry.data.permalink}/${(element as any).data.permalink}`,
-            };
-          }),
-        );
+              return {
+                ...element,
+                visible,
+                href: `/docs/${entry.data.permalink}/${(element as any).data.permalink}`,
+              };
+            }),
+          );
 
-        return { ...entry.data, collection: children };
-      }),
+          return { ...entry.data, collection: children };
+        }),
     );
   }
 

@@ -22,6 +22,10 @@
         "collection": {
           "type": "array"
         },
+        "navbar": {
+          "type": "boolean",
+          "default": false
+        },
         "$schema": {
           "type": "string"
         }

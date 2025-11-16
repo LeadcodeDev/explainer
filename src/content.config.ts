@@ -17,6 +17,7 @@ export const docDefaultSchema = z.object({
   icon: z.string().optional(),
   directory: z.string(),
   collection: z.array(z.any()),
+  navbar: z.boolean().default(false),
 });
 
 export const docDefaults = defineCollection({

@@ -11,7 +11,6 @@ const rehypeBlogListReact = () => {
         node.children[0].type === "text" &&
         node.children[0].value === ":::blog-list"
       ) {
-        console.log(node);
         node.tagName = "BlogListWrapper";
 
         node.properties = {
