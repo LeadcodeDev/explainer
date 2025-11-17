@@ -37,6 +37,7 @@ const itemPerLine = {
   {
     posts
       .filter((post) => post.id !== current)
+      .reverse()
       .map((post) => (
         <a
           href={`/blog/${post.data.permalink}`}
