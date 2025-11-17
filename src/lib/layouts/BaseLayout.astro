@@ -55,7 +55,12 @@ const derivedDocs = await load();
   </head>
   <body class="relative min-h-screen">
     <div class="min-h-screen flex flex-col">
-      <Navbar docs={derivedDocs} client:only />
+      <Navbar
+        docs={derivedDocs.filter((entry) =>
+          entry.visibility.includes("navbar"),
+        )}
+        client:only
+      />
       <slot />
       <Footer client:only />
     </div>

@@ -90,6 +90,8 @@ title: First file
 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 permalink: first-file
 icon: lucide:file
+visibility:
+  - navbar
 ---
 ```
 
@@ -99,7 +101,7 @@ export const docSchema = z.object({
   description: z.string(),
   permalink: z.string().optional(),
   icon: z.string().optional(),
-  navbar: z.boolean().default(false),
+  visibility: z.array(z.enum(["navbar"])).default([]),
 });
 ```
 

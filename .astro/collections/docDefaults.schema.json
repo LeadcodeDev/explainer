@@ -22,9 +22,15 @@
         "collection": {
           "type": "array"
         },
-        "navbar": {
-          "type": "boolean",
-          "default": false
+        "visibility": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "navbar"
+            ]
+          },
+          "default": []
         },
         "$schema": {
           "type": "string"
