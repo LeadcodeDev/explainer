@@ -28,6 +28,22 @@ export const docDefaults = defineCollection({
   schema: docDefaultSchema,
 });
 
+export const deepDocDefaults = defineCollection({
+  loader: glob({
+    pattern: "**/*_default.{md,mdx}",
+    base: "./content/docs",
+  }),
+  schema: docDefaultSchema,
+});
+
+export const docs = defineCollection({
+  loader: glob({
+    pattern: "**/[^_]*.{md,mdx}",
+    base: "./content/docs",
+  }),
+  schema: docSchema,
+});
+
 const pages = defineCollection({
   loader: glob({
     pattern: ["**/*.{md,mdx}", "blog/index.{md,mdx}", "!docs/**/*"],
@@ -43,6 +59,7 @@ const documentations = {
       ...acc,
       [directory]: defineCollection({
         loader: glob({
+          // pattern: "**/[^_]*.{md,mdx}",
           pattern: "**/[^_]*.{md,mdx}",
           base: `./content/docs/${directory}`,
         }),
@@ -67,4 +84,11 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { pages, docDefaults, blog, ...documentations };
+export const collections = {
+  pages,
+  docDefaults,
+  deepDocDefaults,
+  docs,
+  blog,
+  ...documentations,
+};

@@ -7,7 +7,7 @@
   --color-warning: rgba(187, 142, 5, 0.75);
   --bg-diff-remove: rgba(244, 63, 94, 0.2);
   --bg-diff-add: rgba(16, 185, 129, 0.2);
-  --bg-highlight: rgba(0, 51, 90, 0.1);
+  --bg-highlight: var(--background);
   --callout-success: #00c16a;
   --callout-success-bg: oklab(0.97 -0.07 0.07 / 0.4);
   --callout-success-border: #00c16a;
@@ -28,7 +28,7 @@
 }
 
 .dark {
-  --bg-highlight: rgb(29, 44, 61);
+  --bg-highlight: var(--background);
   --color-warning: rgba(255, 193, 7, 0.75);
   --bg-tab-item: oklch(0.208 0.042 265.755);
   --color-border-tab: oklch(0.372 0.044 257.287);

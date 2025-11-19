@@ -1,32 +1,23 @@
 ---
 import Separator from "@/components/elements/separator";
 import { Icon } from "@iconify/react";
-import type { CollectionKey, z } from "astro:content";
-import { getCollection, getEntry } from "astro:content";
 import clsx from "clsx";
-import type { docSchema } from "src/content.config";
-import config from "../../../explainer.config";
 import "../../assets/css/global.css";
 import "../../assets/css/markdown.css";
 import BaseLayout from "./BaseLayout.astro";
 import { useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
+import Collapsible from "@/components/elements/collapsible";
 
-const { load } = useDocumentation(astroContent);
-const derived = await load();
+const { load, flattenDocs } = useDocumentation(astroContent);
+const documentations = await load();
 
-const currentCollection = derived.find((element) => {
-  return element.collection.find((item) =>
-    Astro.url.pathname.startsWith((item as any).href),
-  );
-});
-
-const currentCollectionItems = currentCollection?.collection.map((item) => {
-  return {
-    label: (item as any).data?.title,
-    href: `/docs/${(item as any).collection}/${(item as any).data.permalink}`,
-    icon: ((item as any).data as z.infer<typeof docSchema>).icon,
-  };
+const currentCollection = documentations.find((element) => {
+  const pages = flattenDocs(element.children);
+  return pages.find((item) => {
+    const a = `/docs/${item.id}`;
+    return Astro.url.pathname.startsWith(a);
+  });
 });
 ---
 
@@ -37,91 +28,69 @@ const currentCollectionItems = currentCollection?.collection.map((item) => {
       <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
         <aside class="hidden lg:block lg:col-span-2 pr-2">
           <div
-            class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)]"
+            class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)] w-[225px]"
           >
-            <nav>
-              <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0">
-                {
-                  derived.map((element) => (
-                    <a
-                      class="flex items-center gap-2 group text-primary font-medium"
-                      href={element?.collection?.[0]?.href}
-                    >
-                      <div
-                        class={clsx(
-                          "rounded-sm p-1 inline-flex ring-inset ring-1",
-                          Astro.url.pathname.startsWith(
-                            `/docs/${element.permalink}`,
-                          )
-                            ? "bg-primary ring-primary text-white"
-                            : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
-                        )}
+            {
+              documentations.length > 0 && (
+                <Fragment>
+                  <nav class="flex flex-col gap-2 px-2.5">
+                    {documentations.map((element) => (
+                      <a
+                        class="flex items-center gap-2 group text-primary font-medium"
+                        href={element.children[0].href}
                       >
-                        {element.icon && (
-                          <Icon
-                            client:only
-                            icon={element.icon}
-                            className="size-4"
-                          />
-                        )}
-                      </div>
-                      <span
-                        class={clsx(
-                          "text-sm relative",
-                          Astro.url.pathname.startsWith(
-                            `/docs/${element.permalink}`,
-                          )
-                            ? "text-primary"
-                            : "text-muted-foreground",
-                        )}
-                      >
-                        {element.label}
-                      </span>
-                    </a>
-                  ))
-                }
-              </div>
-            </nav>
-
-            <hr
-              class="my-5 border-dashed border-gray-200 dark:border-gray-700"
-            />
-
-            <div class="space-y-1">
-              {
-                currentCollectionItems?.map((item) => (
-                  <a
-                    href={item.href}
-                    class="group block py-1.5 px-1.5 text-sm rounded-md transition-colors hover:text-primary"
-                  >
-                    <div class="flex items-center gap-2">
-                      {item.icon ? (
-                        <Icon
-                          client:only
-                          icon={item.icon}
-                          className={clsx(
-                            "text-gray-500 dark:text-gray-400 group-hover:text-primary size-5",
-                            Astro.url.pathname.startsWith(item.href)
-                              ? "text-primary"
-                              : "text-muted-foreground",
+                        <div
+                          class={clsx(
+                            "rounded-sm p-1 inline-flex ring-inset ring-1",
+                            // Astro.url.pathname.startsWith(
+                            //   `${element.children[0].href}`,
+                            // )
+                            //   ? "bg-primary ring-primary text-white"
+                            //   : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
                           )}
-                        />
-                      ) : (
-                        <div class="size-5" />
-                      )}
-                      <span
-                        class={clsx(
-                          "text-sm group-hover:text-primary",
-                          Astro.url.pathname.startsWith(item.href)
-                            ? "text-primary"
-                            : "text-muted-foreground",
-                        )}
-                      >
-                        {item.label}
-                      </span>
-                    </div>
-                  </a>
-                ))
+                        >
+                          {element.data.icon && (
+                            <Icon
+                              client:only
+                              icon={element.data.icon}
+                              className="size-4"
+                            />
+                          )}
+                        </div>
+                        <span
+                          class={clsx(
+                            "text-sm relative",
+                            // Astro.url.pathname.startsWith(
+                            //   `${element.children[0].href}`,
+                            // )
+                            //   ? "text-primary"
+                            //   : "text-muted-foreground",
+                          )}
+                        >
+                          {element.data.label}
+                        </span>
+                      </a>
+                    ))}
+                  </nav>
+
+                  <hr class="my-5 border-dashed border-gray-200 dark:border-gray-700" />
+                </Fragment>
+              )
+            }
+
+            <div
+              class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
+            >
+              {
+                currentCollection.children.map((children) => {
+                  return (
+                    <Collapsible
+                      client:load
+                      currentPathname={Astro.url.pathname}
+                      item={children}
+                    />
+                  );
+                })
               }
             </div>
           </div>
@@ -154,8 +123,8 @@ const currentCollectionItems = currentCollection?.collection.map((item) => {
               <div class="sm:px-0 py-5 overflow-y-auto">
                 <nav>
                   <div class="space-y-3 mb-3 lg:mb-6 lg:mx-0">
-                    {
-                      derived?.map((element) => (
+                    <!-- {
+                      documentations?.map((element) => (
                         <a
                           class="flex items-center gap-2 group text-primary font-medium"
                           href={element?.collection?.[0]?.href}
@@ -164,79 +133,42 @@ const currentCollectionItems = currentCollection?.collection.map((item) => {
                             class={clsx(
                               "rounded-sm p-1 inline-flex ring-inset ring-1",
                               Astro.url.pathname.startsWith(
-                                `/docs/${element.permalink}`,
+                                `${element.children[0].href}`,
                               )
                                 ? "bg-primary ring-primary text-white"
                                 : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
                             )}
                           >
-                            {element.icon && (
+                            {element.data.icon && (
                               <Icon
                                 client:only
-                                icon={element.icon}
+                                icon={element.data.icon}
                                 className="size-4"
                               />
                             )}
                           </div>
+                          {element?.collection?.[0]?.href}
                           <span
                             class={clsx(
                               "text-sm relative",
                               Astro.url.pathname.startsWith(
-                                `/docs/${element.permalink}`,
+                                `${element.children[0].href}`,
                               )
                                 ? "text-primary"
                                 : "text-muted-foreground",
                             )}
                           >
-                            {element.label}
+                            {element.data.label}
                           </span>
                         </a>
                       ))
-                    }
+                    } -->
                   </div>
                 </nav>
 
                 <hr
                   class="my-5 border-dashed border-gray-200 dark:border-gray-700"
                 />
-
-                <div class="space-y-1">
-                  {
-                    currentCollectionItems?.map((item) => (
-                      <a
-                        href={item.href}
-                        class="group block py-1.5 px-1.5 text-sm rounded-md transition-colors hover:text-primary"
-                      >
-                        <div class="flex items-center gap-2">
-                          {item.icon ? (
-                            <Icon
-                              client:only
-                              icon={item.icon}
-                              className={clsx(
-                                "text-gray-500 dark:text-gray-400 group-hover:text-primary size-5",
-                                Astro.url.pathname.startsWith(item.href)
-                                  ? "text-primary"
-                                  : "text-muted-foreground",
-                              )}
-                            />
-                          ) : (
-                            <div class="size-5" />
-                          )}
-                          <span
-                            class={clsx(
-                              "text-sm group-hover:text-primary",
-                              Astro.url.pathname.startsWith(item.href)
-                                ? "text-primary"
-                                : "text-muted-foreground",
-                            )}
-                          >
-                            {item.label}
-                          </span>
-                        </div>
-                      </a>
-                    ))
-                  }
-                </div>
               </div>
             </div>
           </details>

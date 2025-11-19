@@ -63,6 +63,11 @@ type NavbarProps = {
 };
 
 export default function Navbar(props: NavbarProps) {
+  const docs = props.docs.flatMap((element) => {
+    let children = element.children.flatMap((element: any) => element.children);
+    return { ...element, collection: children };
+  });
+
   return (
     <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/70 backdrop-blur-sm">
       <div className="max-w-[var(--container-width)] mx-auto flex items-center justify-between">
@@ -81,7 +86,7 @@ export default function Navbar(props: NavbarProps) {
           <div className="flex gap-3">
             <NavigationMenu>
               <NavigationMenuList>
-                {props.docs.map((element, index) => (
+                {docs.map((element, index) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuTrigger className="flex items-center">
                       <Icon icon={element.icon} className="size-4 mr-2" />
@@ -89,8 +94,8 @@ export default function Navbar(props: NavbarProps) {
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                        {element.collection
-                          .filter((item: any) => item.visible)
+                        {element.children
+                          // .filter((item: any) => item.visible)
                           .map((item: any) => (
                             <ListItem
                               key={item.id}
@@ -189,7 +194,7 @@ export default function Navbar(props: NavbarProps) {
                   })}
 
                   <div className="flex flex-col gap-6 pt-5">
-                    {props.docs.map((element, index) => (
+                    {docs.map((element, index) => (
                       <div key={index}>
                         <div className="flex items-center font-medium">
                           <Icon icon={element.icon} className="size-4 mr-2" />
@@ -197,8 +202,8 @@ export default function Navbar(props: NavbarProps) {
                         </div>
                         <div>
                           <ul className="grid w-[400px] gap-2 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                            {element.collection
-                              .filter((item: any) => item.visible)
+                            {element.children
+                              // .filter((item: any) => item.visible)
                               .map((item: any) => (
                                 <a
                                   key={item.id}

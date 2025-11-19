@@ -21,11 +21,12 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  const { generateStaticPaths } = useDocumentation(astroContent);
+  const { generateStaticPaths, load } = useDocumentation(astroContent);
   return generateStaticPaths();
 }
 
 const { element } = Astro.props;
+
 const { Content, headings } = await render(element);
 
 const issueUrl = config.repository + "/issues/new";

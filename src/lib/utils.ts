@@ -13,12 +13,6 @@ export type HeadingNode = {
   children: HeadingNode[];
 };
 
-type NavbarItem = {
-  label: string;
-  description: string;
-  href: string;
-};
-
 type ExplainerConfig = {
   repository?: string;
   projectName: string;
@@ -64,90 +58,116 @@ export function useDocumentation(astro: {
   getCollection: typeof getCollection;
   getEntry: typeof getEntry;
 }) {
-  async function load() {
-    const { getCollection, getEntry } = astro;
-    const defaults = await getCollection("docDefaults");
+  async function buildTree(root: string) {
+    const { join } = await import("node:path");
+    const { readdir, stat } = await import("node:fs/promises");
+    let obj: { children: any[] } = { children: [] };
 
-    return Promise.all(
-      defaults.map(async (entry) => {
-        let children = await Promise.all(
-          entry.data.collection.map(async (child) => {
-            const [filename, visible] = Object.entries(child)[0];
-            const element = await getEntry(
-              entry.data.directory as any,
-              filename as any,
-            );
+    const elements = await readdir(root);
+    for (const element of elements) {
+      const currentElementPath = join(root, element);
+      const elementStat = await stat(currentElementPath);
 
-            if (!element) {
-              console.error(`Element not found: ${filename}`);
-              return null;
-            }
+      if (elementStat.isDirectory()) {
+        const currentObj = await buildTree(join(root, element));
+        obj.children.push(currentObj);
+      }
 
-            return {
-              ...element,
-              visible,
-              href: `/docs/${entry.data.permalink}/${(element as any).data.permalink}`,
-            };
-          }),
-        );
-
-        return { ...entry.data, collection: children };
-      }),
-    );
-  }
-
-  async function getPages() {
-    const { getCollection, getEntry } = astro;
-    const defaults = await getCollection("docDefaults");
-
-    const pages = [];
-
-    for (const entry of defaults) {
-      let children = await Promise.all(
-        entry.data.collection.flatMap(async (child) => {
-          const [filename, visible] = Object.entries(child)[0];
-          const element = await getEntry(
-            entry.data.directory as any,
-            filename as any,
+      if (elementStat.isFile()) {
+        if (element.startsWith("_default")) {
+          const [_, location] = root.split("/docs/");
+          const astroElement = await astro.getEntry(
+            "deepDocDefaults",
+            join(location, "_default"),
           );
 
-          if (!element) {
-            console.error(`Element not found: ${filename}`);
-            return null;
-          }
+          obj = { ...astroElement, ...obj };
+        } else {
+          const [_, location] = root.split("/docs/");
+          const [filename, __] = element.split(".");
 
-          return {
-            ...element,
-            visible,
-            href: `/docs/${entry.data.permalink}/${(element as any).data.permalink}`,
-          };
-        }),
-      );
+          const astroElement = await astro.getEntry(
+            "docs",
+            join(location, filename),
+          );
 
-      pages.push(...children);
+          obj.children.push(astroElement);
+        }
+      }
     }
 
-    return pages;
+    return obj;
+  }
+
+  async function load(): Promise<any[]> {
+    const { join } = await import("node:path");
+
+    const root = join(process.cwd(), "content", "docs");
+    return buildTree(root).then((obj) => obj.children);
+  }
+
+  async function getDocs() {
+    const default_docs = await astro.getCollection("docDefaults");
+    const docs = await load();
+
+    const a = default_docs.filter(
+      (element) => !docs.some((doc) => doc.id === element.id),
+    );
+
+    return a.map((element) => {
+      const children = docs
+        .filter((doc) => doc.id.startsWith(element.data.directory))
+        .flatMap((child) => child.children);
+
+      return {
+        ...element,
+        children: children ? [...children] : [],
+      };
+    });
   }
 
   async function generateStaticPaths() {
-    const derived = await load();
-    return derived.flatMap((element) =>
-      element.collection.map((item) => ({
-        params: {
-          slug:
-            item?.collection +
-            "/" +
-            (item?.data as unknown as { permalink: string }).permalink,
-        },
-        props: { element: item },
-      })),
-    );
+    const docs = await load();
+
+    function flattenChildren(children: any[]): any[] {
+      return children.flatMap((child) => {
+        return [
+          {
+            params: { slug: child.id },
+            props: { element: child },
+          },
+          ...(child.children && child.children.length
+            ? flattenChildren(child.children)
+            : []),
+        ];
+      });
+    }
+
+    return docs.flatMap((root) => flattenChildren(root.children));
+  }
+
+  function flattenDocs(elements: any[]) {
+    const pages: any[] = [];
+
+    function flatten(children: any[]) {
+      for (const element of children) {
+        if (element.children && element.children.length) {
+          flatten(element.children);
+        } else {
+          pages.push(element);
+        }
+      }
+    }
+
+    flatten(elements);
+
+    return pages;
   }
 
   return {
     load,
     generateStaticPaths,
-    getPages,
+    getDocs,
+    flattenDocs,
   };
 }

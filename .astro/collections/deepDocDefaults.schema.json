@@ -1,0 +1,50 @@
+{
+  "$ref": "#/definitions/deepDocDefaults",
+  "definitions": {
+    "deepDocDefaults": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "permalink": {
+          "type": "string"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "directory": {
+          "type": "string"
+        },
+        "collection": {
+          "type": "array"
+        },
+        "visibility": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "navbar"
+            ]
+          },
+          "default": []
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "description",
+        "permalink",
+        "directory",
+        "collection"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

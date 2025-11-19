@@ -10,7 +10,7 @@ import * as astroContent from "astro:content";
 const { title = config.seo.title } = Astro.props;
 
 const { load } = useDocumentation(astroContent);
-const derivedDocs = await load();
+const documentations = await load();
 ---
 
 <!doctype html>
@@ -56,9 +56,10 @@ const derivedDocs = await load();
   <body class="relative min-h-screen">
     <div class="min-h-screen flex flex-col">
       <Navbar
-        docs={derivedDocs.filter((entry) =>
-          entry.visibility.includes("navbar"),
-        )}
+        docs={documentations.filter((entry) => {
+          // return entry.visibility.includes("navbar");
+          return true;
+        })}
         client:only
       />
       <slot />

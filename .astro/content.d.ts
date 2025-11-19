@@ -181,6 +181,14 @@ declare module 'astro:content' {
   rendered?: RenderedContent;
   filePath?: string;
 }>;
+"deepDocDefaults": Record<string, {
+  id: string;
+  body?: string;
+  collection: "deepDocDefaults";
+  data: InferEntrySchema<"deepDocDefaults">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
 "docDefaults": Record<string, {
   id: string;
   body?: string;
@@ -189,11 +197,19 @@ declare module 'astro:content' {
   rendered?: RenderedContent;
   filePath?: string;
 }>;
-"framework": Record<string, {
+"docs": Record<string, {
   id: string;
   body?: string;
-  collection: "framework";
-  data: InferEntrySchema<"framework">;
+  collection: "docs";
+  data: InferEntrySchema<"docs">;
+  rendered?: RenderedContent;
+  filePath?: string;
+}>;
+"documentation": Record<string, {
+  id: string;
+  body?: string;
+  collection: "documentation";
+  data: InferEntrySchema<"documentation">;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
@@ -202,14 +218,6 @@ declare module 'astro:content' {
   body?: string;
   collection: "pages";
   data: InferEntrySchema<"pages">;
-  rendered?: RenderedContent;
-  filePath?: string;
-}>;
-"syntax": Record<string, {
-  id: string;
-  body?: string;
-  collection: "syntax";
-  data: InferEntrySchema<"syntax">;
   rendered?: RenderedContent;
   filePath?: string;
 }>;
