@@ -11,7 +11,9 @@ type Props = {
 };
 
 export default function Collapsible(props: PropsWithChildren<Props>) {
-  const [isOpen, setIsOpen] = useState(props.defaultOpen ?? true);
+  const [isOpen, setIsOpen] = useState(
+    props.defaultOpen ?? (props.isNestedElement && false) ?? true,
+  );
 
   return (
     <CollapsiblePrimitives.Collapsible

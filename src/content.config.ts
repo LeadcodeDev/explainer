@@ -8,6 +8,7 @@ export const docSchema = z.object({
   description: z.string(),
   permalink: z.string().optional(),
   icon: z.string().optional(),
+  visibility: z.array(z.enum(["navbar"])).default([]),
 });
 
 export const docDefaultSchema = z.object({
@@ -17,7 +18,6 @@ export const docDefaultSchema = z.object({
   icon: z.string().optional(),
   directory: z.string(),
   collection: z.array(z.any()),
-  visibility: z.array(z.enum(["navbar"])).default([]),
 });
 
 export const docDefaults = defineCollection({

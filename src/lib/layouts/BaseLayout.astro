@@ -9,8 +9,16 @@ import * as astroContent from "astro:content";
 
 const { title = config.seo.title } = Astro.props;
 
-const { load } = useDocumentation(astroContent);
-const documentations = await load();
+const { load, flattenDocs } = useDocumentation(astroContent);
+const loaded = await load();
+const docs = loaded.map((element) => {
+  return {
+    ...element,
+    children: flattenDocs(element.children).filter((child) =>
+      child.data.visibility.includes("navbar"),
+    ),
+  };
+});
 ---
 
 <!doctype html>
@@ -56,7 +64,7 @@ const documentations = await load();
   <body class="relative min-h-screen">
     <div class="min-h-screen flex flex-col">
       <Navbar
-        docs={documentations.filter((entry) => {
+        docs={docs.filter((entry) => {
           // return entry.visibility.includes("navbar");
           return true;
         })}

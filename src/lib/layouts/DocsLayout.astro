@@ -19,6 +19,11 @@ const currentCollection = documentations.find((element) => {
     return Astro.url.pathname.startsWith(a);
   });
 });
+
+function findFlattenCollection(id: string) {
+  const doc = documentations.find((element) => element.id === id);
+  return flattenDocs(doc.children);
+}
 ---
 
 <BaseLayout>
@@ -30,13 +35,13 @@ const currentCollection = documentations.find((element) => {
             class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)] w-[225px]"
           >
             {
-              documentations.length > 0 && (
+              documentations.length > 1 && (
                 <Fragment>
                   <nav class="flex flex-col gap-2 px-2.5">
                     {documentations.map((element) => (
                       <a
                         class="flex items-center gap-2 group text-primary font-medium"
-                        href={element.children[0].href}
+                        href={`/docs/${findFlattenCollection(element.id)[0].id}`}
                       >
                         <div
                           class={clsx(

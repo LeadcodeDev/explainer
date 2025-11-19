@@ -22,16 +22,6 @@
         "collection": {
           "type": "array"
         },
-        "visibility": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "navbar"
-            ]
-          },
-          "default": []
-        },
         "$schema": {
           "type": "string"
         }
