@@ -23,7 +23,6 @@ const currentCollection = documentations.find((element) => {
 
 <BaseLayout>
   <main class="relative flex-1">
-    <Separator />
     <div class="mx-auto px-2 sm:px-0 max-w-[var(--container-width)]">
       <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
         <aside class="hidden lg:block lg:col-span-2 pr-2">
@@ -42,11 +41,11 @@ const currentCollection = documentations.find((element) => {
                         <div
                           class={clsx(
                             "rounded-sm p-1 inline-flex ring-inset ring-1",
-                            // Astro.url.pathname.startsWith(
-                            //   `${element.children[0].href}`,
-                            // )
-                            //   ? "bg-primary ring-primary text-white"
-                            //   : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
+                            Astro.url.pathname.startsWith(
+                              `/docs/${currentCollection.id.replace("_default", "")}`,
+                            )
+                              ? "bg-primary ring-primary text-background"
+                              : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
                           )}
                         >
                           {element.data.icon && (
@@ -60,11 +59,11 @@ const currentCollection = documentations.find((element) => {
                         <span
                           class={clsx(
                             "text-sm relative",
-                            // Astro.url.pathname.startsWith(
-                            //   `${element.children[0].href}`,
-                            // )
-                            //   ? "text-primary"
-                            //   : "text-muted-foreground",
+                            Astro.url.pathname.startsWith(
+                              `/docs/${currentCollection.id.replace("_default", "")}`,
+                            )
+                              ? "text-primary/80"
+                              : "text-muted-foreground",
                           )}
                         >
                           {element.data.label}
