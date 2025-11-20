@@ -14,10 +14,9 @@ const documentations = await load();
 
 const currentCollection = documentations.find((element) => {
   const pages = flattenDocs(element.children);
-  return pages.find((item) => {
-    const a = `/docs/${item.id}`;
-    return Astro.url.pathname.startsWith(a);
-  });
+  return pages.find((item) =>
+    Astro.url.pathname.startsWith(`/docs/${item.id}`),
+  );
 });
 
 function findFlattenCollection(id: string) {
@@ -86,7 +85,7 @@ function findFlattenCollection(id: string) {
               class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
             >
               {
-                currentCollection.children.map((children: any) => {
+                currentCollection?.children.map((children: any) => {
                   return (
                     <Collapsible
                       client:load
