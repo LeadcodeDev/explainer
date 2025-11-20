@@ -3,6 +3,8 @@ title: Documentation
 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 permalink: docs
 icon: lucide:book
+visibility:
+  - navbar
 ---
 
 # Documentation
@@ -47,8 +49,8 @@ description: My doc description
 permalink: my-doc
 icon: lucide:cuboid
 collection:
-  - first_file: true
-  - second_file: false
+  - first_file
+  - second_file
 ---
 ```
 
@@ -59,22 +61,20 @@ export const docDefaultSchema = z.object({
   permalink: z.string(),
   icon: z.string().optional(),
   directory: z.string(),
-  collection: z.array(z.any()),
+  collection: z.array(z.string()),
 });
 ```
 
 :::
 
-| Property              | Description                                             |
-| --------------------- | ------------------------------------------------------- |
-| `label`               | Display collection name                                 |
-| `description`         | Description of your collection                          |
-| `permalink`           | Collection url                                          |
-| `icon`                | Icon Using `iconify` library                            |
-| `directory`           | Directory name inside `docs/`                           |
-| `collection`          | Collection items, used to define order                  |
-| `collection[n].key`   | Documentation filename inside directory                 |
-| `collection[n].value` | Hide or show this documentation page inside navbar menu |
+| Property      | Description                                      |
+| ------------- | ------------------------------------------------ |
+| `label`       | Display collection name                          |
+| `description` | Description of your collection                   |
+| `permalink`   | Collection url                                   |
+| `icon`        | Icon Using `iconify` library                     |
+| `directory`   | Directory name inside `docs/`                    |
+| `collection`  | Collection folder or items, used to define order |
 
 ---
 

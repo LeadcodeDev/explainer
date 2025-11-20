@@ -16,11 +16,11 @@
         "icon": {
           "type": "string"
         },
-        "directory": {
-          "type": "string"
-        },
         "collection": {
-          "type": "array"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "$schema": {
           "type": "string"
@@ -30,7 +30,6 @@
         "label",
         "description",
         "permalink",
-        "directory",
         "collection"
       ],
       "additionalProperties": false

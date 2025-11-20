@@ -16,8 +16,7 @@ export const docDefaultSchema = z.object({
   description: z.string(),
   permalink: z.string(),
   icon: z.string().optional(),
-  directory: z.string(),
-  collection: z.array(z.any()),
+  collection: z.array(z.string()),
 });
 
 export const docDefaults = defineCollection({
