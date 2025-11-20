@@ -64,7 +64,6 @@ export function useDocumentation(astro: {
 
     let _default: { children: any[] } = { children: [] };
     const pages: any[] = [];
-    const folders: any[] = [];
 
     const elements = await readdir(root);
     for (const element of elements) {
@@ -78,7 +77,10 @@ export function useDocumentation(astro: {
 
       if (elementStat.isFile()) {
         if (element.startsWith("_default")) {
-          const [_, location] = root.split("/docs/");
+          const location = root.replace(
+            join(process.cwd(), "content", "docs/"),
+            "",
+          );
           const astroElement = await astro.getEntry(
             "deepDocDefaults",
             join(location, "_default"),
@@ -86,7 +88,10 @@ export function useDocumentation(astro: {
 
           _default = { ...astroElement, children: [] };
         } else {
-          const [_, location] = root.split("/docs/");
+          const location = root.replace(
+            join(process.cwd(), "content", "docs/"),
+            "",
+          );
           const [filename, __] = element.split(".");
 
           const astroElement = await astro.getEntry(
@@ -101,8 +106,11 @@ export function useDocumentation(astro: {
 
     if ((_default as any)?.data?.collection) {
       for (const collection of (_default as any).data.collection) {
-        const [_, base] = root.split("/docs/");
-        const targetId = join(base, collection);
+        const location = root.replace(
+          join(process.cwd(), "content", "docs/"),
+          "",
+        );
+        const targetId = join(location, collection);
         const targetPage = pages.find((page) => page.id === targetId);
 
         if (targetPage) {
@@ -140,26 +148,6 @@ export function useDocumentation(astro: {
 
     const root = join(process.cwd(), "content", "docs");
     return buildTree(root).then((tree) => tree.children);
-  }
-
-  async function getDocs() {
-    const default_docs = await astro.getCollection("docDefaults");
-    const docs = await load();
-
-    const a = default_docs.filter(
-      (element) => !docs.some((doc) => doc.id === element.id),
-    );
-
-    return a.map((element) => {
-      const children = docs
-        .filter((doc) => doc.id.startsWith(element.data.directory))
-        .flatMap((child) => child.children);
-
-      return {
-        ...element,
-        children: children ? [...children] : [],
-      };
-    });
   }
 
   async function generateStaticPaths() {
@@ -203,7 +191,6 @@ export function useDocumentation(astro: {
   return {
     load,
     generateStaticPaths,
-    getDocs,
     flattenDocs,
   };
 }
