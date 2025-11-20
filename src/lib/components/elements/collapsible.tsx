@@ -12,7 +12,11 @@ type Props = {
 
 export default function Collapsible(props: PropsWithChildren<Props>) {
   const [isOpen, setIsOpen] = useState(
-    props.defaultOpen ?? (props.isNestedElement && false) ?? true,
+    (props.defaultOpen ?? props.isNestedElement)
+      ? props.currentPathname.startsWith(
+          `/docs/${props.item.id.replace("/_default", "")}`,
+        )
+      : true,
   );
 
   return (
@@ -58,7 +62,7 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
         </div>
       </CollapsiblePrimitives.CollapsibleTrigger>
       <CollapsiblePrimitives.CollapsibleContent className="flex flex-col pl-5 ml-1">
-        {props.item.children.map((item) => {
+        {props.item.children.map((item: any) => {
           if (item.children) {
             return (
               <div

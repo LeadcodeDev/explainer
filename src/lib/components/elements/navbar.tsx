@@ -63,7 +63,6 @@ type NavbarProps = {
 };
 
 export default function Navbar(props: NavbarProps) {
-  console.log(props.docs[0]);
   return (
     <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/70 backdrop-blur-sm">
       <div className="max-w-[var(--container-width)] mx-auto flex items-center justify-between">

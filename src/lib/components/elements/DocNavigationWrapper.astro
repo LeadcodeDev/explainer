@@ -6,11 +6,11 @@ import * as astroContent from "astro:content";
 const { slug } = Astro.params;
 
 const { load, flattenDocs } = useDocumentation(astroContent);
-const pages = flattenDocs(await load());
-
-const currentPageIndex = pages.findIndex(
-  (page) => page.href === `/docs/${slug}`,
+const pages = flattenDocs(await load()).filter(
+  (element) => !element.id.endsWith("_default"),
 );
+
+const currentPageIndex = pages.findIndex((page) => page.id === slug);
 
 const previousPage = pages[currentPageIndex - 1];
 const nextPage = pages[currentPageIndex + 1];
@@ -53,7 +53,7 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
   {
     nextPage && (
       <a
-        href={nextPage.href}
+        href={`/docs/${nextPage.id}`}
         class:list={[container]}
         class="group hover:bg-secondary"
       >

@@ -86,7 +86,7 @@ function findFlattenCollection(id: string) {
               class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
             >
               {
-                currentCollection.children.map((children) => {
+                currentCollection.children.map((children: any) => {
                   return (
                     <Collapsible
                       client:load

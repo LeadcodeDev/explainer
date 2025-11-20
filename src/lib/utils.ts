@@ -61,7 +61,10 @@ export function useDocumentation(astro: {
   async function buildTree(root: string) {
     const { join } = await import("node:path");
     const { readdir, stat } = await import("node:fs/promises");
-    let obj: { children: any[] } = { children: [] };
+
+    let _default: { children: any[] } = { children: [] };
+    const pages: any[] = [];
+    const folders: any[] = [];
 
     const elements = await readdir(root);
     for (const element of elements) {
@@ -70,7 +73,7 @@ export function useDocumentation(astro: {
 
       if (elementStat.isDirectory()) {
         const currentObj = await buildTree(join(root, element));
-        obj.children.push(currentObj);
+        _default.children.push(currentObj);
       }
 
       if (elementStat.isFile()) {
@@ -81,7 +84,7 @@ export function useDocumentation(astro: {
             join(location, "_default"),
           );
 
-          obj = { ...astroElement, ...obj };
+          _default = { ...astroElement, children: [] };
         } else {
           const [_, location] = root.split("/docs/");
           const [filename, __] = element.split(".");
@@ -91,19 +94,52 @@ export function useDocumentation(astro: {
             join(location, filename),
           );
 
-          obj.children.push(astroElement);
+          pages.push(astroElement);
         }
       }
     }
 
-    return obj;
+    if ((_default as any)?.data?.collection) {
+      for (const collection of (_default as any).data.collection) {
+        const [_, base] = root.split("/docs/");
+        const targetId = join(base, collection);
+        const targetPage = pages.find((page) => page.id === targetId);
+
+        if (targetPage) {
+          _default.children.push(targetPage);
+        }
+      }
+    }
+
+    for (const folder of _default.children) {
+      if (folder.data.collection) {
+        for (const collection of folder.data.collection) {
+          const index = folder.data.collection.indexOf(collection);
+          const targetId = join(
+            folder.id.replace("/_default", ""),
+            `${collection}/_default`,
+          );
+          const targetPage = folder.children.find(
+            (page: any) => page.id === targetId,
+          );
+
+          if (targetPage) {
+            const folderIndex = folder.children.indexOf(targetPage);
+            folder.children.splice(folderIndex, 1);
+            folder.children.splice(index, 0, targetPage);
+          }
+        }
+      }
+    }
+
+    return _default;
   }
 
   async function load(): Promise<any[]> {
     const { join } = await import("node:path");
 
     const root = join(process.cwd(), "content", "docs");
-    return buildTree(root).then((obj) => obj.children);
+    return buildTree(root).then((tree) => tree.children);
   }
 
   async function getDocs() {
