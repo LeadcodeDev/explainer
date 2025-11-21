@@ -5,13 +5,124 @@ permalink: card
 icon: lucide:bell
 ---
 
-# Card
+# Cards
 
-:::card-group{cols=4, test="test"}
-:::card{label="Test", icon="lucide:bell"}
-test
+This component allows you to group text elements while providing visual impact.
+
+```
+:::card-group
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
 :::
-:::card{label="Test", icon="lucide:bell"}
-d
+```
+
+:::card-group {cols=2}
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::
+
+---
+
+## Configuration
+
+### Card per line
+
+You can customize the number of elements per line by setting the `cols` prop.
+
+> [!note]
+> Default card per line was fixed to 2
+
+```
+:::card-group {cols=4}
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+:::
+```
+
+:::card-group {cols=4}
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::
+
+If the elements cannot be aligned horizontally, they will be moved to the next line.
+
+```
+:::card-group {cols=2}
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+:::
+```
+
+:::card-group {cols=2}
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::
+
+### Card item
+
+Vous pouvez personaliser chacune de vos cartes en utilisant les props suivantes :
+
+- `label`: Le texte à afficher en haut de la carte. (required)
+- `icon`: L'icône à afficher en haut de la carte.
+
+> [!note]
+> The cards use the [`iconify`](https://icon-sets.iconify.design/) library to display icons.
+
+```
+:::card-group
+  :::card {label="Test", icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card {label="Test", icon="lucide:user"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+:::
+```
+
+:::card-group {cols=2}
+:::card {label="Test", icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card {label="Test", icon="lucide:user"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 :::
 :::

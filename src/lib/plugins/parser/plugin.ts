@@ -110,9 +110,7 @@ export default function rehypeComponents() {
       const parsedBlocks = parseSingleNode(node);
       const hasBlock = parsedBlocks.some((block) => block.startTag in mdx);
 
-      if (hasBlock) {
-        console.log(JSON.stringify(parsedBlocks, null, 2));
-
+      if (parent.type === "root" && hasBlock) {
         parent.children[index] = {
           type: "element",
           tagName: "BlockRenderer",
