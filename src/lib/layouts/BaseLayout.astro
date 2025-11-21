@@ -19,6 +19,21 @@ const docs = loaded.map((element) => {
     ),
   };
 });
+
+const searchableDoc = await Promise.all(
+  loaded
+    .flatMap((elements) => elements.children)
+    .map(async (element) => {
+      const children = await Promise.all(
+        flattenDocs(element.children).map(async (entry) => {
+          const a = await astroContent.render(entry);
+          return { ...entry, content: a };
+        }),
+      );
+
+      return { ...element, children };
+    }),
+);
 ---
 
 <!doctype html>
@@ -68,6 +83,7 @@ const docs = loaded.map((element) => {
           // return entry.visibility.includes("navbar");
           return true;
         })}
+        searchableDoc={searchableDoc}
         client:only
       />
       <slot />

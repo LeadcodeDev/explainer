@@ -41,7 +41,9 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
           </div>
         </div>
         <div class="mt-4">
-          <h3 class="font-semibold text-gray-900">{previousPage.data.title}</h3>
+          <h3 class="font-semibold text-muted-foreground">
+            {previousPage.data.title}
+          </h3>
           <p class="text-sm text-gray-500 mt-1">
             {previousPage.data.description}
           </p>
@@ -67,7 +69,9 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
           </div>
         </div>
         <div class="mt-4 text-right">
-          <h3 class="font-semibold text-gray-900">{nextPage.data.title}</h3>
+          <h3 class="font-semiboldtext-muted-foreground">
+            {nextPage.data.title}
+          </h3>
           <p class="text-sm text-gray-500 mt-1">{nextPage.data.description}</p>
         </div>
       </a>

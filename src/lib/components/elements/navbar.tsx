@@ -18,7 +18,7 @@ import { cn } from "@/utils";
 import { Icon } from "@iconify/react";
 import config from "explainer.config";
 import { LaptopIcon, MenuIcon, MoonIcon, SunIcon } from "lucide-react";
-import * as React from "react";
+import { forwardRef, Fragment, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -28,8 +28,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import { SearchCommand } from "./search-command";
 
-const ListItem = React.forwardRef<
+const ListItem = forwardRef<
   React.ComponentRef<"a">,
   React.ComponentPropsWithoutRef<"a"> & { icon?: string }
 >(({ className, title, icon, children, ...props }, ref) => {
@@ -60,196 +61,200 @@ ListItem.displayName = "ListItem";
 
 type NavbarProps = {
   docs: any[];
+  searchableDoc: any[];
 };
 
 export default function Navbar(props: NavbarProps) {
   return (
-    <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/70 backdrop-blur-sm">
-      <div className="max-w-[var(--container-width)] mx-auto flex items-center justify-between">
-        <a href="/" className="flex sm:hidden items-center space-x-2">
-          <span className="font-bold text-primary text-lg">
-            💧 {config.projectName}
-          </span>
-        </a>
-
-        <div className="hidden md:flex items-center justify-between w-full">
-          <a href="/" className="flex items-center space-x-2">
+    <Fragment>
+      <div className="sticky top-0 z-50 w-full p-2 py-3 border-b bg-background/70 backdrop-blur-sm">
+        <div className="max-w-[var(--container-width)] mx-auto flex items-center justify-between">
+          <a href="/" className="flex sm:hidden items-center space-x-2">
             <span className="font-bold text-primary text-lg">
               💧 {config.projectName}
             </span>
           </a>
-          <div className="flex gap-3">
-            <NavigationMenu>
-              <NavigationMenuList>
-                {props.docs.map((element, index) => (
-                  <NavigationMenuItem key={index}>
-                    <NavigationMenuTrigger className="flex items-center">
-                      <Icon icon={element.icon} className="size-4 mr-2" />
-                      {element.data.label}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                        {element.children
-                          // .filter((item: any) => item.visible)
-                          .map((item: any) => (
-                            <ListItem
-                              key={item.id}
-                              title={item.data.title}
-                              icon={item.data.icon}
-                              href={`/docs/${item.id}`}
-                            >
-                              {item.data.description}
-                            </ListItem>
-                          ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-            <NavigationMenu>
-              <NavigationMenuList>
-                {config.navbar.map((element) => (
-                  <NavigationMenuItem key={element.label}>
-                    <NavigationMenuLink
-                      href={element.href}
-                      className="px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
-                    >
-                      {element.label}
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
-          </div>
 
-          <div className="flex items-center space-x-2">
-            <ThemeToggle />
+          <div className="hidden md:flex items-center justify-between w-full">
+            <a href="/" className="flex items-center space-x-2">
+              <span className="font-bold text-primary text-lg">
+                💧 {config.projectName}
+              </span>
+            </a>
+            <SearchCommand items={props.searchableDoc} />
+            <div className="flex gap-3">
+              <NavigationMenu>
+                <NavigationMenuList>
+                  {props.docs.map((element, index) => (
+                    <NavigationMenuItem key={index}>
+                      <NavigationMenuTrigger className="flex items-center">
+                        <Icon icon={element.icon} className="size-4 mr-2" />
+                        {element.data.label}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                          {element.children
+                            // .filter((item: any) => item.visible)
+                            .map((item: any) => (
+                              <ListItem
+                                key={item.id}
+                                title={item.data.title}
+                                icon={item.data.icon}
+                                href={`/docs/${item.id}`}
+                              >
+                                {item.data.description}
+                              </ListItem>
+                            ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  ))}
+                </NavigationMenuList>
+              </NavigationMenu>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  {config.navbar.map((element) => (
+                    <NavigationMenuItem key={element.label}>
+                      <NavigationMenuLink
+                        href={element.href}
+                        className="px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
+                      >
+                        {element.label}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  ))}
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
 
-            {config.socials.media.github && (
-              <a
-                href={config.socials.media.github}
-                rel="noopener noreferrer"
-                target="_blank"
-                className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
+            <div className="flex items-center space-x-2">
+              <ThemeToggle />
+
+              {config.socials.media.github && (
+                <a
+                  href={config.socials.media.github}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"
                 >
-                  <path
-                    fill="currentColor"
-                    d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-                  ></path>
-                </svg>
-                <span className="sr-only">{config.seo.title} on GitHub</span>
-              </a>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 sm:hidden">
-          <ThemeToggle />
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <MenuIcon className="size-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              className="flex flex-col justify-between gap-4"
-              side="left"
-            >
-              <div>
-                <SheetHeader>
-                  <SheetTitle>{config.seo.title}</SheetTitle>
-                </SheetHeader>
-                <SheetDescription />
-                <div className="flex flex-col items-start gap-2">
-                  <a
-                    href="/"
-                    className="pt-5 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
                   >
-                    Home
-                  </a>
-                  {config.navbar.map((element) => {
-                    if (element.href) {
-                      return (
-                        <a
-                          key={element.label}
-                          href={element.href}
-                          className="text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
-                        >
-                          {element.label}
-                        </a>
-                      );
-                    }
-                  })}
+                    <path
+                      fill="currentColor"
+                      d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                    ></path>
+                  </svg>
+                  <span className="sr-only">{config.seo.title} on GitHub</span>
+                </a>
+              )}
+            </div>
+          </div>
 
-                  <div className="flex flex-col gap-6 pt-5">
-                    {props.docs.map((element, index) => (
-                      <div key={index}>
-                        <div className="flex items-center font-medium">
-                          <Icon icon={element.icon} className="size-4 mr-2" />
-                          {element.label}
+          <div className="flex items-center gap-2 sm:hidden">
+            <ThemeToggle />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <MenuIcon className="size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                className="flex flex-col justify-between gap-4"
+                side="left"
+              >
+                <div>
+                  <SheetHeader>
+                    <SheetTitle>{config.seo.title}</SheetTitle>
+                  </SheetHeader>
+                  <SheetDescription />
+                  <div className="flex flex-col items-start gap-2">
+                    <a
+                      href="/"
+                      className="pt-5 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
+                    >
+                      Home
+                    </a>
+                    {config.navbar.map((element) => {
+                      if (element.href) {
+                        return (
+                          <a
+                            key={element.label}
+                            href={element.href}
+                            className="text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
+                          >
+                            {element.label}
+                          </a>
+                        );
+                      }
+                    })}
+
+                    <div className="flex flex-col gap-6 pt-5">
+                      {props.docs.map((element, index) => (
+                        <div key={index}>
+                          <div className="flex items-center font-medium">
+                            <Icon icon={element.icon} className="size-4 mr-2" />
+                            {element.label}
+                          </div>
+                          <div>
+                            <ul className="grid w-[400px] gap-2 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                              {element.children
+                                // .filter((item: any) => item.visible)
+                                .map((item: any) => (
+                                  <a
+                                    key={item.id}
+                                    href={item.href}
+                                    className="text-sm"
+                                  >
+                                    {item.data.title}
+                                  </a>
+                                ))}
+                            </ul>
+                          </div>
                         </div>
-                        <div>
-                          <ul className="grid w-[400px] gap-2 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                            {element.children
-                              // .filter((item: any) => item.visible)
-                              .map((item: any) => (
-                                <a
-                                  key={item.id}
-                                  href={item.href}
-                                  className="text-sm"
-                                >
-                                  {item.data.title}
-                                </a>
-                              ))}
-                          </ul>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <SheetFooter>
-                {config.socials.media.github && (
-                  <Button variant="outline" asChild>
-                    <a
-                      href={config.socials.media.github}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
+                <SheetFooter>
+                  {config.socials.media.github && (
+                    <Button variant="outline" asChild>
+                      <a
+                        href={config.socials.media.github}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="rounded-[calc(var(--ui-radius)*1.5)] font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-sm gap-1.5 text-(--ui-text) hover:bg-(--ui-bg-elevated) focus:outline-none focus-visible:bg-(--ui-bg-elevated) hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-                        ></path>
-                      </svg>
-                      <span className="">GitHub</span>
-                    </a>
-                  </Button>
-                )}
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width={24}
+                          height={24}
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                          ></path>
+                        </svg>
+                        <span className="">GitHub</span>
+                      </a>
+                    </Button>
+                  )}
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
 
 function ThemeToggle() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
