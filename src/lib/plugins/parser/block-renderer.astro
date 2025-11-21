@@ -21,9 +21,7 @@ if (!ast) return null;
 
 const node: ASTNode | ASTNode[] = JSON.parse(ast);
 
-const renderNodeData = (
-  block: ASTNode | { type: "text"; value: string } | undefined,
-): any => {
+const renderNodeData = (block: any): any => {
   if (!block) return null;
 
   if (Array.isArray(block)) {
@@ -34,14 +32,12 @@ const renderNodeData = (
 
   if ("type" in block && block.type === "text") return block.value;
 
-  const Component = mdx[block.startTag || ""];
+  const Component = mdx[block.startTag ?? ""];
 
-  // Si aucun composant trouvé, on rend les enfants directement (raw / code / span)
   const childrenRendered =
     block.children?.flatMap(renderNodeData).filter(Boolean) || [];
 
   if (!Component) {
-    // Rendu direct des enfants
     return childrenRendered;
   }
 
