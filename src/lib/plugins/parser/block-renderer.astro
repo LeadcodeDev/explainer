@@ -1,0 +1,68 @@
+---
+import CardGroup from "@/components/content/card-group/card-group.astro";
+import Card from "@/components/content/card-group/card.astro";
+import BlockDynamic from "./dynamic-block.astro";
+
+interface ASTNode {
+  delimiter?: string;
+  startTag?: string;
+  attributes?: Record<string, any>;
+  children?: Array<ASTNode | { type: "text"; value: string }>;
+  type?: string;
+}
+
+const mdx: Record<string, any> = {
+  "card-group": CardGroup,
+  card: Card,
+};
+
+const { ast } = Astro.props as { ast: string | undefined };
+if (!ast) return null;
+
+const node: ASTNode | ASTNode[] = JSON.parse(ast);
+
+const renderNodeData = (block: any): any => {
+  if (!block) return null;
+
+  if (Array.isArray(block)) {
+    return block.flatMap(renderNodeData).filter(Boolean);
+  }
+
+  if (typeof block !== "object") return block;
+
+  if ("type" in block && block.type === "text") return block.value;
+
+  const Component = mdx[block.startTag ?? ""];
+
+  const childrenRendered =
+    block.children?.flatMap(renderNodeData).filter(Boolean) || [];
+
+  if (!Component) {
+    return childrenRendered;
+  }
+
+  return {
+    component: Component,
+    props: block.attributes || {},
+    children: childrenRendered,
+  };
+};
+
+const treeData = Array.isArray(node)
+  ? node.flatMap(renderNodeData).filter(Boolean)
+  : renderNodeData(node);
+---
+
+{
+  treeData.map((node: any, i: number) => {
+    if (typeof node === "string") return node;
+    return (
+      <BlockDynamic
+        key={i}
+        component={node.component}
+        props={node.props}
+        children={node.children}
+      />
+    );
+  })
+}
