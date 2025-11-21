@@ -1,0 +1,32 @@
+---
+import { Icon } from "@iconify/react/dist/iconify.js";
+
+const props = Astro.props;
+const { slug } = Astro.params;
+const { origin, pathname } = Astro.url;
+
+const currentAnchor = `${origin}${pathname}#${props.id}`;
+---
+
+<h3
+  id={props.id}
+  class="relative text-lg text-highlighted font-bold mt-12 mb-6 scroll-mt-6 [&>a]:focus-visible:outline-primary [&>a>code]:!border-dashed [&>a>code]:!bg-secondary/50 hover:[&>a>code]:!border-primary/50 hover:[&>a>code]:!text-primary hover:[&>a>code]:!bg-primary/5 [&>a>code]:text-xl/7 [&>a>code]:!font-bold [&>a>code]:transition-colors"
+>
+  <a
+    href={`/docs/${slug}#${props.id}`}
+    class="group lg:ps-2 lg:-ms-2 !text-inherit !no-underline !font-bold"
+  >
+    <span
+      class="absolute -ms-8 top-1 opacity-0 group-hover:opacity-100 group-focus:opacity-100 p-1 bg-secondary hover:text-primary rounded-md hidden lg:flex text-muted transition"
+      onclick={`navigator.clipboard.writeText("${currentAnchor}");`}
+    >
+      <Icon
+        client:load
+        icon="lucide:hash"
+        className="size-4 shrink-0"
+        aria-hidden="true"
+      />
+    </span>
+    <slot />
+  </a>
+</h3>
