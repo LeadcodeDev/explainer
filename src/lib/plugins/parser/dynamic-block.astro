@@ -1,0 +1,23 @@
+---
+import DynamicBlockRenderer from "./dynamic-block.astro";
+const { component: Component, props, children } = Astro.props;
+
+const childrenArray = Array.isArray(children)
+  ? children
+  : [children].filter(Boolean);
+---
+
+<Component {...props}>
+  {
+    childrenArray.map((child: any) => {
+      if (typeof child === "string") return child;
+      return (
+        <DynamicBlockRenderer
+          component={child.component}
+          props={child.props}
+          children={child.children}
+        />
+      );
+    })
+  }
+</Component>

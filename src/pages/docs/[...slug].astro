@@ -16,6 +16,7 @@ import * as astroContent from "astro:content";
 import DocNavigationWrapper from "@/components/elements/DocNavigationWrapper.astro";
 import { Icon } from "@iconify/react";
 import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
+import BlockRenderer from "@/plugins/parser/block-renderer.astro";
 interface Props {
   element: CollectionEntry<"blog">;
 }
@@ -97,7 +98,9 @@ function pascalCase(str: string) {
         </div>
 
         <div class="prose">
-          <Content components={{ CodeGroupWrapper, BlogListWrapper }} />
+          <Content
+            components={{ CodeGroupWrapper, BlogListWrapper, BlockRenderer }}
+          />
         </div>
 
         <div
