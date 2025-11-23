@@ -27,7 +27,7 @@ const container = "flex flex-col justify-between border rounded-xl p-6 w-1/2";
   {
     previousPage && (
       <a
-        href={previousPage.href}
+        href={`/docs/${previousPage.id}`}
         class:list={[container]}
         class="group hover:bg-secondary"
       >

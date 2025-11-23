@@ -2,6 +2,8 @@
 import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
 import BlockDynamic from "./dynamic-block.astro";
+import StepGroup from "@/components/content/steps/step-group.astro";
+import Step from "@/components/content/steps/step.astro";
 
 interface ASTNode {
   delimiter?: string;
@@ -14,6 +16,8 @@ interface ASTNode {
 const mdx: Record<string, any> = {
   "card-group": CardGroup,
   card: Card,
+  "step-group": StepGroup,
+  step: Step,
 };
 
 const { ast } = Astro.props as { ast: string | undefined };

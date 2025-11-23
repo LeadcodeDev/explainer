@@ -1,0 +1,29 @@
+---
+import { Icon } from "@iconify/react";
+
+type props = {
+  title: string;
+};
+
+const props = Astro.props;
+const { origin, pathname } = Astro.url;
+
+const anchor = props.title.toLowerCase().replace(/\s+/g, "-");
+const currentAnchor = `${origin}${pathname}#${anchor}`;
+---
+
+<h3>
+  <a
+    href={currentAnchor}
+    class="group lg:ps-2 lg:-ms-2 !text-inherit !no-underline !font-bold"
+  >
+    <span
+      class="absolute -ms-8 top-0.5 opacity-0 group-hover:opacity-100 group-focus:opacity-100 p-1 bg-elevated hover:text-primary rounded-md hidden lg:flex text-muted transition"
+    >
+      <Icon icon="lucide:hash" className="size-4 shrink-0" aria-hidden="true" />
+    </span>
+    {props.title}
+  </a>
+</h3>
+
+<slot />

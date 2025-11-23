@@ -4,6 +4,8 @@ import { visit } from "unist-util-visit";
 const mdx: Record<string, string> = {
   "card-group": "CardGroup",
   card: "Card",
+  "step-group": "StepGroup",
+  step: "Step",
 };
 
 interface Block {
@@ -111,6 +113,7 @@ export default function rehypeComponents() {
       const hasBlock = parsedBlocks.some((block) => block.startTag in mdx);
 
       if (parent.type === "root" && hasBlock) {
+        console.log(JSON.stringify(parsedBlocks, null, 2));
         parent.children[index] = {
           type: "element",
           tagName: "BlockRenderer",
