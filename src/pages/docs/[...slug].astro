@@ -24,7 +24,7 @@ interface Props {
 }
 
 export async function getStaticPaths() {
-  const { generateStaticPaths, load } = useDocumentation(astroContent);
+  const { generateStaticPaths } = useDocumentation(astroContent);
   return generateStaticPaths();
 }
 
@@ -69,7 +69,7 @@ function pascalCase(str: string) {
 }
 ---
 
-<DocsLayout>
+<DocsLayout title={element.data.title} description={element.data.description}>
   <div class="lg:col-span-8">
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-8 py-6 px-4">
