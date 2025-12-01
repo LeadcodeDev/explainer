@@ -29,7 +29,11 @@ function resolveTailwindColor(value: string): string {
 const montserrat = loadFont("Montserrat-Medium");
 const cssVars = extractCSSVariables();
 
-export async function generateThumbnail(title: string, description: string) {
+export async function generateThumbnail(
+  headline: string,
+  title: string,
+  description: string,
+) {
   const primaryColor = resolveTailwindColor(cssVars["--primary"]);
   return satori(
     <div tw="w-full h-full flex flex-col justify-center bg-[#020420]">
@@ -78,7 +82,7 @@ export async function generateThumbnail(title: string, description: string) {
           tw="uppercase text-[24px] mb-4 font-semibold"
           style={{ color: primaryColor }}
         >
-          Headline
+          {headline}
         </p>
         <h1
           tw="w-[600px] m-0 text-[75px] font-semibold mb-4"

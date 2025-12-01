@@ -28,7 +28,11 @@ function findFlattenCollection(id: string) {
 
 const { title, description } = Astro.props;
 
-const svg = await generateThumbnail(title, description);
+const svg = await generateThumbnail(
+  currentCollection.data.label,
+  title,
+  description,
+);
 const svgUri = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 ---
 
