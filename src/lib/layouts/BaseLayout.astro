@@ -7,7 +7,7 @@ import "../../assets/css/global.css";
 import { useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
 
-const { title = config.seo.title } = Astro.props;
+const { title = config.seo.title, thumbnail, description } = Astro.props;
 
 const { load, flattenDocs } = useDocumentation(astroContent);
 const loaded = await load();
@@ -46,13 +46,16 @@ const searchableDoc = await Promise.all(
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={config.seo.description} />
-    <meta name="image" content={config.seo.thumbnail} />
+    <meta name="description" content={description ?? config.seo.description} />
+    <meta name="image" content={thumbnail ?? config.seo.thumbnail} />
 
-    <meta property="og:title" content={config.seo.title} />
+    <meta property="og:title" content={title ?? config.seo.title} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:description" content={config.seo.description} />
+    <meta
+      property="og:description"
+      content={description ?? config.seo.description}
+    />
     <meta property="og:image" content={config.seo.thumbnail} />
     <meta property="og:image:alt" content={config.seo.title} />
     <meta property="og:image:width" content="1200" />

@@ -1,5 +1,4 @@
 ---
-import Separator from "@/components/elements/separator";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import "../../assets/css/global.css";
@@ -8,6 +7,9 @@ import BaseLayout from "./BaseLayout.astro";
 import { useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
 import Collapsible from "@/components/elements/collapsible";
+import DocSwitcher from "@/components/elements/doc-switcher";
+import { generateThumbnail } from "@/components/content/thumbnail";
+import config from "../../../explainer.config";
 
 const { load, flattenDocs } = useDocumentation(astroContent);
 const documentations = await load();
@@ -23,9 +25,22 @@ function findFlattenCollection(id: string) {
   const doc = documentations.find((element) => element.id === id);
   return flattenDocs(doc.children);
 }
+
+const { title, description } = Astro.props;
+
+const svg = await generateThumbnail(
+  currentCollection.data.label,
+  title,
+  description,
+);
+const svgUri = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={`${title} • ${config.projectName}`}
+  thumbnail={svgUri}
+  description={description}
+>
   <main class="relative flex-1">
     <div class="mx-auto px-2 sm:px-0 max-w-[var(--container-width)]">
       <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
@@ -35,54 +50,18 @@ function findFlattenCollection(id: string) {
           >
             {
               documentations.length > 1 && (
-                <Fragment>
-                  <nav class="flex flex-col gap-2 px-2.5">
-                    {documentations.map((element) => (
-                      <a
-                        class="flex items-center gap-2 group text-primary font-medium"
-                        href={`/docs/${findFlattenCollection(element.id)[0].id}`}
-                      >
-                        <div
-                          class={clsx(
-                            "rounded-sm p-1 inline-flex ring-inset ring-1",
-                            Astro.url.pathname.startsWith(
-                              `/docs/${currentCollection.id.replace("_default", "")}`,
-                            )
-                              ? "bg-primary ring-primary text-background"
-                              : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
-                          )}
-                        >
-                          {element.data.icon && (
-                            <Icon
-                              client:only
-                              icon={element.data.icon}
-                              className="size-4"
-                            />
-                          )}
-                        </div>
-                        <span
-                          class={clsx(
-                            "text-sm relative",
-                            Astro.url.pathname.startsWith(
-                              `/docs/${currentCollection.id.replace("_default", "")}`,
-                            )
-                              ? "text-primary/80"
-                              : "text-muted-foreground",
-                          )}
-                        >
-                          {element.data.label}
-                        </span>
-                      </a>
-                    ))}
-                  </nav>
-
-                  <hr class="my-5 border-dashed border-gray-200 dark:border-gray-700" />
-                </Fragment>
+                <div class="px-5 2xl:px-0 mb-10">
+                  <DocSwitcher
+                    client:load
+                    current={currentCollection}
+                    items={documentations}
+                  />
+                </div>
               )
             }
 
             <div
-              class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
+              class="px-5 2xl:px-0 space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
             >
               {
                 currentCollection?.children.map((children: any) => {
@@ -126,6 +105,18 @@ function findFlattenCollection(id: string) {
               <div class="sm:px-0 py-5 overflow-y-auto">
                 <nav>
                   <div class="space-y-3 mb-3 lg:mb-6 lg:mx-0">
+                    {
+                      documentations.length > 1 && (
+                        <div class="mb-10">
+                          <DocSwitcher
+                            client:load
+                            current={currentCollection}
+                            items={documentations}
+                          />
+                        </div>
+                      )
+                    }
+
                     <!-- {
                       documentations?.map((element) => (
                         <a
