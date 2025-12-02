@@ -30,9 +30,9 @@ const montserrat = loadFont("Montserrat-Medium");
 const cssVars = extractCSSVariables();
 
 export async function generateThumbnail(
-  headline: string,
-  title: string,
-  description: string,
+  headline?: string,
+  title?: string,
+  description?: string,
 ) {
   const primaryColor = resolveTailwindColor(cssVars["--primary"]);
   return satori(
@@ -77,13 +77,15 @@ export async function generateThumbnail(
       </svg>
 
       <div tw="flex flex-col w-[600px] pl-[100px]">
-        <p
-          v-if="headline"
-          tw="uppercase text-[24px] mb-4 font-semibold"
-          style={{ color: primaryColor }}
-        >
-          {headline}
-        </p>
+        {headline && (
+          <p
+            v-if="headline"
+            tw="uppercase text-[24px] mb-4 font-semibold"
+            style={{ color: primaryColor }}
+          >
+            {headline}
+          </p>
+        )}
         <h1
           tw="w-[600px] m-0 text-[75px] font-semibold mb-4"
           style={{

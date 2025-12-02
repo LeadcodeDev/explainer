@@ -21,15 +21,10 @@ const currentCollection = documentations.find((element) => {
   );
 });
 
-function findFlattenCollection(id: string) {
-  const doc = documentations.find((element) => element.id === id);
-  return flattenDocs(doc.children);
-}
-
 const { title, description } = Astro.props;
 
 const svg = await generateThumbnail(
-  currentCollection.data.label,
+  currentCollection?.data?.label,
   title,
   description,
 );
