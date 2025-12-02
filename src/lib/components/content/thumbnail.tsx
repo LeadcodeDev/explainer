@@ -34,7 +34,7 @@ function resolveTailwindColor(value: string): string {
 }
 
 const montserratMedium = loadFont("Montserrat-Medium");
-const montserratSemibold = loadFont("Montserrat-Semibold");
+const montserratSemibold = loadFont("Montserrat-SemiBold");
 const montserratBold = loadFont("Montserrat-Bold");
 
 const cssVars = extractCSSVariables();
