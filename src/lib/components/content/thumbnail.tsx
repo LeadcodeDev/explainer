@@ -1,3 +1,4 @@
+import * as culori from "culori";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import satori from "satori";
@@ -22,11 +23,20 @@ function resolveTailwindColor(value: string): string {
     return `rgb(${value})`;
   }
 
-  // Cas: #00dc82 ou hsl() → OK
+  if (value.startsWith("oklch(")) {
+    const parsed = culori.parse(value);
+    if (parsed) {
+      return culori.formatHex(parsed);
+    }
+  }
+
   return value;
 }
 
-const montserrat = loadFont("Montserrat-Medium");
+const montserratMedium = loadFont("Montserrat-Medium");
+const montserratSemibold = loadFont("Montserrat-Semibold");
+const montserratBold = loadFont("Montserrat-Bold");
+
 const cssVars = extractCSSVariables();
 
 export async function generateThumbnail(
@@ -80,20 +90,21 @@ export async function generateThumbnail(
         {headline && (
           <p
             v-if="headline"
-            tw="uppercase text-[24px] mb-4 font-semibold"
-            style={{ color: primaryColor }}
+            tw="uppercase text-[24px] mb-4"
+            style={{ color: primaryColor, fontWeight: 600 }}
           >
             {headline}
           </p>
         )}
         <h1
-          tw="w-[600px] m-0 text-[75px] font-semibold mb-4"
+          tw="w-[600px] m-0 text-[75px] font-bold mb-4"
           style={{
             display: "block",
             WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
             overflow: "hidden",
             color: "white",
+            fontWeight: 800,
           }}
         >
           {title}
@@ -116,9 +127,18 @@ export async function generateThumbnail(
       fonts: [
         {
           name: "Montserrat",
-          data: montserrat,
+          data: montserratMedium,
           weight: 400,
-          style: "normal",
+        },
+        {
+          name: "Montserrat",
+          data: montserratSemibold,
+          weight: 600,
+        },
+        {
+          name: "Montserrat",
+          data: montserratBold,
+          weight: 800,
         },
       ],
     },

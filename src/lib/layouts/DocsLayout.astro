@@ -8,7 +8,6 @@ import { useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
 import Collapsible from "@/components/elements/collapsible";
 import DocSwitcher from "@/components/elements/doc-switcher";
-import { generateThumbnail } from "@/components/content/thumbnail";
 import config from "../../../explainer.config";
 
 const { load, flattenDocs } = useDocumentation(astroContent);
@@ -21,20 +20,13 @@ const currentCollection = documentations.find((element) => {
   );
 });
 
-const { title, description } = Astro.props;
-
-const svg = await generateThumbnail(
-  currentCollection?.data?.label,
-  title,
-  description,
-);
-const svgUri = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+const { id, title, description } = Astro.props;
 ---
 
 <BaseLayout
   title={`${title} • ${config.projectName}`}
-  thumbnail={svgUri}
   description={description}
+  thumbnail={`/docs/${id}/thumbnail.png`}
 >
   <main class="relative flex-1">
     <div class="mx-auto px-2 sm:px-0 max-w-[var(--container-width)]">

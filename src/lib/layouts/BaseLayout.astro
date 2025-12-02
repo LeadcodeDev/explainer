@@ -56,7 +56,7 @@ const searchableDoc = await Promise.all(
       property="og:description"
       content={description ?? config.seo.description}
     />
-    <meta property="og:image" content={config.seo.thumbnail} />
+    <meta property="og:image" content={thumbnail ?? config.seo.thumbnail} />
     <meta property="og:image:alt" content={config.seo.title} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

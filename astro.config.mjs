@@ -24,12 +24,13 @@ import {
   default as remarkReadMoreDirective,
 } from "./src/lib/plugins/read-more/remark-directive";
 import sitemap from "@astrojs/sitemap";
+import { buildDocIntegration } from "./src/hooks/build-doc";
 
 export default defineConfig({
   site: "https://example.com",
   output: "static",
   prefetch: true,
-  integrations: [react(), mdx(), icon(), sitemap()],
+  integrations: [react(), mdx(), icon(), buildDocIntegration(), sitemap()],
 
   markdown: {
     shikiConfig: {
@@ -71,6 +72,9 @@ export default defineConfig({
   },
 
   vite: {
+    build: {
+      chunkSizeWarningLimit: 2000,
+    },
     plugins: [tailwindcss()],
   },
 });

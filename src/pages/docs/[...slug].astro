@@ -19,6 +19,10 @@ import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
 import BlockRenderer from "@/plugins/parser/block-renderer.astro";
 import H2 from "@/components/content/heading/h2.astro";
 import H3 from "@/components/content/heading/h3.astro";
+import { writeFile, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+import { generateThumbnail } from "@/components/content/thumbnail";
+
 interface Props {
   element: CollectionEntry<"blog">;
 }
@@ -29,7 +33,6 @@ export async function getStaticPaths() {
 }
 
 const { element } = Astro.props;
-
 const { Content, headings } = await render(element);
 
 const issueUrl = config.repository + "/issues/new";
@@ -69,7 +72,11 @@ function pascalCase(str: string) {
 }
 ---
 
-<DocsLayout title={element.data?.title} description={element.data?.description}>
+<DocsLayout
+  id={element.id}
+  title={element.data?.title}
+  description={element.data?.description}
+>
   <div class="lg:col-span-8">
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-8 py-6 px-4">
