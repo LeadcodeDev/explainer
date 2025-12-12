@@ -41,6 +41,11 @@ type ExplainerConfig = {
     label: string;
     href: string;
   }[];
+  content: {
+    components: {
+      [key: string]: (...props: any[]) => any;
+    };
+  };
 };
 
 export function defineExplainerConfig(config: ExplainerConfig) {

@@ -1,3 +1,6 @@
+import CardGroup from "@/components/content/card-group/card-group.astro";
+import Card from "@/components/content/card-group/card.astro";
+import CodeGroup from "@/components/content/code-group/code-group.astro";
 import { defineExplainerConfig } from "@/utils";
 
 export default defineExplainerConfig({
@@ -38,4 +41,12 @@ export default defineExplainerConfig({
       href: "/blog",
     },
   ],
+  content: {
+    components: {
+      "card-group": CardGroup,
+      card: Card,
+      codegroup: CodeGroup,
+      "code-group": CodeGroup,
+    },
+  },
 });

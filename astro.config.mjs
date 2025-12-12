@@ -15,16 +15,13 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import rehypeCallouts from "rehype-callouts";
 import rehypeMermaid from "rehype-mermaid";
-import rehypeCodeGroupReact from "./src/lib/plugins/code-group/plugin";
-import rehypeReadMoreReact from "./src/lib/plugins/read-more/plugin";
 import rehypeBlogListReact from "./src/lib/plugins/blog-list/plugin";
-import rehypeBlock from "./src/lib/plugins/parser/plugin";
-import {
-  default as remarkDirective,
-  default as remarkReadMoreDirective,
-} from "./src/lib/plugins/read-more/remark-directive";
+import remarkBlockParser from "./src/lib/plugins/parser/plugin";
+import remarkDirectivePkg from "remark-directive";
+import remarkReadMoreDirective from "./src/lib/plugins/read-more/remark-directive";
 import sitemap from "@astrojs/sitemap";
 import { buildDocIntegration } from "./src/hooks/build-doc";
+import transformerMetaLabel from "./src/lib/plugins/shiki/transformer-meta-label";
 
 export default defineConfig({
   site: "https://example.com",
@@ -45,15 +42,19 @@ export default defineConfig({
         transformerNotationFocus(),
         transformerNotationErrorLevel(),
         transformerMetaHighlight(),
+        transformerMetaLabel(),
       ],
     },
     syntaxHighlight: {
       type: "shiki",
       excludeLangs: ["mermaid"],
     },
-    remarkPlugins: [remarkDirective, remarkReadMoreDirective],
+    remarkPlugins: [
+      remarkDirectivePkg,
+      remarkBlockParser,
+      remarkReadMoreDirective,
+    ],
     rehypePlugins: [
-      rehypeBlock,
       rehypeMermaid,
       [
         rehypeCallouts,
@@ -65,8 +66,6 @@ export default defineConfig({
           },
         },
       ],
-      rehypeCodeGroupReact,
-      rehypeReadMoreReact,
       rehypeBlogListReact,
     ],
   },

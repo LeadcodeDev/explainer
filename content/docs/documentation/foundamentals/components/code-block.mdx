@@ -110,39 +110,19 @@ impl User {
 
 ## Group code blocks
 
-Group code blocks can be done with the `:::codegroup labels=[...labels]` syntax.
-
 > [!warning] This is a **collapsible** callout
 > Only code blocks can be used in a group.
 
-:::codegroup labels=[Without labels, With labels]
+:::codegroup
 
-```
-:::codegroup auto
-// Code block without labels
-:::
-```
-
-```
-:::codegroup labels=[first,, third]
-// First code block (named)
-// Second code block
-// Third code block (named)
-:::
-```
-
-:::
-
-:::codegroup labels=[struct, impl]
-
-```rust
+```rs [foo]
 pub struct User {
-  pub firstname: String, // [!code highlight]
+  pub firstname: String,
   pub lastname: String,
 }
 ```
 
-```rust
+```rs [bar]
 pub struct User {
   pub firstname: String,
   pub lastname: String,
@@ -156,3 +136,29 @@ impl User {
 ```
 
 :::
+
+````md
+:::codegroup
+
+```rs [foo]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+```rs [bar]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new(firstname: String, lastname: String) -> Self {
+    Self { firstname, lastname }
+  }
+}
+```
+
+:::
+````
