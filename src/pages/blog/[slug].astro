@@ -7,12 +7,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import BlogLayout from "@/layouts/BlogLayout.astro";
-import CodeGroupWrapper from "@/plugins/code-group/CodeGroupWrapper.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import { NewspaperIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import config from "../../../explainer.config";
-import ReadMoreWrapper from "../../lib/plugins/read-more/ReadMoreWrapper.astro";
 import BlogListWrapper from "../../lib/plugins/blog-list/BlogListWrapper.astro";
 interface Props {
   element: CollectionEntry<"blog">;
@@ -178,7 +176,7 @@ const headingTree = buildHeadingTree(availableHeadings);
       <div class="w-full max-w-4xl">
         <div class="prose">
           <Content
-            components={{ CodeGroupWrapper, ReadMoreWrapper, BlogListWrapper }}
+            components={{ ...config.content.components, BlogListWrapper }}
           />
         </div>
 
