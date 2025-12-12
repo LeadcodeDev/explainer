@@ -1,0 +1,81 @@
+---
+
+---
+
+<div class="step-group my-8">
+  <slot />
+</div>
+
+<style is:global>
+  .step-group {
+    counter-reset: step-counter;
+  }
+
+  .step-group .step-content {
+    display: flex;
+    position: relative;
+    padding-left: 2.5rem; /* Space for the number and line */
+    margin-bottom: 2rem; /* Space between steps */
+  }
+
+  /* Vertical line */
+  .step-group .step-content::before {
+    content: "";
+    position: absolute;
+    left: 11px; /* Align with center of the circle */
+    top: 0;
+    bottom: -1rem; /* Extend line below the current step */
+    width: 2px;
+    background-color: var(
+      --astro-code-color-text
+    ); /* Use a Shiki variable for consistency */
+    opacity: 0.15;
+  }
+
+  /* Number circle */
+  .step-group .step-content::after {
+    counter-increment: step-counter;
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    border-radius: 9999px; /* Full circle */
+    border: 1px solid var(--astro-code-color-text); /* Border color */
+    background-color: var(--astro-code-color-background); /* Background color */
+    color: var(--astro-code-color-text); /* Text color */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+    z-index: 10;
+  }
+
+  /* Hide line for the last step */
+  .step-group .step-content:last-of-type::before {
+    display: none;
+  }
+
+  /* Ensure text and headings within the step start correctly */
+  .step-group .step-content > * {
+    flex-grow: 1;
+  }
+
+  /* Reset top margin for the first heading inside a step to align with the number */
+  .step-group .step-content :where(h1, h2, h3, h4, h5, h6):first-child {
+    margin-top: 0;
+  }
+
+  /* Adjust margins for content within a step */
+  .step-group .step-content :where(p, ul, ol, .code-block, .callout) {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Remove bottom margin for the last element within a step-content to avoid extra space */
+  .step-group .step-content > *:last-child {
+    margin-bottom: 0;
+  }
+</style>

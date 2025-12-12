@@ -3,6 +3,8 @@ import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
 import CodeGroup from "@/components/content/code-group/code-group.astro";
 import CodeBlock from "@/components/content/codeblock.astro";
+import StepGroup from "@/components/content/step-group/step-group.astro";
+import Step from "@/components/content/step-group/step.astro";
 import { defineExplainerConfig } from "@/utils";
 
 export default defineExplainerConfig({
@@ -51,6 +53,8 @@ export default defineExplainerConfig({
       "code-group": CodeGroup,
       pre: CodeBlock,
       callout: Callout,
+      "step-group": StepGroup,
+      step: Step,
     },
     icons: {
       markdown: "devicon:markdown",
