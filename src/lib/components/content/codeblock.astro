@@ -1,10 +1,121 @@
 ---
-const props = Astro.props;
+import { Icon } from "@iconify/react";
+
+interface Props {
+  class?: string;
+  "data-language"?: string;
+  "data-label"?: string;
+  [key: string]: any;
+}
+
+const {
+  class: className,
+  "data-language": language,
+  "data-label": label,
+  ...props
+} = Astro.props;
+
+const icons: Record<string, string> = {
+  markdown: "devicon:markdown",
+  mdx: "devicon:markdown",
+  html: "devicon:html5",
+  css: "devicon:css3",
+  javascript: "devicon:javascript",
+  js: "devicon:javascript",
+  typescript: "devicon:typescript",
+  ts: "devicon:typescript",
+  python: "devicon:python",
+  py: "devicon:python",
+  dart: "devicon:dart",
+  rust: "catppuccin:rust",
+  rs: "catppuccin:rust",
+  npm: "devicon:npm",
+  npx: "devicon:npm",
+  yarn: "devicon:yarn",
+  pnpm: "devicon:pnpm",
+  bun: "devicon:bun",
+  vite: "devicon:vite",
+  "tailwind.config.js": "devicon:tailwindcss",
+  "tailwind.config.ts": "devicon:tailwindcss",
+  react: "devicon:react",
+  nextjs: "devicon:nextjs",
+  svelte: "devicon:svelte",
+  vue: "devicon:vuejs",
+  go: "devicon:go",
+  bash: "devicon:bash",
+  sh: "devicon:bash",
+  shell: "devicon:bash",
+  sql: "devicon:azuresqldatabase",
+  yaml: "devicon:yaml",
+  yml: "devicon:yaml",
+  json: "devicon:json",
+  dockerfile: "devicon:docker",
+  git: "devicon:git",
+  github: "devicon:github",
+  gitlab: "devicon:gitlab",
+};
+
+const displayLabel = label || language || "text";
+const displayLanguage = language || "text";
+
+let icon =
+  icons[displayLabel.toLowerCase()] ||
+  icons[displayLanguage.toLowerCase()] ||
+  "mdi:code-tags";
+
+if (["bash", "sh", "shell"].includes(displayLanguage.toLowerCase())) {
+  const html = await Astro.slots.render("default");
+  const text = html.replace(/<[^>]+>/g, "").trim();
+  const match = text.match(/^(\w+)/);
+  if (match) {
+    const cmd = match[1].toLowerCase();
+    if (["npm", "npx", "pnpm", "yarn", "bun"].includes(cmd) && icons[cmd]) {
+      icon = icons[cmd];
+    }
+  }
+}
 ---
 
-<p>
-  <pre
-    class="astro-code astro-code-themes github-light catppuccin-frappe has-highlighted"
-    set:html={props.html}
-  />
-</p>
+<div
+  class="code-block group relative my-4 rounded-lg border bg-background overflow-hidden text-sm"
+>
+  {
+    label && (
+      <div class="code-block-header flex items-center gap-2 border-b bg-background px-4 py-2.5">
+        <Icon
+          client:load
+          icon={icon}
+          className="size-4 text-muted-foreground"
+        />
+        <span class="font-medium text-muted-foreground">{displayLabel}</span>
+      </div>
+    )
+  }
+  <div class="relative">
+    <pre
+      class={className}
+      data-language={language}
+      data-label={label}
+      {...props}><slot /></pre>
+  </div>
+</div>
+
+<style is:global>
+  .code-block pre {
+    margin: 0 !important;
+    padding: 1rem !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  .code-group .code-block {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .code-group .code-block .code-block-header {
+    display: none;
+  }
+</style>

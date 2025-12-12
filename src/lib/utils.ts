@@ -42,6 +42,7 @@ type ExplainerConfig = {
     href: string;
   }[];
   content: {
+    icons: Record<string, string>;
     components: {
       [key: string]: (...props: any[]) => any;
     };

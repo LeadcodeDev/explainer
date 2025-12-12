@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import { useEffect, useRef, useState, type PropsWithChildren } from "react";
+import config from "../../../../../explainer.config";
 
 export type CodeGroupProps = {
   labels?: string | string[];
@@ -8,12 +9,10 @@ export type CodeGroupProps = {
   codes?: string | string[];
 };
 
-export default function CodeGroupComponent({
-  children,
-  labels: propLabels,
-  languages: propLanguages,
-  codes: propCodes,
-}: PropsWithChildren<CodeGroupProps>) {
+export default function CodeGroupComponent(
+  props: PropsWithChildren<CodeGroupProps>,
+) {
+  const icons = config.content.icons;
   const [activeTab, setActiveTab] = useState(0);
   const [tabs, setTabs] = useState<
     { label: string; language: string; icon: string }[]
@@ -32,9 +31,9 @@ export default function CodeGroupComponent({
     return [];
   };
 
-  const parsedCodes = parseProp(propCodes);
-  const parsedLabels = parseProp(propLabels);
-  const parsedLanguages = parseProp(propLanguages);
+  const parsedCodes = parseProp(props.codes);
+  const parsedLabels = parseProp(props.labels);
+  const parsedLanguages = parseProp(props.languages);
 
   const isPropsMode = parsedCodes.length > 0;
 
@@ -53,17 +52,31 @@ export default function CodeGroupComponent({
 
       const language = el.getAttribute("data-language") || "text";
 
+      let icon = getCurrentIcon(label, language);
+
+      if (["bash", "sh", "shell"].includes(language.toLowerCase())) {
+        const text = el.textContent?.trim() || "";
+        const match = text.replace(/^\$\s*/, "").match(/^(\w+)/);
+        if (match) {
+          const cmd = match[1].toLowerCase();
+          if (["npm", "npx", "pnpm", "yarn", "bun"].includes(cmd)) {
+            const cmdIcon = icons[cmd as keyof typeof icons];
+            if (cmdIcon) icon = cmdIcon;
+          }
+        }
+      }
+
       newTabs.push({
         label,
         language,
-        icon: getCurrentIcon(label, language),
+        icon,
       });
     });
 
     if (JSON.stringify(newTabs) !== JSON.stringify(tabs)) {
       setTabs(newTabs);
     }
-  }, [children, isPropsMode]);
+  }, [props.children, isPropsMode]);
 
   useEffect(() => {
     if (isPropsMode || !containerRef.current) return;
@@ -99,11 +112,30 @@ export default function CodeGroupComponent({
 
   // Render for Props Mode (rehype plugin generated)
   if (isPropsMode) {
-    const tabsData = parsedCodes.map((code: string, i: number) => ({
-      label: parsedLabels[i] || parsedLanguages[i] || "Code",
-      language: parsedLanguages[i],
-      content: code,
-    }));
+    const tabsData = parsedCodes.map((code: string, i: number) => {
+      const language = parsedLanguages[i] || "text";
+      const label = parsedLabels[i] || language || "Code";
+      let icon = getCurrentIcon(label, language);
+
+      if (["bash", "sh", "shell"].includes(language.toLowerCase())) {
+        const text = code.replace(/<[^>]+>/g, "").trim();
+        const match = text.replace(/^\$\s*/, "").match(/^(\w+)/);
+        if (match) {
+          const cmd = match[1].toLowerCase();
+          if (["npm", "pnpm", "yarn", "bun"].includes(cmd)) {
+            const cmdIcon = icons[cmd as keyof typeof icons];
+            if (cmdIcon) icon = cmdIcon;
+          }
+        }
+      }
+
+      return {
+        label,
+        language,
+        icon,
+        content: code,
+      };
+    });
 
     return (
       <div className="code-group border rounded-md overflow-hidden mb-5 bg-background">
@@ -120,7 +152,7 @@ export default function CodeGroupComponent({
               )}
               type="button"
             >
-              <Icon icon={getCurrentIcon(tab.label, tab.language)} width={16} />
+              <Icon icon={tab.icon} width={16} />
               <span>{tab.label}</span>
             </button>
           ))}
@@ -156,47 +188,8 @@ export default function CodeGroupComponent({
         </div>
       )}
       <div ref={containerRef} className="code-group-content">
-        {children}
+        {props.children}
       </div>
     </div>
   );
 }
-
-const icons = {
-  markdown: "devicon:markdown",
-  mdx: "devicon:markdown",
-  html: "devicon:html5",
-  css: "devicon:css3",
-  javascript: "devicon:javascript",
-  js: "devicon:javascript",
-  typescript: "devicon:typescript",
-  ts: "devicon:typescript",
-  python: "devicon:python",
-  py: "devicon:python",
-  dart: "devicon:dart",
-  rust: "catppuccin:rust",
-  rs: "catppuccin:rust",
-  npm: "devicon:npm",
-  yarn: "devicon:yarn",
-  pnpm: "devicon:pnpm",
-  bun: "devicon:bun",
-  vite: "devicon:vite",
-  "tailwind.config.js": "devicon:tailwindcss",
-  "tailwind.config.ts": "devicon:tailwindcss",
-  react: "devicon:react",
-  nextjs: "devicon:nextjs",
-  svelte: "devicon:svelte",
-  vue: "devicon:vuejs",
-  go: "devicon:go",
-  bash: "devicon:bash",
-  sh: "devicon:bash",
-  shell: "devicon:bash",
-  sql: "devicon:azuresqldatabase",
-  yaml: "devicon:yaml",
-  yml: "devicon:yaml",
-  json: "devicon:json",
-  dockerfile: "devicon:docker",
-  git: "devicon:git",
-  github: "devicon:github",
-  gitlab: "devicon:gitlab",
-};
