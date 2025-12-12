@@ -1,3 +1,4 @@
+import Callout from "@/components/content/callout.astro";
 import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
 import CodeGroup from "@/components/content/code-group/code-group.astro";
@@ -49,6 +50,7 @@ export default defineExplainerConfig({
       codegroup: CodeGroup,
       "code-group": CodeGroup,
       pre: CodeBlock,
+      callout: Callout,
     },
     icons: {
       markdown: "devicon:markdown",

@@ -18,7 +18,6 @@ import rehypeMermaid from "rehype-mermaid";
 import rehypeBlogListReact from "./src/lib/plugins/blog-list/plugin";
 import remarkBlockParser from "./src/lib/plugins/parser/plugin";
 import remarkDirectivePkg from "remark-directive";
-import remarkReadMoreDirective from "./src/lib/plugins/read-more/remark-directive";
 import sitemap from "@astrojs/sitemap";
 import { buildDocIntegration } from "./src/hooks/build-doc";
 import transformerMetaLabel from "./src/lib/plugins/shiki/transformer-meta-label";
@@ -49,11 +48,7 @@ export default defineConfig({
       type: "shiki",
       excludeLangs: ["mermaid"],
     },
-    remarkPlugins: [
-      remarkDirectivePkg,
-      remarkBlockParser,
-      remarkReadMoreDirective,
-    ],
+    remarkPlugins: [remarkDirectivePkg, remarkBlockParser],
     rehypePlugins: [
       rehypeMermaid,
       [

@@ -23,9 +23,7 @@ To organise the documentation, each section or complete documentation must be co
 
 Each documentation folder must contain a configuration file named `_default.md`. This file defines the metadata for the section, and its front matter must follow the following structure :
 
-:::codegroup labels=[Tree]
-
-```
+```plain [Tree]
 ├── content/
 │  ├── [...page]
 │  └── docs/
@@ -35,13 +33,11 @@ Each documentation folder must contain a configuration file named `_default.md`.
 │        └── second_file.mdx
 ```
 
-:::
-
 The configuration file is structured in the form of standardised `frontmatter`, which allows various information to be defined.
 
-:::codegroup labels=[_example.mdx, Collection]
+:::codegroup
 
-```mdx
+```mdx [example]
 ---
 label: My documentation
 directory: my_doc
@@ -54,7 +50,7 @@ collection:
 ---
 ```
 
-```ts
+```ts [Collection]
 export const docDefaultSchema = z.object({
   label: z.string(),
   description: z.string(),
@@ -82,9 +78,9 @@ export const docDefaultSchema = z.object({
 
 The other Markdown files (`.md` or `.mdx`) in the same folder represent the individual pages of the documentation. The front matter of each of these files must comply with the following schema :
 
-:::codegroup labels=[first_file.mdx, Collection]
+:::codegroup
 
-```mdx
+```mdx [first_file.mdx]
 ---
 title: First file
 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -95,7 +91,7 @@ visibility:
 ---
 ```
 
-```typescript
+```typescript [Collection]
 export const docSchema = z.object({
   title: z.string(),
   description: z.string(),
