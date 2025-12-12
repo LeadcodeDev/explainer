@@ -220,11 +220,11 @@ h6 {
     border-spacing: 0;
     border-style: hidden;
     border-radius: 0.5rem !important;
-    border: 1px solid var(--color-border-tab);
+    border: 1px solid var(--color-border) !important;
   }
 
   thead {
-    border: 1px solid var(--color-border-tab);
+    border: 1px solid var(--color-border);
     border-radius: 0.5rem !important;
     background-color: var(--tab-container);
   }
@@ -234,13 +234,13 @@ h6 {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
     text-align: left;
-    border-right: 1px solid var(--ui-border-muted);
-    border-bottom: 1px solid var(--ui-border-muted);
-    border-top: 1px solid var(--ui-border-muted);
+    border-right: 1px solid var(--ui-border);
+    border-bottom: 1px solid var(--ui-border);
+    border-top: 1px solid var(--ui-border);
   }
 
   tbody tr {
-    border: 1px solid var(--color-border-tab);
+    border: 1px solid var(--color-border);
   }
 
   tbody td {
@@ -248,9 +248,9 @@ h6 {
     font-size: 0.875rem;
     text-align: left;
     vertical-align: top;
-    border-right: 1px solid var(--ui-border-muted);
-    border-bottom: 1px solid var(--ui-border-muted);
-    border-left: 1px solid var(--ui-border-muted);
+    border-right: 1px solid var(--ui-border);
+    border-bottom: 1px solid var(--ui-border);
+    border-left: 1px solid var(--ui-border);
   }
 
   img {
@@ -295,7 +295,7 @@ html.dark .prose > .astro-code {
   border-radius: 0.5rem;
   font-size: 0.875rem;
   position: relative;
-  border: 1px solid var(--color-border-tab) !important;
+  border: 1px solid var(--color-border) !important;
 
   .line {
     padding-left: 1.5rem !important;

@@ -1,0 +1,13 @@
+---
+import CodeGroupComponent from "./code-group";
+
+interface Props {
+  labels?: string;
+}
+
+const props = Astro.props;
+---
+
+<CodeGroupComponent client:load {...props}>
+  <slot />
+</CodeGroupComponent>

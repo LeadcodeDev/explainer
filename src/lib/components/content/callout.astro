@@ -1,0 +1,81 @@
+---
+import { cn } from "@/utils";
+import { Icon } from "@iconify/react";
+import { undefined } from "astro:schema";
+
+type Props = {
+  to: string;
+  text?: string;
+  variant?: Variant;
+};
+
+const props = Astro.props;
+
+type Variant = "info" | "success" | "warning" | "danger";
+
+const icons: Record<Variant, string> = {
+  info: "lucide:info",
+  success: "lucide:lightbulb",
+  warning: "lucide:triangle-alert",
+  danger: "lucide:circle-alert",
+};
+
+const variants: Record<Variant, string> & Record<"_default", string> = {
+  _default: "bg-background !text-muted-foreground",
+  info: "bg-blue-50 border-blue-200 !text-blue-500",
+  success: "bg-green-50 border-green-300 !text-green-700",
+  warning: "bg-yellow-50 border-orange-200 !text-yellow-700",
+  danger: "bg-red-100 border-red-300 !text-red-500",
+};
+
+const currentIcon = props.variant ? icons[props.variant] : undefined;
+const currentVariant = variants[props.variant ?? "_default"];
+---
+
+<div
+  class:list={cn(
+    "callout group relative flex gap-1 px-4 py-1 w-full rounded-md text-sm/6 my-2 transition-colors border hover:border-solid [&>p]:text-sm !font-light",
+    currentVariant,
+  )}
+  style={{
+    textDecoration: "none",
+  }}
+>
+  <div class="flex mt-[10px] justify-center">
+    {
+      currentIcon && (
+        <Icon
+          client:load
+          icon={currentIcon as string}
+          className="size-4 shrink-0 align-sub me-1.5 inline-block transition-colors"
+        />
+      )
+    }
+  </div>
+  <div class="flex-1">
+    <slot />
+  </div>
+</div>
+
+<style is:global>
+  div.callout {
+    * {
+      color: inherit;
+    }
+    p {
+      &:not(:first-child) {
+        padding-top: 0;
+      }
+      &:not(:last-child) {
+        padding-bottom: 0;
+      }
+    }
+    pre {
+      padding: 0 !important;
+
+      > code {
+        border: none !important;
+      }
+    }
+  }
+</style>

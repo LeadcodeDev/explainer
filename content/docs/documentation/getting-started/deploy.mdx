@@ -15,11 +15,13 @@ Your environment must support installing Playwrite and its browsers in order for
 
 Explainer provides a GitHub Actions workflow to deploy your static site to a Cloudflare Pages environment.
 
-> [!NOTE]
-> Cloudflare does not allow the installation of Playwright or its browsers.
-> You must use an external CI/CD pipeline to generate the diagrams and then push them to your Cloudflare Pages environment.
+:::callout{variant="info"}
+Cloudflare does not allow the installation of Playwright or its browsers.
 
-```yaml
+You must use an external CI/CD pipeline to generate the diagrams and then push them to your Cloudflare Pages environment.
+:::
+
+```yaml [.github/workflows/deploy.yml]
 name: Astro CI/CD with Playwright & Cloudflare Pages
 
 on:
