@@ -1,0 +1,49 @@
+---
+import { cn } from "@/utils";
+
+type Props = {
+  title?: string;
+  class?: string;
+};
+const { title, class: className } = Astro.props;
+---
+
+<div class={cn("step relative flex gap-6 pb-8 last:pb-0", className)}>
+  <div
+    class="step-line absolute left-4 top-0 h-full w-px bg-border -translate-x-1/2"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="step-number relative z-10 flex items-center justify-center size-8 bg-secondary rounded-full border border-border text-sm font-semibold text-foreground shrink-0"
+  >
+  </div>
+  <div class="flex-1 min-w-0">
+    {
+      title && (
+        <h3 class="text-lg font-semibold !mt-0 pt-0 mb-3 leading-none text-foreground">
+          {title}
+        </h3>
+      )
+    }
+    <div class="step-content text-muted-foreground [&>p:first-child]:!pt-0">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .step-group {
+    counter-reset: step;
+  }
+</style>
+
+<style>
+  .step {
+    counter-increment: step;
+  }
+
+  .step-number::after {
+    content: counter(step);
+  }
+</style>
