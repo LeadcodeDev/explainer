@@ -7,11 +7,46 @@ icon: lucide:grid-2x2
 
 # Steps
 
+This section details various processes or features, broken down into a series of manageable steps.
+
+Each `step-group` provides a structured guide, with individual steps offering explanations, instructions, and often code examples to help you achieve a specific goal or understand a particular concept.
+
+Follow the sequence of steps to successfully complete the task.
+
+## Usage
+
 ::::step-group
-:::step
+:::step{title="Lorem ipsum dolor sit amet"}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+```rs [main.rs]
+fn main() {
+    println!("Hello, world!");
+}
+```
+
 :::
-:::step
+:::step{title="Lorem ipsum dolor sit amet"}
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 :::
 ::::
+
+````plain [Simple steps]
+::::step-group
+  :::step{title="Lorem ipsum dolor sit amet"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+    ```rs [main.rs]
+    fn main() {
+        println!("Hello, world!");
+    }
+    ```
+  :::
+
+  :::step{title="Lorem ipsum dolor sit amet"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+::::
+````
