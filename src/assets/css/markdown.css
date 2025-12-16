@@ -58,7 +58,6 @@ h4,
 h5,
 h6 {
   scroll-margin-top: 100px;
-  color: var(--title-color);
 }
 
 .prose {
@@ -437,105 +436,4 @@ html.dark .prose > .astro-code {
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
   border: none !important;
-}
-
-.callout {
-  margin: 1rem 0;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-
-  .callout-title {
-    display: none;
-  }
-
-  .callout-content {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0.8;
-    font-size: var(--text-sm);
-
-    > *:first-child {
-      margin-top: 0;
-    }
-
-    > *:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &[data-callout="note"] {
-    background-color: var(--callout-note-bg);
-    border: 1px solid
-      color-mix(in oklab, var(--callout-note-border) 25%, transparent);
-    color: var(--callout-note);
-
-    .callout-content {
-      &::before {
-        content: "ⓘ";
-        font-size: 1.2rem;
-        color: var(--callout-note);
-      }
-    }
-  }
-
-  &[data-callout="success"] {
-    background-color: var(--callout-success-bg);
-    border: 1px solid
-      color-mix(in oklab, var(--callout-success-border) 25%, transparent);
-    color: var(--callout-success);
-
-    .callout-content {
-      &::before {
-        content: "✓";
-        font-size: 1.2rem;
-        color: var(--callout-success);
-      }
-    }
-  }
-
-  &[data-callout="important"] {
-    background-color: var(--callout-important-bg);
-    border: 1px solid
-      color-mix(in oklab, var(--callout-important-border) 25%, transparent);
-    color: var(--callout-important);
-
-    .callout-content {
-      &::before {
-        content: "✧";
-        font-size: 1.5rem;
-        color: var(--callout-important);
-      }
-    }
-  }
-
-  &[data-callout="warning"] {
-    background-color: var(--callout-warning-bg);
-    border: 1px solid
-      color-mix(in oklab, var(--callout-warning-border) 25%, transparent);
-    color: var(--callout-warning);
-
-    .callout-content {
-      &::before {
-        content: "⚠︎";
-        font-size: 1.4rem;
-        color: var(--callout-warning);
-      }
-    }
-  }
-
-  &[data-callout="error"] {
-    background-color: var(--callout-error-bg);
-    border: 1px solid
-      color-mix(in oklab, var(--callout-error-border) 25%, transparent);
-    color: var(--callout-error);
-
-    .callout-content {
-      &::before {
-        content: "✗";
-        font-size: 1.2em;
-        color: var(--callout-error);
-      }
-    }
-  }
 }

@@ -13,9 +13,7 @@ import {
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
-import rehypeCallouts from "rehype-callouts";
 import rehypeMermaid from "rehype-mermaid";
-import rehypeBlogListReact from "./src/lib/plugins/blog-list/plugin";
 import remarkBlockParser from "./src/lib/plugins/parser/plugin";
 import remarkDirectivePkg from "remark-directive";
 import sitemap from "@astrojs/sitemap";
@@ -49,20 +47,7 @@ export default defineConfig({
       excludeLangs: ["mermaid"],
     },
     remarkPlugins: [remarkDirectivePkg, remarkBlockParser],
-    rehypePlugins: [
-      rehypeMermaid,
-      [
-        rehypeCallouts,
-        {
-          customClassNames: {
-            calloutClass: "callout",
-            calloutTitleClass: "callout-title",
-            calloutContentClass: "callout-content",
-          },
-        },
-      ],
-      rehypeBlogListReact,
-    ],
+    rehypePlugins: [rehypeMermaid],
   },
 
   vite: {

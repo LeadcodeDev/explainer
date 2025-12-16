@@ -11,7 +11,7 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 import { NewspaperIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import config from "../../../explainer.config";
-import BlogListWrapper from "../../lib/plugins/blog-list/BlogListWrapper.astro";
+import Articles from "@/components/elements/articles.astro";
 interface Props {
   element: CollectionEntry<"blog">;
 }
@@ -175,14 +175,14 @@ const headingTree = buildHeadingTree(availableHeadings);
     <div class="relative pt-5 flex justify-between w-full">
       <div class="w-full max-w-4xl">
         <div class="prose">
-          <Content
-            components={{ ...config.content.components, BlogListWrapper }}
-          />
+          <Content components={config.content.components} />
         </div>
 
         <div class="pt-20">
           <div class="flex flex-col gap-5">
-            <h2 class="text-4xl sm:text-4xl text-pretty font-medium">
+            <h2
+              class="text-4xl sm:text-4xl text-primary text-pretty font-medium"
+            >
               Find our recent articles
             </h2>
             <div class="max-w-2xl text-muted-foreground">
@@ -192,7 +192,7 @@ const headingTree = buildHeadingTree(availableHeadings);
             </div>
           </div>
 
-          <BlogListWrapper perLine={3} current={element.id} />
+          <Articles perLine={3} current={element.id} />
         </div>
       </div>
 

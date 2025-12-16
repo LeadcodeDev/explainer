@@ -8,6 +8,7 @@ import Preview from "@/components/content/code-preview/preview.astro";
 import CodeBlock from "@/components/content/codeblock.astro";
 import StepGroup from "@/components/content/step-group/step-group.astro";
 import Step from "@/components/content/step-group/step.astro";
+import Articles from "@/components/elements/articles.astro";
 import { defineExplainerConfig } from "@/utils";
 
 export default defineExplainerConfig({
@@ -61,6 +62,7 @@ export default defineExplainerConfig({
       "code-preview": CodePreview,
       "content-preview": ContentPreview,
       preview: Preview,
+      articles: Articles,
     },
     icons: {
       markdown: "devicon:markdown",

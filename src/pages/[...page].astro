@@ -1,6 +1,6 @@
 ---
-import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
 import { render, getCollection } from "astro:content";
+import config from "../../explainer.config";
 import Layout from "@/layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -46,5 +46,5 @@ const { Content } = await render(page);
 ---
 
 <Layout>
-  <Content components={{ BlogListWrapper }} />
+  <Content components={config.content.components} />
 </Layout>
