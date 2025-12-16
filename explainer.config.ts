@@ -2,6 +2,9 @@ import Callout from "@/components/content/callout.astro";
 import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
 import CodeGroup from "@/components/content/code-group/code-group.astro";
+import CodePreview from "@/components/content/code-preview/code-preview.astro";
+import ContentPreview from "@/components/content/code-preview/content-preview.astro";
+import Preview from "@/components/content/code-preview/preview.astro";
 import CodeBlock from "@/components/content/codeblock.astro";
 import StepGroup from "@/components/content/step-group/step-group.astro";
 import Step from "@/components/content/step-group/step.astro";
@@ -55,6 +58,9 @@ export default defineExplainerConfig({
       callout: Callout,
       "step-group": StepGroup,
       step: Step,
+      "code-preview": CodePreview,
+      "content-preview": ContentPreview,
+      preview: Preview,
     },
     icons: {
       markdown: "devicon:markdown",

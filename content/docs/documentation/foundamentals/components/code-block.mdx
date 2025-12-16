@@ -18,7 +18,10 @@ Highlighting can be done before or after the declaration with the `[!code highli
 
 Single highlight can be done with the `[!code highlight]` syntax.
 
-```rust
+::::preview
+:::code-preview
+
+```rs
 pub struct User {
   // [!code highlight]
   pub firstname: String,
@@ -26,16 +29,55 @@ pub struct User {
 }
 ```
 
-```rust
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  // [!code highlight]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+::::preview
+:::code-preview
+
+```rs
 pub struct User {
   pub firstname: String,
   pub lastname: String, // [!code highlight]
 }
 ```
 
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String,
+  pub lastname: String, // [!code highlight]
+}
+```
+````
+
+:::
+::::
+
 ### Multiple lines
 
 Multiple highlights can be done with the `[!code highlight:1,2]` syntax.
+
+::::preview
+:::code-preview
 
 ```rust {1,3-4}
 pub struct User {
@@ -44,19 +86,55 @@ pub struct User {
 }
 ```
 
+:::
+
+:::content-preview
+
+````mdx
+```rust {1,3-4}
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
 ---
 
 ## Code block with focused line
 
 The `[!code focus:<n>]` syntax will highlight the line 2 of the code block.
 
+::::preview
+:::code-preview
+
 ```rust
+pub struct User {
+  // [!code focus:2]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
 pub struct User {
     // [!code focus:2]
   pub firstname: String,
   pub lastname: String,
 }
 ```
+````
+
+:::
+::::
 
 ---
 
@@ -68,12 +146,31 @@ The `[!code error]` and `[!code warning]` syntax will highlight the line with th
 
 Error status can be done with the `[!code error]` syntax.
 
+::::preview
+:::code-preview
+
 ```rust
 pub struct User {
   pub firstname: String // [!code error]
   pub lastname: String,
 }
 ```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String // [!code error]
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
 
 ### Code block with warning
 
@@ -88,6 +185,9 @@ pub struct User {
 
 ## Include embedded code blocks
 
+::::preview
+:::code-preview
+
 ```rs [entities/user.rs]
 pub struct User {
   pub firstname: String,
@@ -95,7 +195,11 @@ pub struct User {
 }
 ```
 
-````
+:::
+
+:::content-preview
+
+````mdx
 ```rs [entities/user.rs]
 pub struct User {
   pub firstname: String,
@@ -103,12 +207,18 @@ pub struct User {
 }
 ```
 ````
+
+:::
+::::
 
 ---
 
 ## Line modifiers
 
 The `[!code --]` and `[!code ++]` syntax will remove or add a line to the code block.
+
+::::preview
+:::code-preview
 
 ```rust
 pub struct User {
@@ -124,12 +234,38 @@ impl User {
 }
 ```
 
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new() -> Self { // [!code --]
+  pub fn new(firstname: String, lastname: String) -> Self { // [!code ++]
+    Self { firstname, lastname }
+  }
+}
+```
+````
+
+:::
+::::
+
 ---
 
 ## Group code blocks
 
 > [!warning] This is a **collapsible** callout
 > Only code blocks can be used in a group.
+
+:::::preview
+::::code-preview
 
 :::codegroup
 
@@ -154,6 +290,10 @@ impl User {
 ```
 
 :::
+
+::::
+
+::::content-preview
 
 ````md
 :::codegroup
@@ -180,3 +320,6 @@ impl User {
 
 :::
 ````
+
+::::
+:::::
