@@ -2,6 +2,12 @@
 import { render, getCollection } from "astro:content";
 import config from "../../explainer.config";
 import Layout from "@/layouts/Layout.astro";
+import HeroSection from "@/components/elements/hero-section.astro";
+import FeaturesSection from "@/components/elements/features-section.astro";
+import HighlightsSection from "@/components/elements/highlights-section.astro";
+import TestimonialsSection from "@/components/elements/testimonials-section.astro";
+import CtaSection from "@/components/elements/cta-section.astro";
+import BlogSection from "@/components/elements/blog-section.astro";
 
 export async function getStaticPaths() {
   const allPages = await getCollection("pages");
@@ -46,5 +52,15 @@ const { Content } = await render(page);
 ---
 
 <Layout>
-  <Content components={config.content.components} />
+  <Content
+    components={{
+      ...config.content.components,
+      "hero-section": HeroSection,
+      "features-section": FeaturesSection,
+      "highlights-section": HighlightsSection,
+      "testimonials-section": TestimonialsSection,
+      "cta-section": CtaSection,
+      "blog-section": BlogSection,
+    }}
+  />
 </Layout>

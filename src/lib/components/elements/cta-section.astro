@@ -1,0 +1,67 @@
+---
+import { Icon } from "@iconify/react";
+import { Button } from "@/components/ui/button";
+
+const title = "Ready to get started?";
+const description =
+  "Start building your documentation in minutes. Free, open source, and yours to customize.";
+
+const action = {
+  label: "Read the docs",
+  href: "/docs/documentation/getting-started/getting-started",
+};
+---
+
+<div
+  class="w-full max-w-[var(--container-width)] mx-auto px-5 py-16 sm:py-24 lg:py-32"
+>
+  <div
+    class="relative overflow-hidden border rounded-2xl bg-primary/5 px-8 py-16 sm:px-16 sm:py-20 text-center"
+  >
+    <!-- Decorative circles -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <!-- Top-left — ellipse bleeding off card -->
+      <div
+        class="absolute -top-16 -left-16 w-64 h-48 rounded-full border-2 border-primary/10"
+      >
+      </div>
+
+      <!-- Bottom-right — concentric circles bleeding off card -->
+      <div
+        class="absolute -bottom-20 -right-20 w-64 h-64 rounded-full border-2 border-primary/10"
+      >
+      </div>
+      <div
+        class="absolute -bottom-12 -right-12 w-44 h-44 rounded-full border border-primary/[0.07]"
+      >
+      </div>
+
+      <!-- Floating dots -->
+      <div class="absolute top-8 right-1/4 size-2.5 rounded-full bg-primary/10">
+      </div>
+      <div
+        class="absolute bottom-10 left-[30%] size-2 rounded-full bg-primary/[0.08]"
+      >
+      </div>
+    </div>
+    <h2 class="text-3xl font-semibold text-highlighted sm:text-4xl">
+      {title}
+    </h2>
+    <p class="mt-4 text-lg text-muted-foreground max-w-xl mx-auto text-balance">
+      {description}
+    </p>
+    <div class="mt-8 flex justify-center">
+      <Button size="lg" className="cursor-pointer" client:load>
+        <a href={action.href} class="flex gap-2" rel="noopener noreferrer">
+          {action.label}
+          <Icon
+            icon="mdi:arrow-right"
+            aria-hidden="true"
+            className="size-5"
+            client:load
+          />
+        </a>
+      </Button>
+    </div>
+  </div>
+</div>

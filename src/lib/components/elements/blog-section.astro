@@ -1,0 +1,27 @@
+---
+import Articles from "@/components/elements/articles.astro";
+import config from "explainer.config";
+
+const title = "From the blog";
+const description = `Latest news and tips from the ${config.projectName} team.`;
+---
+
+<div
+  class="w-full max-w-[var(--container-width)] mx-auto px-5 py-16 sm:py-24 lg:py-32"
+>
+  <div class="text-center mb-16">
+    <p class="text-sm font-semibold text-primary uppercase tracking-wide mb-3">
+      Blog
+    </p>
+    <h2 class="text-3xl font-semibold text-highlighted sm:text-4xl">
+      {title}
+    </h2>
+    <p
+      class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-balance"
+    >
+      {description}
+    </p>
+  </div>
+
+  <Articles />
+</div>
