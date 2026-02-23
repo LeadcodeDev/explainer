@@ -19,7 +19,15 @@ const posts = contents
       import.meta.env.DEV ||
       (item.data.publishedAt && new Date(item.data.publishedAt) <= new Date()),
   )
-  .reverse();
+  .sort((a, b) => {
+    const dateA = a.data.publishedAt
+      ? new Date(a.data.publishedAt).getTime()
+      : 0;
+    const dateB = b.data.publishedAt
+      ? new Date(b.data.publishedAt).getTime()
+      : 0;
+    return dateB - dateA;
+  });
 
 const itemPerLine = {
   1: "lg:grid-cols-1",
@@ -46,7 +54,6 @@ const itemPerLine = {
   {
     posts
       .filter((post) => post.id !== current)
-      .reverse()
       .map((post) => (
         <a
           href={`/blog/${post.data.permalink}`}
@@ -62,7 +69,10 @@ const itemPerLine = {
             )}
           <div class="overflow-hidden rounded-lg">
             <img
-              src={post.data?.thumbnail ?? config.blog.defaults.thumbnail}
+              src={
+                post.data?.thumbnail ??
+                `/blog/${post.data.permalink}/thumbnail.png`
+              }
               alt={post.data.title}
               class="w-full h-48 object-cover rounded-lg"
             />

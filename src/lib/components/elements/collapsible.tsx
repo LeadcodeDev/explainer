@@ -1,5 +1,5 @@
 import * as CollapsiblePrimitives from "@/components/ui/collapsible";
-import type { DocSection } from "@/utils";
+import type { DocSection, DocTreeNode } from "@/utils";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import { useEffect, useState, type PropsWithChildren } from "react";
@@ -63,19 +63,18 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
             )}
             <p className="truncate">{props.item.data.label}</p>
           </div>
-          {props.isNestedElement && (
-            <Icon
-              icon="lucide:chevron-down"
-              width={16}
-              height={16}
-              className={clsx(
-                "shrink-0 mr-1",
-                currentPathname.startsWith(`/docs/${props.item.id}`)
-                  ? "text-primary"
-                  : "group-data-[state=open]:text-muted-foreground",
-              )}
-            />
-          )}
+          <Icon
+            icon="lucide:chevron-down"
+            width={16}
+            height={16}
+            className={clsx(
+              "shrink-0 mr-1 transition-transform",
+              isOpen && "rotate-180",
+              currentPathname.startsWith(`/docs/${props.item.id}`)
+                ? "text-primary"
+                : "group-data-[state=open]:text-muted-foreground",
+            )}
+          />
         </div>
       </CollapsiblePrimitives.CollapsibleTrigger>
       <CollapsiblePrimitives.CollapsibleContent className="flex flex-col pl-1.5 ml-1">

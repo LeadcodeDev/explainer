@@ -14,34 +14,70 @@ async function renderThumbnail(svg: string, outputPath: string): Promise<void> {
   await writeFile(outputPath, png.asPng());
 }
 
+async function buildBlogMetadataMap() {
+  const blogDir = join(process.cwd(), "content/blog");
+  const allBlogFiles = await readdir(blogDir);
+  const blogFiles = allBlogFiles.filter(
+    (f) => (f.endsWith(".mdx") || f.endsWith(".md")) && f !== "index.mdx",
+  );
+  const blogMap = new Map<
+    string,
+    { title: string; description: string; thumbnail?: string }
+  >();
+  for (const file of blogFiles) {
+    const content = await readFile(join(blogDir, file), "utf8");
+    const { data } = matter(content);
+    if (data.permalink) {
+      blogMap.set(data.permalink, {
+        title: data.title,
+        description: data.description,
+        thumbnail: data.thumbnail,
+      });
+    }
+  }
+  return blogMap;
+}
+
+async function generateBlogThumbnails(
+  blogMap: Map<
+    string,
+    { title: string; description: string; thumbnail?: string }
+  >,
+  outputDir: string,
+  logger: { info: (msg: string) => void; warn: (msg: string) => void },
+) {
+  const tasks = [...blogMap.entries()]
+    .filter(([, data]) => !data.thumbnail)
+    .map(([slug, data]) => async () => {
+      const thumbnail = await generateThumbnail("Blog", data.title);
+      const location = join(outputDir, "blog", slug);
+      await mkdir(location, { recursive: true });
+      await renderThumbnail(thumbnail, join(location, "thumbnail.png"));
+      logger.info(`Thumbnail generated for blog/${slug}`);
+    });
+
+  await Promise.all(
+    tasks.map(async (task) => {
+      try {
+        await task();
+      } catch (error) {
+        logger.warn(`Failed to generate thumbnail: ${error}`);
+      }
+    }),
+  );
+}
+
 export function buildDocIntegration(): AstroIntegration {
   return {
     name: "@explainer/renderer",
     hooks: {
+      "astro:config:setup": async ({ logger }) => {
+        const blogMap = await buildBlogMetadataMap();
+        const publicDir = join(process.cwd(), "public");
+        await generateBlogThumbnails(blogMap, publicDir, logger);
+      },
       "astro:build:done": async ({ pages, logger }) => {
-        logger.info("Starting thumbnail generation");
-
-        // Build blog metadata map upfront (permalink → { title, description })
-        const blogDir = join(process.cwd(), "content/blog");
-        const allBlogFiles = await readdir(blogDir);
-        const blogFiles = allBlogFiles.filter(
-          (f) => (f.endsWith(".mdx") || f.endsWith(".md")) && f !== "index.mdx",
-        );
-        const blogMap = new Map<
-          string,
-          { title: string; description: string; thumbnail?: string }
-        >();
-        for (const file of blogFiles) {
-          const content = await readFile(join(blogDir, file), "utf8");
-          const { data } = matter(content);
-          if (data.permalink) {
-            blogMap.set(data.permalink, {
-              title: data.title,
-              description: data.description,
-              thumbnail: data.thumbnail,
-            });
-          }
-        }
+        logger.info("Starting doc thumbnail generation");
 
         // Collect doc thumbnail tasks
         const docTasks = pages
@@ -72,33 +108,8 @@ export function buildDocIntegration(): AstroIntegration {
             logger.info(`Thumbnail generated for docs/${file}`);
           });
 
-        // Collect blog thumbnail tasks
-        const blogTasks = pages
-          .filter((element) => element.pathname.startsWith("blog/"))
-          .filter((element) => element.pathname !== "blog/")
-          .map((element) => async () => {
-            const slug = element.pathname
-              .replace("blog/", "")
-              .replace(/\/$/, "");
-            const blogData = blogMap.get(slug);
-            if (!blogData || blogData.thumbnail) return;
-
-            const thumbnail = await generateThumbnail(
-              "Blog",
-              blogData.title,
-              blogData.description,
-            );
-
-            const location = join(process.cwd(), "dist", "blog", slug);
-            await mkdir(location, { recursive: true });
-            await renderThumbnail(thumbnail, join(location, "thumbnail.png"));
-            logger.info(`Thumbnail generated for blog/${slug}`);
-          });
-
-        // Run ALL thumbnails in a single batch so Vite module runner stays active
-        const allTasks = [...docTasks, ...blogTasks];
         await Promise.all(
-          allTasks.map(async (task) => {
+          docTasks.map(async (task) => {
             try {
               await task();
             } catch (error) {

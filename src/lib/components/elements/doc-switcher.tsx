@@ -79,7 +79,7 @@ export default function DocSwitcher(props: Props) {
             <DropdownMenuItem
               key={element.id}
               asChild
-              className={`gap-2 p-2 ${isCurrent ? "text-primary" : "text-muted"}`}
+              className={`gap-2 p-2 ${isCurrent ? "text-primary" : "text-secondary-foreground"}`}
             >
               <a href={href ?? "#"}>
                 <div className="flex size-6 items-center justify-center rounded-md border">

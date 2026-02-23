@@ -1,0 +1,157 @@
+---
+title: What's new in Explainer 2.0
+description: "A major update bringing new components, improved navigation, auto-generated thumbnails, and a polished design system."
+permalink: whats-new-2.0
+authors:
+  - leadcode_dev
+publishedAt: "2026-02-23"
+---
+
+# What's new in Explainer 2.0
+
+We're excited to announce a major update to Explainer that brings a host of new features, components, and design improvements. Here's a summary of everything that's changed.
+
+:::callout{variant="info"}
+This release includes breaking changes. If you're upgrading from a previous version, please review each section carefully.
+:::
+
+---
+
+## New landing page
+
+Explainer now ships with a fully designed landing page — ready to use out of the box.
+
+::::card-group
+:::card{title="Hero Section" icon="lucide:sparkles"}
+A bold, animated hero with primary and secondary call-to-action buttons.
+:::
+:::card{title="Features Grid" icon="lucide:layout-grid"}
+Showcase your project's key features in a responsive grid layout.
+:::
+:::card{title="Testimonials" icon="lucide:message-circle"}
+Display user feedback with a clean, rotating testimonial section.
+:::
+:::card{title="Blog Section" icon="lucide:newspaper"}
+Automatically pull your latest blog posts onto the homepage.
+:::
+::::
+
+---
+
+## New MDX components
+
+::::card-group
+:::card{title="Step Groups" icon="lucide:list-ordered"}
+Guide readers through multi-step processes with a clear, numbered layout.
+:::
+:::card{title="Code Previews" icon="lucide:eye"}
+Show live rendered output alongside source code — perfect for documenting UI components.
+:::
+:::card{title="Blockquote" icon="lucide:quote"}
+Styled citations with optional author attribution using the `—` convention.
+:::
+:::card{title="Code Groups" icon="lucide:columns-2"}
+Tabbed code blocks to present multiple files or languages side by side.
+:::
+:::card{title="Card Groups" icon="lucide:layout-grid"}
+Display feature cards in a responsive grid with icons and descriptions.
+:::
+:::card{title="Articles" icon="lucide:newspaper"}
+Embed a blog article listing directly inside your documentation pages.
+:::
+::::
+
+---
+
+## Heading anchor links
+
+All `h2` and `h3` headings now generate clickable anchor links. Hover over any heading to reveal the `#` symbol, click it to update the URL, and share a direct link to that section.
+
+> The best documentation is the one you can link to directly.
+>
+> — The Explainer Team
+
+---
+
+## Improved navigation
+
+::::step-group
+:::step{title="Doc Switcher"}
+A redesigned documentation switcher in the sidebar with descriptions and active state indicators.
+:::
+:::step{title="Navbar Dropdowns"}
+The navbar now supports dropdown menus with icons and descriptions for richer navigation.
+:::
+:::step{title="Full-text Search"}
+The search bar now indexes all documentation content for full-text search across your docs.
+:::
+:::step{title="Previous / Next"}
+Navigate between documentation pages with contextual links at the bottom of each page.
+:::
+::::
+
+---
+
+## Auto-generated thumbnails
+
+Blog posts and documentation pages now get automatically generated Open Graph thumbnails during build. Powered by Satori, each thumbnail features your project's primary color, the page title, and a clean dark design.
+
+:::callout{variant="success"}
+No manual image creation needed — thumbnails are generated at build time and served as static assets.
+:::
+
+---
+
+## Documentation restructuring
+
+The documentation now supports multiple doc collections with a clean switcher. Direct pages at the root of a collection are also supported alongside nested folder structures.
+
+:::codegroup
+
+```txt [Before]
+content/
+  docs/
+    getting-started/
+      installation.mdx
+      configuration.mdx
+```
+
+```txt [After]
+content/
+  docs/
+    framework/
+      getting-started/
+        installation.mdx
+    documentation/
+      demo.mdx
+```
+
+:::
+
+---
+
+## Design polish
+
+:::callout{variant="warning"}
+If you customized the color tokens in your `global.css`, make sure to update them to match the new naming convention.
+:::
+
+| Feature          | Status   |
+| ---------------- | -------- |
+| Landing page     | New      |
+| Step groups      | New      |
+| Code previews    | New      |
+| Blockquote       | New      |
+| Card groups      | New      |
+| Heading anchors  | New      |
+| Doc switcher     | Improved |
+| Navbar dropdowns | Improved |
+| Search           | Improved |
+| Thumbnails       | Improved |
+| Dark mode        | Improved |
+
+---
+
+## Getting started
+
+Ready to try it out? Head over to the [Getting Started](/docs/framework/getting-started/getting-started) guide to set up your own Explainer documentation.
