@@ -41,20 +41,44 @@ export default defineExplainerConfig({
   },
   navbar: [
     {
-      label: "Resources",
+      label: "Documentations",
       icon: "lucide:book",
       children: [
         {
-          label: "API",
-          description: "Full API docs",
-          icon: "mdi:code-braces",
-          href: "/api",
+          label: "Getting Started",
+          description: "Introduction to Explainer",
+          icon: "lucide:info",
+          href: "/docs/framework/getting-started/getting-started",
         },
         {
-          label: "Changelog",
-          description: "What's new",
-          icon: "mdi:history",
-          href: "/changelog",
+          label: "Installation",
+          description: "Install and set up the project",
+          icon: "lucide:play",
+          href: "/docs/framework/getting-started/installation",
+        },
+        {
+          label: "Project Structure",
+          description: "Understand the folder layout",
+          icon: "lucide:layout-panel-top",
+          href: "/docs/framework/getting-started/project-structure",
+        },
+        {
+          label: "Configuration",
+          description: "Configure your site",
+          icon: "lucide:settings-2",
+          href: "/docs/framework/getting-started/configuration",
+        },
+        {
+          label: "Deployment",
+          description: "Deploy your documentation",
+          icon: "lucide:cloud-lightning",
+          href: "/docs/framework/getting-started/deploy",
+        },
+        {
+          label: "Routing",
+          description: "File-based routing system",
+          icon: "lucide:signpost",
+          href: "/docs/framework/foundamentals/routing",
         },
       ],
     },

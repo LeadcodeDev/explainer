@@ -56,3 +56,71 @@ export default defineExplainerConfig({
   ],
 });
 ```
+
+---
+
+## Navbar
+
+The `navbar` array supports two types of entries: **simple links** and **dropdown menus**.
+
+### Simple link
+
+A simple link navigates directly to a page. You can optionally add an icon.
+
+```ts
+navbar: [
+  {
+    label: "Blog",
+    href: "/blog",
+    icon: "lucide:newspaper", // optional
+  },
+],
+```
+
+| Property | Type     | Description                       |
+| -------- | -------- | --------------------------------- |
+| `label`  | `string` | Display text                      |
+| `href`   | `string` | Target URL                        |
+| `icon`   | `string` | Iconify icon identifier (optional)|
+
+### Dropdown
+
+A dropdown entry displays a collapsible menu with a list of sub-items. Each sub-item can have its own label, description, icon and link.
+
+```ts
+navbar: [
+  {
+    label: "Resources",
+    icon: "lucide:book",
+    children: [
+      {
+        label: "API Reference",
+        description: "Full API docs",
+        icon: "mdi:code-braces",
+        href: "/api",
+      },
+      {
+        label: "Changelog",
+        description: "What's new",
+        icon: "mdi:history",
+        href: "/changelog",
+      },
+    ],
+  },
+],
+```
+
+| Property   | Type     | Description                          |
+| ---------- | -------- | ------------------------------------ |
+| `label`    | `string` | Display text for the trigger         |
+| `icon`     | `string` | Iconify icon on the trigger (optional)|
+| `children` | `array`  | List of sub-items                    |
+
+Each child item accepts the following properties:
+
+| Property      | Type     | Description                          |
+| ------------- | -------- | ------------------------------------ |
+| `label`       | `string` | Display text                         |
+| `description` | `string` | Short description shown below label (optional) |
+| `icon`        | `string` | Iconify icon identifier (optional)   |
+| `href`        | `string` | Target URL                           |
