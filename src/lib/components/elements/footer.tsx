@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import config from "explainer.config";
+import { Icon } from '@iconify/react'
+import config from 'explainer.config'
 
 export default function Footer() {
   return (
@@ -17,8 +17,7 @@ export default function Footer() {
                 className="text-gray-600 hover:text-gray-800"
               >
                 <span className="sr-only">{key}</span>
-                {config.socials.icons &&
-                key.toLowerCase() in config.socials.icons ? (
+                {config.socials.icons && key.toLowerCase() in config.socials.icons ? (
                   <Icon
                     icon={config.socials.icons[key.toLowerCase()]}
                     aria-hidden="true"
@@ -28,14 +27,13 @@ export default function Footer() {
                   key
                 )}
               </a>
-            );
+            )
           })}
         </div>
         <p className="mt-10 text-center text-sm/6 text-gray-600">
-          &copy; {new Date().getFullYear()} {config.seo.title}, Inc. All rights
-          reserved.
+          &copy; {new Date().getFullYear()} {config.seo.title}, Inc. All rights reserved.
         </p>
       </div>
     </footer>
-  );
+  )
 }

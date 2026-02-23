@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from 'react'
 
 import {
   CommandDialog,
@@ -8,40 +8,36 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
-import { useTheme } from "@/hooks/use-theme";
-import type { DocPage, DocSection } from "@/utils";
-import { Icon } from "@iconify/react";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "../ui/input-group";
-import { Kbd, KbdGroup } from "../ui/kbd";
+} from '@/components/ui/command'
+import { useTheme } from '@/hooks/use-theme'
+import type { DocPage, DocSection } from '@/utils'
+import { Icon } from '@iconify/react'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group'
+import { Kbd, KbdGroup } from '../ui/kbd'
 
 type SearchableDocEntry = DocSection & {
-  children: (DocPage & { description: string })[];
-};
+  children: (DocPage & { description: string })[]
+}
 
 type Props = {
-  items: SearchableDocEntry[];
-};
+  items: SearchableDocEntry[]
+}
 
 export function SearchCommand(props: Props) {
-  const { setTheme } = useTheme();
-  const [open, setOpen] = useState(false);
+  const { setTheme } = useTheme()
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
+      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        setOpen((open) => !open)
       }
-    };
+    }
 
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
 
   return (
     <Fragment>
@@ -74,26 +70,20 @@ export function SearchCommand(props: Props) {
                     key={page.id}
                     value={`${page.data.title} ${page.description}`}
                     onSelect={() => {
-                      setOpen(false);
-                      window.location.href = `/docs/${page.id}`;
+                      setOpen(false)
+                      window.location.href = `/docs/${page.id}`
                     }}
                     className="cursor-pointer"
                   >
                     <div className="flex items-center gap-2">
-                      <Icon
-                        icon={page.data.icon ?? "lucide:file-text"}
-                        width={16}
-                        height={16}
-                      />
-                      <span className="whitespace-nowrap">
-                        {page.data.title}
-                      </span>
+                      <Icon icon={page.data.icon ?? 'lucide:file-text'} width={16} height={16} />
+                      <span className="whitespace-nowrap">{page.data.title}</span>
                     </div>
                     <p className="text-muted/50 truncate">{page.description}</p>
                   </CommandItem>
                 ))}
               </CommandGroup>
-            );
+            )
           })}
 
           <CommandSeparator />
@@ -101,8 +91,8 @@ export function SearchCommand(props: Props) {
             <CommandItem
               value="theme light"
               onSelect={() => {
-                setTheme("light");
-                setOpen(false);
+                setTheme('light')
+                setOpen(false)
               }}
               className="cursor-pointer"
             >
@@ -112,8 +102,8 @@ export function SearchCommand(props: Props) {
             <CommandItem
               value="theme dark"
               onSelect={() => {
-                setTheme("dark");
-                setOpen(false);
+                setTheme('dark')
+                setOpen(false)
               }}
               className="cursor-pointer"
             >
@@ -123,8 +113,8 @@ export function SearchCommand(props: Props) {
             <CommandItem
               value="theme system"
               onSelect={() => {
-                setTheme("system");
-                setOpen(false);
+                setTheme('system')
+                setOpen(false)
               }}
               className="cursor-pointer"
             >
@@ -135,5 +125,5 @@ export function SearchCommand(props: Props) {
         </CommandList>
       </CommandDialog>
     </Fragment>
-  );
+  )
 }

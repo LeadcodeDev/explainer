@@ -1,5 +1,5 @@
-import type { Root } from "mdast";
-import type { VFile } from "vfile";
+import type { Root } from 'mdast'
+import type { VFile } from 'vfile'
 
 /**
  * Remark plugin that strips the `layout` field from MDX frontmatter
@@ -9,11 +9,11 @@ import type { VFile } from "vfile";
 export default function remarkStripLayout() {
   return (_tree: Root, file: VFile) => {
     const astroData = file.data as {
-      astro?: { frontmatter?: Record<string, unknown> };
-    };
+      astro?: { frontmatter?: Record<string, unknown> }
+    }
 
     if (astroData.astro?.frontmatter?.layout) {
-      delete astroData.astro.frontmatter.layout;
+      astroData.astro.frontmatter.layout = undefined
     }
-  };
+  }
 }

@@ -1,15 +1,15 @@
-import { glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
 
 export const docSchema = z.object({
   title: z.string(),
   description: z.string(),
   permalink: z.string().optional(),
   icon: z.string().optional(),
-  visibility: z.array(z.enum(["navbar"])).default([]),
-});
+  visibility: z.array(z.enum(['navbar'])).default([]),
+})
 
 export const docDefaultSchema = z.object({
   label: z.string(),
@@ -17,65 +17,62 @@ export const docDefaultSchema = z.object({
   permalink: z.string(),
   icon: z.string().optional(),
   collection: z.array(z.string()),
-});
+})
 
 export const docDefaults = defineCollection({
   loader: glob({
-    pattern: "**/_default.{md,mdx}",
-    base: "./content/docs",
+    pattern: '**/_default.{md,mdx}',
+    base: './content/docs',
   }),
   schema: docDefaultSchema,
-});
+})
 
 export const deepDocDefaults = defineCollection({
   loader: glob({
-    pattern: "**/*_default.{md,mdx}",
-    base: "./content/docs",
+    pattern: '**/*_default.{md,mdx}',
+    base: './content/docs',
   }),
   schema: docDefaultSchema,
-});
+})
 
 export const docs = defineCollection({
   loader: glob({
-    pattern: "**/[^_]*.{md,mdx}",
-    base: "./content/docs",
+    pattern: '**/[^_]*.{md,mdx}',
+    base: './content/docs',
   }),
   schema: docSchema,
-});
+})
 
 const pages = defineCollection({
   loader: glob({
-    pattern: ["**/*.{md,mdx}", "blog/index.{md,mdx}", "!docs/**/*"],
-    base: "./content",
+    pattern: ['**/*.{md,mdx}', 'blog/index.{md,mdx}', '!docs/**/*'],
+    base: './content',
   }),
   schema: z.object({
     layout: z.string().optional(),
     title: z.string().optional(),
     description: z.string().optional(),
   }),
-});
+})
 
-const directories = readdirSync(join(process.cwd(), "content/docs"));
-const documentations = {
-  ...directories.reduce((acc, directory) => {
-    return {
-      ...acc,
-      [directory]: defineCollection({
-        loader: glob({
-          // pattern: "**/[^_]*.{md,mdx}",
-          pattern: "**/[^_]*.{md,mdx}",
-          base: `./content/docs/${directory}`,
-        }),
-        schema: docSchema,
+const directories = readdirSync(join(process.cwd(), 'content/docs'))
+const documentations = Object.fromEntries(
+  directories.map((directory) => [
+    directory,
+    defineCollection({
+      loader: glob({
+        pattern: '**/[^_]*.{md,mdx}',
+        base: `./content/docs/${directory}`,
       }),
-    };
-  }, {}),
-};
+      schema: docSchema,
+    }),
+  ]),
+)
 
 const blog = defineCollection({
   loader: glob({
-    pattern: ["**/*.{md,mdx}", "!blog/index.{md,mdx}"],
-    base: "./content/blog",
+    pattern: ['**/*.{md,mdx}', '!blog/index.{md,mdx}'],
+    base: './content/blog',
   }),
   schema: z.object({
     title: z.string(),
@@ -87,7 +84,7 @@ const blog = defineCollection({
     draft: z.boolean().optional().default(false),
     publishedAt: z.string().optional(),
   }),
-});
+})
 
 export const collections = {
   pages,
@@ -96,4 +93,4 @@ export const collections = {
   docs,
   blog,
   ...documentations,
-};
+}

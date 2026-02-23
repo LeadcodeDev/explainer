@@ -1,36 +1,30 @@
-import * as CollapsiblePrimitives from "@/components/ui/collapsible";
-import type { DocSection, DocTreeNode } from "@/utils";
-import { Icon } from "@iconify/react";
-import clsx from "clsx";
-import { useEffect, useState, type PropsWithChildren } from "react";
+import * as CollapsiblePrimitives from '@/components/ui/collapsible'
+import type { DocSection, DocTreeNode } from '@/utils'
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+import { type PropsWithChildren, useEffect, useState } from 'react'
 
 type Props = {
-  defaultOpen?: boolean;
-  currentPathname: string;
-  item: DocSection;
-  isNestedElement?: boolean;
-};
+  defaultOpen?: boolean
+  currentPathname: string
+  item: DocSection
+  isNestedElement?: boolean
+}
 
 export default function Collapsible(props: PropsWithChildren<Props>) {
-  const currentPathname = props.currentPathname;
+  const currentPathname = props.currentPathname
 
   const [isOpen, setIsOpen] = useState(
     (props.defaultOpen ?? props.isNestedElement)
-      ? currentPathname.startsWith(
-          `/docs/${props.item.id.replace("/_default", "")}`,
-        )
+      ? currentPathname.startsWith(`/docs/${props.item.id.replace('/_default', '')}`)
       : true,
-  );
+  )
 
   useEffect(() => {
     if (props.isNestedElement || props.defaultOpen) {
-      setIsOpen(
-        currentPathname.startsWith(
-          `/docs/${props.item.id.replace("/_default", "")}`,
-        ),
-      );
+      setIsOpen(currentPathname.startsWith(`/docs/${props.item.id.replace('/_default', '')}`))
     }
-  }, [currentPathname]);
+  }, [currentPathname, props.isNestedElement, props.defaultOpen, props.item.id])
 
   return (
     <CollapsiblePrimitives.Collapsible
@@ -41,10 +35,8 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
       <CollapsiblePrimitives.CollapsibleTrigger asChild>
         <div
           className={clsx(
-            "flex items-center w-full gap-1.5 text-sm font-medium cursor-pointer justify-between",
-            isOpen
-              ? "text-muted-foreground"
-              : "text-muted/75 dark:text-neutral-400",
+            'flex items-center w-full gap-1.5 text-sm font-medium cursor-pointer justify-between',
+            isOpen ? 'text-muted-foreground' : 'text-muted/75 dark:text-neutral-400',
           )}
         >
           <div className="flex items-center gap-1.5">
@@ -54,10 +46,8 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
                 width={16}
                 height={16}
                 className={clsx(
-                  "shrink-0 mr-1",
-                  isOpen
-                    ? "text-muted-foreground"
-                    : "text-muted/75 dark:text-neutral-400",
+                  'shrink-0 mr-1',
+                  isOpen ? 'text-muted-foreground' : 'text-muted/75 dark:text-neutral-400',
                 )}
               />
             )}
@@ -68,18 +58,18 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
             width={16}
             height={16}
             className={clsx(
-              "shrink-0 mr-1 transition-transform",
-              isOpen && "rotate-180",
+              'shrink-0 mr-1 transition-transform',
+              isOpen && 'rotate-180',
               currentPathname.startsWith(`/docs/${props.item.id}`)
-                ? "text-primary"
-                : "group-data-[state=open]:text-muted-foreground",
+                ? 'text-primary'
+                : 'group-data-[state=open]:text-muted-foreground',
             )}
           />
         </div>
       </CollapsiblePrimitives.CollapsibleTrigger>
       <CollapsiblePrimitives.CollapsibleContent className="flex flex-col pl-1.5 ml-1">
         {props.item.children.map((item: DocTreeNode) => {
-          if ("children" in item) {
+          if ('children' in item) {
             return (
               <div
                 key={item.id}
@@ -91,7 +81,7 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
                   isNestedElement={true}
                 />
               </div>
-            );
+            )
           }
 
           return (
@@ -99,31 +89,29 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
               key={item.id}
               href={`/docs/${item.id}`}
               className={clsx(
-                "group relative w-full py-1.5 flex items-center gap-1.5 text-sm after:absolute after:inset-y-0 after:block after:w-px after:transition-colors",
-                props.isNestedElement
-                  ? "after:left-0 px-5"
-                  : "after:-left-1.5 px-2.5",
+                'group relative w-full py-1.5 flex items-center gap-1.5 text-sm after:absolute after:inset-y-0 after:block after:w-px after:transition-colors',
+                props.isNestedElement ? 'after:left-0 px-5' : 'after:-left-1.5 px-2.5',
                 currentPathname.startsWith(`/docs/${item.id}`)
-                  ? "text-primary after:bg-primary after:z-1 after:rounded-full"
-                  : "after:bg-muted/25 dark:after:bg-secondary text-muted/75 dark:text-neutral-400",
+                  ? 'text-primary after:bg-primary after:z-1 after:rounded-full'
+                  : 'after:bg-muted/25 dark:after:bg-secondary text-muted/75 dark:text-neutral-400',
               )}
             >
               <Icon
-                icon={item.data.icon ?? "lucide:file-text"}
+                icon={item.data.icon ?? 'lucide:file-text'}
                 width={16}
                 height={16}
                 className={clsx(
-                  "shrink-0 mr-1",
+                  'shrink-0 mr-1',
                   currentPathname.startsWith(`/docs/${item.id}`)
-                    ? "text-primary"
-                    : "group-data-[state=open]:text-muted-foreground",
+                    ? 'text-primary'
+                    : 'group-data-[state=open]:text-muted-foreground',
                 )}
               />
               {item.data.title}
             </a>
-          );
+          )
         })}
       </CollapsiblePrimitives.CollapsibleContent>
     </CollapsiblePrimitives.Collapsible>
-  );
+  )
 }

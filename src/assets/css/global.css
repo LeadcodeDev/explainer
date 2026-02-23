@@ -120,8 +120,8 @@
     @apply border-border outline-ring/50;
   }
 
-  *:not(has(code)) {
-    font-family: "Public Sans";
+  *:not(:has(code)) {
+    font-family: "Public Sans", sans-serif;
   }
 
   body {

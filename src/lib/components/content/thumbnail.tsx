@@ -1,50 +1,45 @@
-import * as culori from "culori";
-import { readFileSync } from "fs";
-import { resolve } from "path";
-import satori from "satori";
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import * as culori from 'culori'
+import satori from 'satori'
 
 export function loadFont(name: string) {
-  return readFileSync(resolve(`src/assets/${name}.ttf`));
+  return readFileSync(resolve(`src/assets/${name}.ttf`))
 }
 
 function extractCSSVariables() {
-  const css = readFileSync("src/assets/css/global.css", "utf8");
-  const vars: Record<string, string> = {};
-  const regex = /--([^:]+):\s*([^;]+)/g;
-  let match;
-  while ((match = regex.exec(css))) {
-    vars[`--${match[1]}`] = match[2].trim();
+  const css = readFileSync('src/assets/css/global.css', 'utf8')
+  const vars: Record<string, string> = {}
+  const regex = /--([^:]+):\s*([^;]+)/g
+  for (const match of css.matchAll(regex)) {
+    vars[`--${match[1]}`] = match[2].trim()
   }
-  return vars;
+  return vars
 }
 
 function resolveTailwindColor(value: string): string {
   if (/^\d+\s+\d+\s+\d+$/.test(value)) {
-    return `rgb(${value})`;
+    return `rgb(${value})`
   }
 
-  if (value.startsWith("oklch(")) {
-    const parsed = culori.parse(value);
+  if (value.startsWith('oklch(')) {
+    const parsed = culori.parse(value)
     if (parsed) {
-      return culori.formatHex(parsed);
+      return culori.formatHex(parsed)
     }
   }
 
-  return value;
+  return value
 }
 
-const montserratMedium = loadFont("Montserrat-Medium");
-const montserratSemibold = loadFont("Montserrat-SemiBold");
-const montserratBold = loadFont("Montserrat-Bold");
+const montserratMedium = loadFont('Montserrat-Medium')
+const montserratSemibold = loadFont('Montserrat-SemiBold')
+const montserratBold = loadFont('Montserrat-Bold')
 
-const cssVars = extractCSSVariables();
+const cssVars = extractCSSVariables()
 
-export async function generateThumbnail(
-  headline?: string,
-  title?: string,
-  description?: string,
-) {
-  const primaryColor = resolveTailwindColor(cssVars["--primary"]);
+export async function generateThumbnail(headline?: string, title?: string, description?: string) {
+  const primaryColor = resolveTailwindColor(cssVars['--primary'])
   return satori(
     <div tw="w-full h-full flex flex-col justify-center bg-[#020420]">
       <svg
@@ -54,7 +49,9 @@ export async function generateThumbnail(
         viewBox="0 0 629 593"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
       >
+        <title>Decorative background</title>
         <g filter="url(#filter0_f_199_94966)">
           <path
             d="M628.5 -578L639.334 -94.4223L806.598 -548.281L659.827 -87.387L965.396 -462.344L676.925 -74.0787L1087.69 -329.501L688.776 -55.9396L1160.22 -164.149L694.095 -34.9354L1175.13 15.7948L692.306 -13.3422L1130.8 190.83L683.602 6.50012L1032.04 341.989L668.927 22.4412L889.557 452.891L649.872 32.7537L718.78 511.519L628.5 36.32L538.22 511.519L607.128 32.7537L367.443 452.891L588.073 22.4412L224.955 341.989L573.398 6.50012L126.198 190.83L564.694 -13.3422L81.8734 15.7948L562.905 -34.9354L96.7839 -164.149L568.224 -55.9396L169.314 -329.501L580.075 -74.0787L291.604 -462.344L597.173 -87.387L450.402 -548.281L617.666 -94.4223L628.5 -578Z"
@@ -72,16 +69,8 @@ export async function generateThumbnail(
             color-interpolation-filters="sRGB"
           >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
-            <feBlend
-              mode="normal"
-              in="SourceGraphic"
-              in2="BackgroundImageFix"
-              result="shape"
-            />
-            <feGaussianBlur
-              stdDeviation="80"
-              result="effect1_foregroundBlur_199_94966"
-            />
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feGaussianBlur stdDeviation="80" result="effect1_foregroundBlur_199_94966" />
           </filter>
         </defs>
       </svg>
@@ -99,11 +88,11 @@ export async function generateThumbnail(
         <h1
           tw="w-[800px] m-0 text-[75px] font-bold mb-4"
           style={{
-            display: "block",
+            display: 'block',
             WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            color: "white",
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            color: 'white',
             fontWeight: 800,
           }}
         >
@@ -112,9 +101,9 @@ export async function generateThumbnail(
         <p
           tw="text-[32px] text-[#E4E4E7] leading-tight"
           style={{
-            display: "block",
+            display: 'block',
             WebkitLineClamp: 3,
-            textOverflow: "ellipsis",
+            textOverflow: 'ellipsis',
           }}
         >
           {description}
@@ -126,21 +115,21 @@ export async function generateThumbnail(
       height: 540,
       fonts: [
         {
-          name: "Montserrat",
+          name: 'Montserrat',
           data: montserratMedium,
           weight: 400,
         },
         {
-          name: "Montserrat",
+          name: 'Montserrat',
           data: montserratSemibold,
           weight: 600,
         },
         {
-          name: "Montserrat",
+          name: 'Montserrat',
           data: montserratBold,
           weight: 800,
         },
       ],
     },
-  );
+  )
 }

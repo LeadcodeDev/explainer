@@ -1,26 +1,24 @@
-import clsx from 'clsx';
+import clsx from 'clsx'
 
 export type BentoGridProps = {
-  title: string;
-  description: string;
+  title: string
+  description: string
   items: {
-    title: string;
-    description: string;
-    subtitle: string;
-    image: string;
-  }[];
+    title: string
+    description: string
+    subtitle: string
+    image: string
+  }[]
 }
 
 export function HomeBentogrid(props: BentoGridProps) {
-  const firstLine = props.items.slice(0, 2);
-  const secondLine = props.items.slice(2, 5);
+  const firstLine = props.items.slice(0, 2)
+  const secondLine = props.items.slice(2, 5)
 
   return (
     <div className="bg-background py-24 sm:py-32">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-base/7 font-semibold text-primary">
-          {props.title}
-        </h2>
+        <h2 className="text-base/7 font-semibold text-primary">{props.title}</h2>
         <p className="mt-2 max-w-lg text-pretty text-4xl font-semibold tracking-tight text-gray-950 dark:text-accent-foreground sm:text-5xl">
           {props.description}
         </p>
@@ -52,9 +50,7 @@ export function HomeBentogrid(props: BentoGridProps) {
                   <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-accent-foreground">
                     {item.subtitle}
                   </p>
-                  <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
-                    {item.description}
-                  </p>
+                  <p className="mt-2 max-w-lg text-sm/6 text-gray-600">{item.description}</p>
                 </div>
               </div>
               <div
@@ -81,9 +77,7 @@ export function HomeBentogrid(props: BentoGridProps) {
                   <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 dark:text-accent-foreground">
                     {item.subtitle}
                   </p>
-                  <p className="mt-2 max-w-lg text-sm/6 text-gray-600">
-                    {item.description}
-                  </p>
+                  <p className="mt-2 max-w-lg text-sm/6 text-gray-600">{item.description}</p>
                 </div>
               </div>
               <div
