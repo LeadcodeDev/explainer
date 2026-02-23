@@ -11,7 +11,7 @@ import DocsLayout from "@/layouts/DocsLayout.astro";
 import { render, type CollectionEntry } from "astro:content";
 import config from "../../../explainer.config";
 
-import { useDocumentation, type HeadingNode } from "../../lib/utils";
+import { useDocumentation, buildHeadingTree } from "../../lib/utils";
 import * as astroContent from "astro:content";
 import DocNavigationWrapper from "@/components/elements/DocNavigationWrapper.astro";
 import { Icon } from "@iconify/react";
@@ -37,29 +37,6 @@ const repositoryUrl = config.repository + "/blob/main/" + element.filePath;
 const availableHeadings = headings.filter((heading) =>
   [2, 3].includes(heading.depth),
 );
-
-function buildHeadingTree(headings: typeof availableHeadings): HeadingNode[] {
-  const result: HeadingNode[] = [];
-  let currentH2: HeadingNode | null = null;
-
-  for (const heading of headings) {
-    const node: HeadingNode = {
-      depth: heading.depth,
-      slug: heading.slug,
-      text: heading.text,
-      children: [],
-    };
-
-    if (heading.depth === 2) {
-      currentH2 = node;
-      result.push(node);
-    } else if (heading.depth === 3 && currentH2) {
-      currentH2.children.push(node);
-    }
-  }
-
-  return result;
-}
 
 const headingTree = buildHeadingTree(availableHeadings);
 
@@ -102,6 +79,54 @@ function pascalCase(str: string) {
           </Breadcrumb>
         </div>
 
+        {
+          headingTree.length ? (
+            <details class="xl:hidden border rounded-lg px-4 py-3 mb-4 group">
+              <summary class="text-sm font-semibold cursor-pointer flex items-center justify-between text-muted-foreground">
+                <span>On this page</span>
+                <svg
+                  class="h-4 w-4 transition-transform group-open:rotate-180"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </summary>
+              <ul class="mt-2 ms-2.5 ps-4 border-s border-secondary">
+                {headingTree.map((heading) => (
+                  <li>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="text-sm flex items-center py-1 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {heading.text}
+                    </a>
+                    <ul class="ms-3">
+                      {heading.children.map((child) => (
+                        <li>
+                          <a
+                            href={`#${child.slug}`}
+                            class="text-sm flex items-center py-1 text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            <span class="truncate">{child.text}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ) : null
+        }
+
         <div class="prose">
           <Content components={config.content.components} />
         </div>
@@ -121,7 +146,7 @@ function pascalCase(str: string) {
                 class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
               >
                 <Icon
-                  client:load
+                  client:visible
                   icon="lucide:circle-alert"
                   className="size-4"
                 />
@@ -134,7 +159,7 @@ function pascalCase(str: string) {
                 target="_blank"
                 class="rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors px-2.5 py-1.5 text-xs gap-1.5 text-muted-foreground hover:text-default disabled:text-muted aria-disabled:text-muted focus:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-inverted"
               >
-                <Icon client:load icon="lucide:pencil" className="size-4" />
+                <Icon client:visible icon="lucide:pencil" className="size-4" />
                 Edit this page on GitHub
               </a>
             </div>

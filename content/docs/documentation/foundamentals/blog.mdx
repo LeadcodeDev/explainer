@@ -19,12 +19,13 @@ To create a new article, you need to create a new markdown file in the `content/
 
 You should use the frontmatter on top of the file to define the article metadata.
 
-> [!WARNING]
-> The `permalink` property is required. If you modify it, the URL of the article will change.
+:::callout{variant="warning"}
+The `permalink` property is required. If you modify it, the URL of the article will change.
+:::
 
-:::codegroup labels=[frontmatter, schema]
+:::codegroup
 
-```mdx
+```mdx [frontmatter]
 ---
 title: "Article title"
 description: "Article description"
@@ -37,7 +38,7 @@ publishedAt: 2024-01-01:23:00:00
 ---
 ```
 
-```ts
+```ts [schema]
 const schema = z.object({
   title: z.string(),
   description: z.string(),
@@ -55,8 +56,9 @@ const schema = z.object({
 
 The article will be visible on the blog page if the `publishedAt` date is defined and is in the future.
 
-> [!NOTE]
-> You can also remove or comment the `publishedAt` date to unpublish the article.
+:::callout{variant="warning"}
+You can also remove or comment the `publishedAt` date to unpublish the article.
+:::
 
 In the blog index page, the articles are sorted by `publishedAt` date and displayed in descending order.
 

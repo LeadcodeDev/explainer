@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import BlogLayout from "@/layouts/BlogLayout.astro";
+import { buildHeadingTree } from "@/utils";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import { NewspaperIcon } from "lucide-react";
 import { DateTime } from "luxon";
@@ -37,36 +38,6 @@ const { Content, headings } = await render(element);
 const availableHeadings = headings.filter((heading) =>
   [2, 3].includes(heading.depth),
 );
-
-type HeadingNode = {
-  depth: number;
-  slug: string;
-  text: string;
-  children: HeadingNode[];
-};
-
-function buildHeadingTree(headings: typeof availableHeadings): HeadingNode[] {
-  const result: HeadingNode[] = [];
-  let currentH2: HeadingNode | null = null;
-
-  for (const heading of headings) {
-    const node: HeadingNode = {
-      depth: heading.depth,
-      slug: heading.slug,
-      text: heading.text,
-      children: [],
-    };
-
-    if (heading.depth === 2) {
-      currentH2 = node;
-      result.push(node);
-    } else if (heading.depth === 3 && currentH2) {
-      currentH2.children.push(node);
-    }
-  }
-
-  return result;
-}
 
 const headingTree = buildHeadingTree(availableHeadings);
 ---

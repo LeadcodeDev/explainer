@@ -13,6 +13,7 @@ const { perLine, current } = Astro.props;
 const contents = await getCollection("blog");
 const posts = contents
   .filter((item) => item.id !== "index")
+  .filter((item) => import.meta.env.DEV || !item.data.draft)
   .filter(
     (item) =>
       import.meta.env.DEV ||
@@ -51,11 +52,14 @@ const itemPerLine = {
           href={`/blog/${post.data.permalink}`}
           class="col-span-1 relative flex flex-col gap-2 border border-border bg-background transition-colors duration-200 rounded-lg p-4"
         >
-          {import.meta.env.DEV && !post.data.publishedAt && (
-            <div class="absolute z-50 top-1 right-2">
-              <Badge variant="outline">Invisible in production mode</Badge>
-            </div>
-          )}
+          {import.meta.env.DEV &&
+            (post.data.draft || !post.data.publishedAt) && (
+              <div class="absolute z-50 top-1 right-2">
+                <Badge variant="outline">
+                  {post.data.draft ? "Draft" : "Invisible in production mode"}
+                </Badge>
+              </div>
+            )}
           <div class="overflow-hidden rounded-lg">
             <img
               src={post.data?.thumbnail ?? config.blog.defaults.thumbnail}
@@ -67,6 +71,16 @@ const itemPerLine = {
           <div class="flex flex-col gap-2 pt-2">
             <h3 class="text-lg font-semibold">{post.data.title}</h3>
             <p class="text-sm text-muted-foreground">{post.data.description}</p>
+
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-1.5">
+                {post.data.tags.map((tag) => (
+                  <Badge variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
 
             <div class="pt-2">
               {post.data.authors && post.data.authors.length > 1 && (

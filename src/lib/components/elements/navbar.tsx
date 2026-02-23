@@ -46,7 +46,9 @@ const ListItem = forwardRef<
           {...props}
         >
           <div className="text-sm font-medium leading-none flex items-center gap-1">
-            {icon && <Icon icon={icon} className="size-5 mr-2" />}
+            {icon && (
+              <Icon icon={icon} width={20} height={20} className="mr-2" />
+            )}
             {title}
           </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -59,9 +61,24 @@ const ListItem = forwardRef<
 });
 ListItem.displayName = "ListItem";
 
+import type { DocPage, DocSection } from "@/utils";
+
+type NavbarDocEntry = {
+  id: string;
+  collection: string;
+  data: DocSection["data"];
+  icon: string;
+  label: string;
+  children: DocPage[];
+};
+
+type SearchableDocEntry = DocSection & {
+  children: (DocPage & { description: string })[];
+};
+
 type NavbarProps = {
-  docs: any[];
-  searchableDoc: any[];
+  docs: NavbarDocEntry[];
+  searchableDoc: SearchableDocEntry[];
 };
 
 export default function Navbar(props: NavbarProps) {
@@ -88,23 +105,26 @@ export default function Navbar(props: NavbarProps) {
                   {props.docs.map((element, index) => (
                     <NavigationMenuItem key={index}>
                       <NavigationMenuTrigger className="flex items-center">
-                        <Icon icon={element.icon} className="size-4 mr-2" />
+                        <Icon
+                          icon={element.icon}
+                          width={16}
+                          height={16}
+                          className="mr-2"
+                        />
                         {element.data.label}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {element.children
-                            // .filter((item: any) => item.visible)
-                            .map((item: any) => (
-                              <ListItem
-                                key={item.id}
-                                title={item.data.title}
-                                icon={item.data.icon}
-                                href={`/docs/${item.id}`}
-                              >
-                                {item.data.description}
-                              </ListItem>
-                            ))}
+                          {element.children.map((item) => (
+                            <ListItem
+                              key={item.id}
+                              title={item.data.title}
+                              icon={item.data.icon}
+                              href={`/docs/${item.id}`}
+                            >
+                              {item.data.description}
+                            </ListItem>
+                          ))}
                         </ul>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
@@ -196,22 +216,25 @@ export default function Navbar(props: NavbarProps) {
                       {props.docs.map((element, index) => (
                         <div key={index}>
                           <div className="flex items-center font-medium">
-                            <Icon icon={element.icon} className="size-4 mr-2" />
+                            <Icon
+                              icon={element.icon}
+                              width={16}
+                              height={16}
+                              className="mr-2"
+                            />
                             {element.label}
                           </div>
                           <div>
                             <ul className="grid w-[400px] gap-2 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                              {element.children
-                                // .filter((item: any) => item.visible)
-                                .map((item: any) => (
-                                  <a
-                                    key={item.id}
-                                    href={item.href}
-                                    className="text-sm"
-                                  >
-                                    {item.data.title}
-                                  </a>
-                                ))}
+                              {element.children.map((item) => (
+                                <a
+                                  key={item.id}
+                                  href={`/docs/${item.id}`}
+                                  className="text-sm"
+                                >
+                                  {item.data.title}
+                                </a>
+                              ))}
                             </ul>
                           </div>
                         </div>
