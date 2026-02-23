@@ -45,7 +45,7 @@ export const docs = defineCollection({
 
 const pages = defineCollection({
   loader: glob({
-    pattern: ['**/*.{md,mdx}', 'blog/index.{md,mdx}', '!docs/**/*'],
+    pattern: ['**/*.{md,mdx}', '!docs/**/*'],
     base: './content',
   }),
   schema: z.object({
@@ -71,7 +71,7 @@ const documentations = Object.fromEntries(
 
 const blog = defineCollection({
   loader: glob({
-    pattern: ['**/*.{md,mdx}', '!blog/index.{md,mdx}'],
+    pattern: ['**/*.{md,mdx}'],
     base: './content/blog',
   }),
   schema: z.object({
