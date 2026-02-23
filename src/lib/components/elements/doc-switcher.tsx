@@ -29,33 +29,35 @@ export default function DocSwitcher(props: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          size="lg"
-          variant="outline"
-          className="border-0 !bg-transparent !px-0 w-full !ring-0 shadow-none"
-        >
-          <div className="bg-primary text-secondary flex aspect-square size-8 items-center justify-center rounded-lg">
+        <div className="border px-2 py-1 rounded-lg">
+          <Button
+            size="lg"
+            variant="outline"
+            className="!bg-transparent !border-0 !px-0 w-full !ring-0 shadow-none"
+          >
+            <div className="bg-primary text-secondary flex aspect-square size-8 items-center justify-center rounded-lg">
+              <Icon
+                icon={props.current.data.icon ?? "lucide:book-open"}
+                width={16}
+                height={16}
+              />
+            </div>
+            <div className="grid flex-1 text-left text-secondary-foreground text-sm leading-tight">
+              <span className="truncate font-medium">
+                {props.current.data.label}
+              </span>
+              <span className="truncate text-xs opacity-60">
+                {props.current.data.description}
+              </span>
+            </div>
             <Icon
-              icon={props.current.data.icon ?? "lucide:book-open"}
+              icon="lucide:chevron-down"
               width={16}
               height={16}
+              className="ml-auto text-muted"
             />
-          </div>
-          <div className="grid flex-1 text-left text-secondary-foreground text-sm leading-tight">
-            <span className="truncate font-medium">
-              {props.current.data.label}
-            </span>
-            <span className="truncate text-xs opacity-60">
-              {props.current.data.description}
-            </span>
-          </div>
-          <Icon
-            icon="lucide:chevron-down"
-            width={16}
-            height={16}
-            className="ml-auto text-muted"
-          />
-        </Button>
+          </Button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"

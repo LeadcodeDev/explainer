@@ -3,10 +3,11 @@ import Separator from "@/components/elements/separator";
 import "../../assets/css/global.css";
 import "../../assets/css/markdown.css";
 import BaseLayout from "./BaseLayout.astro";
-import BlogListWrapper from "@/plugins/blog-list/BlogListWrapper.astro";
+
+const { title, description } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={title} description={description}>
   <main class="relative flex-1">
     <Separator />
     <div class="mx-auto px-4 sm:px-0 max-w-[var(--container-width)]">

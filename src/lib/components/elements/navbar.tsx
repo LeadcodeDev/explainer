@@ -102,45 +102,52 @@ export default function Navbar(props: NavbarProps) {
             <div className="flex gap-3">
               <NavigationMenu>
                 <NavigationMenuList>
-                  {props.docs.map((element, index) => (
-                    <NavigationMenuItem key={index}>
-                      <NavigationMenuTrigger className="flex items-center">
-                        <Icon
-                          icon={element.icon}
-                          width={16}
-                          height={16}
-                          className="mr-2"
-                        />
-                        {element.data.label}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {element.children.map((item) => (
-                            <ListItem
-                              key={item.id}
-                              title={item.data.title}
-                              icon={item.data.icon}
-                              href={`/docs/${item.id}`}
-                            >
-                              {item.data.description}
-                            </ListItem>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  ))}
-                </NavigationMenuList>
-              </NavigationMenu>
-              <NavigationMenu>
-                <NavigationMenuList>
                   {config.navbar.map((element) => (
                     <NavigationMenuItem key={element.label}>
-                      <NavigationMenuLink
-                        href={element.href}
-                        className="px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer"
-                      >
-                        {element.label}
-                      </NavigationMenuLink>
+                      {"children" in element ? (
+                        <>
+                          <NavigationMenuTrigger className="flex items-center">
+                            {"icon" in element && element.icon && (
+                              <Icon
+                                icon={element.icon}
+                                width={16}
+                                height={16}
+                                className="mr-2"
+                              />
+                            )}
+                            {element.label}
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <ul className="grid w-[400px] gap-3 p-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                              {element.children.map((item) => (
+                                <ListItem
+                                  key={item.href}
+                                  title={item.label}
+                                  icon={item.icon}
+                                  href={item.href}
+                                >
+                                  {item.description}
+                                </ListItem>
+                              ))}
+                            </ul>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <NavigationMenuLink
+                          href={element.href}
+                          className="px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md cursor-pointer inline-flex items-center"
+                        >
+                          {element.icon && (
+                            <Icon
+                              icon={element.icon}
+                              width={16}
+                              height={16}
+                              className="mr-2"
+                            />
+                          )}
+                          {element.label}
+                        </NavigationMenuLink>
+                      )}
                     </NavigationMenuItem>
                   ))}
                 </NavigationMenuList>

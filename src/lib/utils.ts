@@ -105,10 +105,19 @@ type ExplainerConfig = {
       };
     };
   };
-  navbar: {
-    label: string;
-    href: string;
-  }[];
+  navbar: (
+    | { label: string; href: string; icon?: string }
+    | {
+        label: string;
+        icon?: string;
+        children: {
+          label: string;
+          description?: string;
+          icon?: string;
+          href: string;
+        }[];
+      }
+  )[];
   content: {
     icons: Record<string, string>;
     components: Record<

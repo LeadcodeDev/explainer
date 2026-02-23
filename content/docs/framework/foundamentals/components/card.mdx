@@ -1,0 +1,185 @@
+---
+title: Card
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: card
+icon: lucide:grid-2x2
+---
+
+# Cards
+
+This component allows you to group text elements while providing visual impact.
+
+::::::preview
+
+:::::code-preview
+
+::::card-group{cols=2}
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+::::
+:::::
+
+:::::content-preview
+
+```
+::::card-group
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+::::
+```
+
+:::::
+
+::::::
+
+---
+
+## Configuration
+
+### Card per line
+
+You can customize the number of elements per line by setting the `cols` prop.
+
+:::callout{variant="info"}
+Default card per line was fixed to 2
+:::
+
+::::::preview
+
+:::::code-preview
+
+::::card-group{cols=3}
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+::::
+
+:::::
+
+:::::content-preview
+
+```
+::::card-group{cols=3}
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+::::
+```
+
+:::::
+
+::::::
+
+If the elements cannot be aligned horizontally, they will be moved to the next line.
+
+::::::preview
+
+:::::code-preview
+
+::::card-group{cols=2}
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+::::
+
+:::::
+
+:::::content-preview
+
+```
+::::card-group{cols=2}
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+::::
+```
+
+:::::
+
+::::::
+
+### Card item
+
+Vous pouvez personaliser chacune de vos cartes en utilisant les props suivantes :
+
+- `label`: Le texte à afficher en haut de la carte. (required)
+- `icon`: L'icône à afficher en haut de la carte.
+
+:::callout{variant="info"}
+The cards use the [`iconify`](https://icon-sets.iconify.design/) library to display icons.
+:::
+
+::::::preview
+
+:::::code-preview
+
+::::card-group
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+:::card{label="Lorem ipsum dolor sit amet" icon="lucide:user"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+:::
+::::
+
+:::::
+
+:::::content-preview
+
+```
+::::card-group
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:bell"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+  :::card{label="Lorem ipsum dolor sit amet" icon="lucide:user"}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  :::
+::::
+```
+
+:::::
+
+::::::

@@ -74,22 +74,29 @@ const searchableDoc = loaded
 
     <ClientRouter />
 
-    <script>
-      const root = window.document.documentElement;
-      const theme = localStorage.getItem("theme") ?? "system";
+    <script is:inline>
+      function applyTheme(doc) {
+        const root = doc.documentElement;
+        root.classList.remove("light", "dark");
+        const theme = localStorage.getItem("theme") ?? "system";
 
-      if (theme === "system") {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
-          ? "dark"
-          : "light";
-        root.classList.add(systemTheme);
-      } else {
-        root.classList.add(theme);
+        if (theme === "system") {
+          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches
+            ? "dark"
+            : "light";
+          root.classList.add(systemTheme);
+        } else {
+          root.classList.add(theme);
+        }
       }
+      applyTheme(document);
+      document.addEventListener("astro:before-swap", (e) => {
+        applyTheme(e.newDocument);
+      });
     </script>
   </head>
-  <body class="relative min-h-screen overflow-x-hidden">
+  <body class="relative min-h-screen overflow-x-clip">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
@@ -98,10 +105,7 @@ const searchableDoc = loaded
     </a>
     <div class="min-h-screen flex flex-col">
       <Navbar
-        docs={docs.filter((entry) => {
-          // return entry.visibility.includes("navbar");
-          return true;
-        })}
+        docs={docs}
         searchableDoc={searchableDoc}
         client:load
         transition:persist

@@ -1,0 +1,326 @@
+---
+title: Code blocks
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: code-blocks
+icon: lucide:code
+---
+
+# Code blocks
+
+Code blocks are a way to display code in a readable format.
+Explainer implements [`Shiki`](https://github.com/shikijs/shiki) for syntax highlighting, you can read the [Shiki documentation](https://shiki.style) for more information on how to customize the syntax highlighting.
+
+## Highlighting
+
+Highlighting can be done before or after the declaration with the `[!code highlight]` syntax.
+
+### Single line
+
+Single highlight can be done with the `[!code highlight]` syntax.
+
+::::preview
+:::code-preview
+
+```rs
+pub struct User {
+  // [!code highlight]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  // [!code highlight]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+::::preview
+:::code-preview
+
+```rs
+pub struct User {
+  pub firstname: String,
+  pub lastname: String, // [!code highlight]
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String,
+  pub lastname: String, // [!code highlight]
+}
+```
+````
+
+:::
+::::
+
+### Multiple lines
+
+Multiple highlights can be done with the `[!code highlight:1,2]` syntax.
+
+::::preview
+:::code-preview
+
+```rust {1,3-4}
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```rust {1,3-4}
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+---
+
+## Code block with focused line
+
+The `[!code focus:<n>]` syntax will highlight the line 2 of the code block.
+
+::::preview
+:::code-preview
+
+```rust
+pub struct User {
+  // [!code focus:2]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+    // [!code focus:2]
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+---
+
+## Code block with status
+
+The `[!code error]` and `[!code warning]` syntax will highlight the line with the error or warning status.
+
+### Code block with error
+
+Error status can be done with the `[!code error]` syntax.
+
+::::preview
+:::code-preview
+
+```rust
+pub struct User {
+  pub firstname: String // [!code error]
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String // [!code error]
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+### Code block with warning
+
+Warning status can be done with the `[!code warning]` syntax.
+
+```rust
+pub struct User {
+  pub firstname: String, // [!code warning]
+  pub lastname: String,
+}
+```
+
+## Include embedded code blocks
+
+::::preview
+:::code-preview
+
+```rs [entities/user.rs]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```rs [entities/user.rs]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+````
+
+:::
+::::
+
+---
+
+## Line modifiers
+
+The `[!code --]` and `[!code ++]` syntax will remove or add a line to the code block.
+
+::::preview
+:::code-preview
+
+```rust
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new() -> Self { // [!code --]
+  pub fn new(firstname: String, lastname: String) -> Self { // [!code ++]
+    Self { firstname, lastname }
+  }
+}
+```
+
+:::
+
+:::content-preview
+
+````mdx
+```
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new() -> Self { // [!code --]
+  pub fn new(firstname: String, lastname: String) -> Self { // [!code ++]
+    Self { firstname, lastname }
+  }
+}
+```
+````
+
+:::
+::::
+
+---
+
+## Group code blocks
+
+:::callout{variant="warning"}
+This is a **collapsible** callout. Only code blocks can be used in a group.
+:::
+
+:::::preview
+::::code-preview
+
+:::codegroup
+
+```rs [foo]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+```rs [bar]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new(firstname: String, lastname: String) -> Self {
+    Self { firstname, lastname }
+  }
+}
+```
+
+:::
+
+::::
+
+::::content-preview
+
+````md
+:::codegroup
+
+```rs [foo]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+```
+
+```rs [bar]
+pub struct User {
+  pub firstname: String,
+  pub lastname: String,
+}
+
+impl User {
+  pub fn new(firstname: String, lastname: String) -> Self {
+    Self { firstname, lastname }
+  }
+}
+```
+
+:::
+````
+
+::::
+:::::

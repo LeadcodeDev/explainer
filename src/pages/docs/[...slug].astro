@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import DocsLayout from "@/layouts/DocsLayout.astro";
-import { render, type CollectionEntry } from "astro:content";
+import { render, getCollection, type CollectionEntry } from "astro:content";
 import config from "../../../explainer.config";
 
 import { useDocumentation, buildHeadingTree } from "../../lib/utils";
@@ -40,8 +40,18 @@ const availableHeadings = headings.filter((heading) =>
 
 const headingTree = buildHeadingTree(availableHeadings);
 
-function pascalCase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+const docDefaults = await getCollection("docDefaults");
+const segments = element.id.split("/");
+const breadcrumbItems: { label: string; href: string }[] = [];
+
+for (let i = 0; i < segments.length - 1; i++) {
+  const defaultId = segments.slice(0, i + 1).join("/") + "/_default";
+  const entry = docDefaults.find((d) => d.id === defaultId);
+  const href = "/docs/" + segments.slice(0, i + 1).join("/");
+  breadcrumbItems.push({
+    label: entry?.data.label ?? segments[i],
+    href,
+  });
 }
 ---
 
@@ -56,24 +66,25 @@ function pascalCase(str: string) {
         <div class="mb-2.5">
           <Breadcrumb>
             <BreadcrumbList>
+              {
+                breadcrumbItems.map((item) => (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href={item.href}
+                        className="text-foreground"
+                      >
+                        {item.label}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                  </>
+                ))
+              }
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-foreground">Docs</BreadcrumbPage
-                >
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage className="text-foreground">
-                  {pascalCase(element.collection)}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  href={`/docs/${element.id.replace("/_default", "")}`}
-                  className="text-primary font-medium"
-                >
+                <BreadcrumbPage className="text-primary font-medium">
                   {element.data.title}
-                </BreadcrumbLink>
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

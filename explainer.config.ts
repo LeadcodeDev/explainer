@@ -41,6 +41,24 @@ export default defineExplainerConfig({
   },
   navbar: [
     {
+      label: "Resources",
+      icon: "lucide:book",
+      children: [
+        {
+          label: "API",
+          description: "Full API docs",
+          icon: "mdi:code-braces",
+          href: "/api",
+        },
+        {
+          label: "Changelog",
+          description: "What's new",
+          icon: "mdi:history",
+          href: "/changelog",
+        },
+      ],
+    },
+    {
       label: "API",
       href: "/api",
     },
@@ -82,6 +100,7 @@ export default defineExplainerConfig({
       npx: "devicon:npm",
       yarn: "devicon:yarn",
       pnpm: "devicon:pnpm",
+      cargo: "catppuccin:cargo",
       bun: "devicon:bun",
       vite: "devicon:vite",
       "tailwind.config.js": "devicon:tailwindcss",

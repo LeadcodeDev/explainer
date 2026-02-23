@@ -75,7 +75,7 @@ const highlights = [
   </div>
 
   <!-- Content (constrained) -->
-  <div class="w-full max-w-[var(--container-width)] mx-auto px-5">
+  <div class="relative w-full max-w-[var(--container-width)] mx-auto px-5">
     <div class="text-center mb-16">
       <p
         class="text-sm font-semibold text-primary uppercase tracking-wide mb-3"
@@ -97,24 +97,26 @@ const highlights = [
         highlights.map((item) => (
           <div
             class:list={[
-              "border rounded-xl p-8 bg-primary/5 flex flex-col gap-5",
+              "border rounded-xl bg-background",
               item.span === 4 ? "sm:col-span-4" : "sm:col-span-2",
             ]}
           >
-            <div class="flex items-center justify-center size-12 rounded-xl bg-primary/10">
-              <Icon
-                icon={item.icon}
-                className="size-6 text-primary"
-                client:load
-              />
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-highlighted">
-                {item.title}
-              </h3>
-              <p class="text-sm text-muted-foreground mt-2 leading-relaxed">
-                {item.description}
-              </p>
+            <div class="bg-primary/5 p-8 flex flex-col gap-5 h-full">
+              <div class="flex items-center justify-center size-12 rounded-xl bg-primary/10">
+                <Icon
+                  icon={item.icon}
+                  className="size-6 text-primary"
+                  client:load
+                />
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-highlighted">
+                  {item.title}
+                </h3>
+                <p class="text-sm text-muted-foreground mt-2 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
             </div>
           </div>
         ))

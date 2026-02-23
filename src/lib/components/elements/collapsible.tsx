@@ -69,17 +69,16 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
               width={16}
               height={16}
               className={clsx(
-                "shrink-0 mr-1 transition-transform",
-                isOpen && "rotate-180",
+                "shrink-0 mr-1",
                 currentPathname.startsWith(`/docs/${props.item.id}`)
                   ? "text-primary"
-                  : "text-muted-foreground",
+                  : "group-data-[state=open]:text-muted-foreground",
               )}
             />
           )}
         </div>
       </CollapsiblePrimitives.CollapsibleTrigger>
-      <CollapsiblePrimitives.CollapsibleContent className="flex flex-col pl-5 ml-1">
+      <CollapsiblePrimitives.CollapsibleContent className="flex flex-col pl-1.5 ml-1">
         {props.item.children.map((item: DocTreeNode) => {
           if ("children" in item) {
             return (
@@ -101,8 +100,10 @@ export default function Collapsible(props: PropsWithChildren<Props>) {
               key={item.id}
               href={`/docs/${item.id}`}
               className={clsx(
-                "group relative w-full px-2.5 py-1.5 flex items-center gap-1.5 text-sm after:absolute after:inset-y-0 after:block after:w-px after:transition-colors",
-                props.isNestedElement ? "after:-left-4" : "after:-left-1.5",
+                "group relative w-full py-1.5 flex items-center gap-1.5 text-sm after:absolute after:inset-y-0 after:block after:w-px after:transition-colors",
+                props.isNestedElement
+                  ? "after:left-0 px-5"
+                  : "after:-left-1.5 px-2.5",
                 currentPathname.startsWith(`/docs/${item.id}`)
                   ? "text-primary after:bg-primary after:z-1 after:rounded-full"
                   : "after:bg-muted/25 dark:after:bg-secondary text-muted/75 dark:text-neutral-400",
