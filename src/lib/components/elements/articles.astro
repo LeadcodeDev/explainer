@@ -78,7 +78,7 @@ const itemPerLine = {
             />
           </div>
 
-          <div class="flex flex-col gap-2 pt-2">
+          <div class="flex flex-col gap-2 pt-2 flex-1">
             <h3 class="text-lg font-semibold">{post.data.title}</h3>
             <p class="text-sm text-muted-foreground">{post.data.description}</p>
 
@@ -92,7 +92,7 @@ const itemPerLine = {
               </div>
             )}
 
-            <div class="pt-2">
+            <div class="mt-auto pt-2">
               {post.data.authors && post.data.authors.length > 1 && (
                 <div class="flex -space-x-1 overflow-hidden">
                   {post.data.authors?.map((author) => {
