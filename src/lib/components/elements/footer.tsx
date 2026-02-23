@@ -3,7 +3,8 @@ import config from "explainer.config";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="relative">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-10 lg:px-8">
         <div className="mt-16 flex justify-center gap-x-5">
           {Object.entries(config.socials.media).map(([key, url]) => {

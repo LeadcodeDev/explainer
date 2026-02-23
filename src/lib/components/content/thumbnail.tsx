@@ -79,14 +79,14 @@ export async function generateThumbnail(
               result="shape"
             />
             <feGaussianBlur
-              stdDeviation="40.5"
+              stdDeviation="80"
               result="effect1_foregroundBlur_199_94966"
             />
           </filter>
         </defs>
       </svg>
 
-      <div tw="flex flex-col w-[600px] pl-[100px]">
+      <div tw="flex flex-col w-[800px] pl-[100px]">
         {headline && (
           <p
             v-if="headline"
@@ -97,7 +97,7 @@ export async function generateThumbnail(
           </p>
         )}
         <h1
-          tw="w-[600px] m-0 text-[75px] font-bold mb-4"
+          tw="w-[800px] m-0 text-[75px] font-bold mb-4"
           style={{
             display: "block",
             WebkitLineClamp: 2,

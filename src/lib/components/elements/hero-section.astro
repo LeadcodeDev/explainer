@@ -1,0 +1,192 @@
+---
+import { BackgroundAnimation } from "@/components/ui/background-animation";
+import { Icon } from "@iconify/react";
+import { Button } from "@/components/ui/button";
+import config from "explainer.config";
+
+const badge = config.projectName;
+const title = "Explain your ideas";
+const description =
+  "Quickly design your documentation and optimise it for search engine optimisation to showcase your products.";
+
+const primaryAction = {
+  label: "Getting Started",
+  href: "/docs/framework/getting-started/getting-started",
+};
+const secondaryAction = config.repository
+  ? { label: "View on GitHub", href: config.repository, icon: "mdi:github" }
+  : null;
+
+const socialProof = [
+  { icon: "mdi:open-source-initiative", text: "Open source" },
+  { icon: "mdi:license", text: "MIT License" },
+  { icon: "mdi:download-outline", text: "1k+ downloads" },
+];
+---
+
+<div
+  class="relative px-4 sm:px-6 lg:px-8 flex flex-col py-24 sm:py-32 lg:py-40 !pb-0 overflow-hidden"
+>
+  <div>
+    <div class="absolute inset-0 w-full -z-10">
+      <BackgroundAnimation client:only />
+    </div>
+
+    <!-- Decorative circles (clipped top/bottom, sides overflow freely) -->
+    <div
+      class="absolute inset-0 -z-[5] pointer-events-none"
+      style="clip-path: inset(0 -100vw 0 -100vw);"
+      aria-hidden="true"
+    >
+      <!-- Top-left — large circle bleeding off screen -->
+      <div
+        class="absolute -top-16 -left-16 w-56 h-56 sm:-top-32 sm:-left-32 sm:w-[28rem] sm:h-[28rem] rounded-full border-2 border-primary/10"
+      >
+        <div
+          class="absolute inset-0 m-auto w-32 h-32 sm:w-80 sm:h-80 rounded-full border border-primary/[0.07]"
+        >
+        </div>
+      </div>
+
+      <!-- Top-right — circle bleeding off screen -->
+      <div
+        class="hidden sm:block absolute -top-24 -right-24 w-80 h-80 rounded-full border-2 border-primary/10"
+      >
+      </div>
+
+      <!-- Mid-left — small circle -->
+      <div
+        class="hidden sm:block absolute top-1/2 -left-16 w-48 h-48 rounded-full border border-primary/[0.08] -translate-y-1/2"
+      >
+      </div>
+
+      <!-- Bottom-right — small circle -->
+      <div
+        class="hidden sm:block absolute -bottom-16 -right-16 w-48 h-48 rounded-full border-2 border-primary/[0.08]"
+      >
+      </div>
+
+      <!-- Floating dots -->
+      <div
+        class="hidden sm:block absolute top-1/4 right-[15%] size-3 rounded-full bg-primary/10"
+      >
+      </div>
+      <div
+        class="hidden sm:block absolute top-[40%] left-[25%] size-2 rounded-full bg-primary/[0.08]"
+      >
+      </div>
+      <div
+        class="hidden sm:block absolute bottom-1/3 right-1/3 size-2.5 rounded-full bg-primary/[0.09]"
+      >
+      </div>
+    </div>
+
+    <!-- Bottom-left circle -->
+    <div
+      class="hidden sm:block absolute bottom-0 left-[33%] -translate-x-1/2 -z-[5] pointer-events-none"
+      aria-hidden="true"
+    >
+      <div
+        class="absolute -bottom-24 -left-32 w-64 h-64 rounded-full border-2 border-primary/10"
+      >
+      </div>
+    </div>
+
+    <!-- Bottom separator -->
+    <div
+      class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+    >
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto pb-24 lg:pb-32">
+      <div class="text-center">
+        {
+          badge && (
+            <div class="mb-6 justify-center">
+              <a
+                href={config.repository ?? "#"}
+                rel="noopener noreferrer"
+                class="rounded-full font-semibold inline-flex items-center gap-2 transition-colors px-4 py-1.5 text-xs ring ring-inset ring-primary/50 text-primary hover:bg-primary/10 active:bg-primary/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <span>{badge}</span>
+                <Icon icon="mdi:arrow-right" className="size-3.5" client:load />
+              </a>
+            </div>
+          )
+        }
+        <h1
+          class="text-5xl text-pretty tracking-tight text-highlighted font-semibold sm:text-7xl max-w-6xl mx-auto"
+        >
+          {title}
+        </h1>
+        <p
+          class="text-lg sm:text-xl/8 text-muted-foreground text-balance mt-6 max-w-2xl mx-auto"
+        >
+          {description}
+        </p>
+      </div>
+
+      <div class="pt-10 flex items-center justify-center">
+        <div class="flex flex-wrap gap-x-4 gap-y-3">
+          <Button size="lg" className="cursor-pointer" client:load>
+            <a
+              href={primaryAction.href}
+              class="flex gap-2"
+              rel="noopener noreferrer"
+            >
+              {primaryAction.label}
+              <Icon
+                icon="mdi:arrow-right"
+                aria-hidden="true"
+                className="size-5"
+                client:load
+              />
+            </a>
+          </Button>
+          {
+            secondaryAction && (
+              <Button
+                variant="outline"
+                size="lg"
+                className="cursor-pointer"
+                client:load
+              >
+                <a
+                  href={secondaryAction.href}
+                  class="flex gap-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon
+                    icon={secondaryAction.icon}
+                    aria-hidden="true"
+                    className="size-5"
+                    client:load
+                  />
+                  {secondaryAction.label}
+                </a>
+              </Button>
+            )
+          }
+        </div>
+      </div>
+
+      <div
+        class="mt-10 flex items-center justify-center gap-x-8 gap-y-3 flex-wrap"
+      >
+        {
+          socialProof.map((item) => (
+            <div class="flex items-center gap-2 text-sm text-muted-foreground">
+              <Icon
+                icon={item.icon}
+                className="size-4 text-primary/70"
+                client:load
+              />
+              <span>{item.text}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>

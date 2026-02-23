@@ -16,6 +16,7 @@ import icon from "astro-icon";
 import rehypeMermaid from "rehype-mermaid";
 import remarkBlockParser from "./src/lib/plugins/parser/plugin";
 import remarkDirectivePkg from "remark-directive";
+import remarkStripLayout from "./src/lib/plugins/remark-strip-layout";
 import sitemap from "@astrojs/sitemap";
 import { buildDocIntegration } from "./src/hooks/build-doc";
 import transformerMetaLabel from "./src/lib/plugins/shiki/transformer-meta-label";
@@ -46,7 +47,7 @@ export default defineConfig({
       type: "shiki",
       excludeLangs: ["mermaid"],
     },
-    remarkPlugins: [remarkDirectivePkg, remarkBlockParser],
+    remarkPlugins: [remarkDirectivePkg, remarkBlockParser, remarkStripLayout],
     rehypePlugins: [rehypeMermaid],
   },
 

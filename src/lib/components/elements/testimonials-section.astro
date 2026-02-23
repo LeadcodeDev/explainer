@@ -1,0 +1,175 @@
+---
+const title = "Loved by developers";
+const description = "See what developers are saying about their experience.";
+
+const testimonials = [
+  {
+    name: "Sarah Chen",
+    username: "@sarahchen",
+    body: "The best documentation framework I've used. Setup took 5 minutes and the output looks incredible.",
+    img: "https://i.pravatar.cc/150?u=sarah",
+  },
+  {
+    name: "Marcus Rivera",
+    username: "@mrivera",
+    body: "Finally, a docs tool that doesn't fight you. Markdown in, beautiful site out. Exactly what we needed.",
+    img: "https://i.pravatar.cc/150?u=marcus",
+  },
+  {
+    name: "Aisha Patel",
+    username: "@aishap",
+    body: "The built-in search and SEO features saved us weeks of work. Our docs rank on page one now.",
+    img: "https://i.pravatar.cc/150?u=aisha",
+  },
+  {
+    name: "Tom Müller",
+    username: "@tmueller",
+    body: "Dark mode, code highlighting, view transitions — it has everything out of the box. No plugins needed.",
+    img: "https://i.pravatar.cc/150?u=tom",
+  },
+  {
+    name: "Elena Rossi",
+    username: "@erossi",
+    body: "We migrated from Docusaurus in a weekend. The MDX component system is so much more flexible.",
+    img: "https://i.pravatar.cc/150?u=elena",
+  },
+  {
+    name: "David Kim",
+    username: "@dkim",
+    body: "The developer experience is top notch. Hot reload is instant and the API reference integration is perfect.",
+    img: "https://i.pravatar.cc/150?u=david",
+  },
+  {
+    name: "Lisa Johansson",
+    username: "@lisaj",
+    body: "Our team loves writing docs now. The components make it easy to create rich, interactive content.",
+    img: "https://i.pravatar.cc/150?u=lisa",
+  },
+  {
+    name: "James Walker",
+    username: "@jwalker",
+    body: "Seriously impressed by the OG thumbnail generation. Every page gets a beautiful social card automatically.",
+    img: "https://i.pravatar.cc/150?u=james",
+  },
+];
+
+const firstRow = testimonials.slice(0, Math.ceil(testimonials.length / 2));
+const secondRow = testimonials.slice(Math.ceil(testimonials.length / 2));
+---
+
+<div class="w-full max-w-[90rem] mx-auto px-5 py-16 sm:py-24 lg:py-32">
+  <div class="text-center mb-16">
+    <p class="text-sm font-semibold text-primary uppercase tracking-wide mb-3">
+      Testimonials
+    </p>
+    <h2 class="text-3xl font-semibold text-highlighted sm:text-4xl">
+      {title}
+    </h2>
+    <p
+      class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-balance"
+    >
+      {description}
+    </p>
+  </div>
+
+  <div class="relative overflow-hidden">
+    <!-- Row 1 -->
+    <div class="flex gap-4 mb-4 testimonial-marquee">
+      {
+        [...firstRow, ...firstRow, ...firstRow, ...firstRow].map((t) => (
+          <figure class="flex-shrink-0 w-80 rounded-xl border bg-primary/5 p-5 cursor-default">
+            <div class="flex items-center gap-3">
+              <img
+                class="size-9 rounded-full object-cover"
+                width="36"
+                height="36"
+                alt={t.name}
+                src={t.img}
+                loading="lazy"
+              />
+              <div>
+                <figcaption class="text-sm font-medium text-highlighted">
+                  {t.name}
+                </figcaption>
+                <p class="text-xs text-muted-foreground">{t.username}</p>
+              </div>
+            </div>
+            <blockquote class="mt-3 text-sm text-muted-foreground leading-relaxed">
+              {t.body}
+            </blockquote>
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- Row 2 (reversed) -->
+    <div class="flex gap-4 testimonial-marquee-reverse">
+      {
+        [...secondRow, ...secondRow, ...secondRow, ...secondRow].map((t) => (
+          <figure class="flex-shrink-0 w-80 rounded-xl border bg-primary/5 p-5 cursor-default">
+            <div class="flex items-center gap-3">
+              <img
+                class="size-9 rounded-full object-cover"
+                width="36"
+                height="36"
+                alt={t.name}
+                src={t.img}
+                loading="lazy"
+              />
+              <div>
+                <figcaption class="text-sm font-medium text-highlighted">
+                  {t.name}
+                </figcaption>
+                <p class="text-xs text-muted-foreground">{t.username}</p>
+              </div>
+            </div>
+            <blockquote class="mt-3 text-sm text-muted-foreground leading-relaxed">
+              {t.body}
+            </blockquote>
+          </figure>
+        ))
+      }
+    </div>
+
+    <!-- Fade edges -->
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background"
+    >
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes testimonial-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes testimonial-scroll-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  .testimonial-marquee {
+    animation: testimonial-scroll 40s linear infinite;
+    width: max-content;
+  }
+  .testimonial-marquee-reverse {
+    animation: testimonial-scroll-reverse 40s linear infinite;
+    width: max-content;
+  }
+  .testimonial-marquee:hover,
+  .testimonial-marquee-reverse:hover {
+    animation-play-state: paused;
+  }
+</style>

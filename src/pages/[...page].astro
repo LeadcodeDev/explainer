@@ -2,6 +2,13 @@
 import { render, getCollection } from "astro:content";
 import config from "../../explainer.config";
 import Layout from "@/layouts/Layout.astro";
+import BlogWrapper from "@/components/elements/blog-wrapper.astro";
+import HeroSection from "@/components/elements/hero-section.astro";
+import FeaturesSection from "@/components/elements/features-section.astro";
+import HighlightsSection from "@/components/elements/highlights-section.astro";
+import TestimonialsSection from "@/components/elements/testimonials-section.astro";
+import CtaSection from "@/components/elements/cta-section.astro";
+import BlogSection from "@/components/elements/blog-section.astro";
 
 export async function getStaticPaths() {
   const allPages = await getCollection("pages");
@@ -43,8 +50,31 @@ const page = allPages.find((p) => {
 if (!page) throw Astro.redirect("/404");
 
 const { Content } = await render(page);
+
+const layouts: Record<string, typeof BlogWrapper> = {
+  "blog-wrapper": BlogWrapper,
+};
+const PageLayout = page.data.layout ? layouts[page.data.layout] : undefined;
+
+const contentComponents = {
+  ...config.content.components,
+  "hero-section": HeroSection,
+  "features-section": FeaturesSection,
+  "highlights-section": HighlightsSection,
+  "testimonials-section": TestimonialsSection,
+  "cta-section": CtaSection,
+  "blog-section": BlogSection,
+};
 ---
 
 <Layout>
-  <Content components={config.content.components} />
+  {
+    PageLayout ? (
+      <PageLayout>
+        <Content components={contentComponents} />
+      </PageLayout>
+    ) : (
+      <Content components={contentComponents} />
+    )
+  }
 </Layout>

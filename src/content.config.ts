@@ -48,7 +48,11 @@ const pages = defineCollection({
     pattern: ["**/*.{md,mdx}", "blog/index.{md,mdx}", "!docs/**/*"],
     base: "./content",
   }),
-  schema: z.object({}),
+  schema: z.object({
+    layout: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+  }),
 });
 
 const directories = readdirSync(join(process.cwd(), "content/docs"));
@@ -79,6 +83,8 @@ const blog = defineCollection({
     permalink: z.string().optional(),
     thumbnail: z.string().optional(),
     authors: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean().optional().default(false),
     publishedAt: z.string().optional(),
   }),
 });

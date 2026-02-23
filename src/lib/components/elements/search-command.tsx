@@ -10,6 +10,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { useTheme } from "@/hooks/use-theme";
+import type { DocPage, DocSection } from "@/utils";
 import { Icon } from "@iconify/react";
 import {
   InputGroup,
@@ -18,8 +19,12 @@ import {
 } from "../ui/input-group";
 import { Kbd, KbdGroup } from "../ui/kbd";
 
+type SearchableDocEntry = DocSection & {
+  children: (DocPage & { description: string })[];
+};
+
 type Props = {
-  items: any[];
+  items: SearchableDocEntry[];
 };
 
 export function SearchCommand(props: Props) {
@@ -45,7 +50,7 @@ export function SearchCommand(props: Props) {
         onClick={() => setOpen(true)}
       >
         <InputGroupAddon align="inline-start">
-          <Icon icon="lucide:search" />
+          <Icon icon="lucide:search" width={16} height={16} />
         </InputGroupAddon>
         <InputGroupInput placeholder="Search" />
         <InputGroupAddon align="inline-end">
@@ -64,19 +69,27 @@ export function SearchCommand(props: Props) {
           {props.items.map((doc) => {
             return (
               <CommandGroup key={doc.id} heading={doc.data.label}>
-                {doc.children.map((page: any) => (
-                  <CommandItem key={page.id} asChild>
-                    <a href={`/docs/${page.id}`} className="cursor-pointer">
-                      <div className="flex items-center gap-2">
-                        <Icon icon={page.data.icon} />
-                        <span className="whitespace-nowrap">
-                          {page.data.title}
-                        </span>
-                      </div>
-                      <p className="text-muted/50 truncate">
-                        {page.content.remarkPluginFrontmatter.description}
-                      </p>
-                    </a>
+                {doc.children.map((page) => (
+                  <CommandItem
+                    key={page.id}
+                    value={`${page.data.title} ${page.description}`}
+                    onSelect={() => {
+                      setOpen(false);
+                      window.location.href = `/docs/${page.id}`;
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon={page.data.icon ?? "lucide:file-text"}
+                        width={16}
+                        height={16}
+                      />
+                      <span className="whitespace-nowrap">
+                        {page.data.title}
+                      </span>
+                    </div>
+                    <p className="text-muted/50 truncate">{page.description}</p>
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -85,32 +98,38 @@ export function SearchCommand(props: Props) {
 
           <CommandSeparator />
           <CommandGroup heading="Settings">
-            <CommandItem asChild>
-              <button
-                onClick={() => setTheme("light")}
-                className="w-full cursor-pointer"
-              >
-                <Icon icon="lucide:sun" />
-                <span>Light</span>
-              </button>
+            <CommandItem
+              value="theme light"
+              onSelect={() => {
+                setTheme("light");
+                setOpen(false);
+              }}
+              className="cursor-pointer"
+            >
+              <Icon icon="lucide:sun" width={16} height={16} />
+              <span>Light</span>
             </CommandItem>
-            <CommandItem asChild>
-              <button
-                onClick={() => setTheme("dark")}
-                className="w-full cursor-pointer"
-              >
-                <Icon icon="lucide:moon" />
-                <span>Dark</span>
-              </button>
+            <CommandItem
+              value="theme dark"
+              onSelect={() => {
+                setTheme("dark");
+                setOpen(false);
+              }}
+              className="cursor-pointer"
+            >
+              <Icon icon="lucide:moon" width={16} height={16} />
+              <span>Dark</span>
             </CommandItem>
-            <CommandItem asChild>
-              <button
-                onClick={() => setTheme("system")}
-                className="w-full cursor-pointer"
-              >
-                <Icon icon="lucide:laptop" />
-                <span>System</span>
-              </button>
+            <CommandItem
+              value="theme system"
+              onSelect={() => {
+                setTheme("system");
+                setOpen(false);
+              }}
+              className="cursor-pointer"
+            >
+              <Icon icon="lucide:laptop" width={16} height={16} />
+              <span>System</span>
             </CommandItem>
           </CommandGroup>
         </CommandList>

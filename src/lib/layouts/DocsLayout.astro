@@ -1,24 +1,14 @@
 ---
-import { Icon } from "@iconify/react";
-import clsx from "clsx";
 import "../../assets/css/global.css";
 import "../../assets/css/markdown.css";
 import BaseLayout from "./BaseLayout.astro";
 import { useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
-import Collapsible from "@/components/elements/collapsible";
-import DocSwitcher from "@/components/elements/doc-switcher";
+import Sidebar from "@/components/elements/sidebar";
 import config from "../../../explainer.config";
 
-const { load, flattenDocs } = useDocumentation(astroContent);
+const { load } = useDocumentation(astroContent);
 const documentations = await load();
-
-const currentCollection = documentations.find((element) => {
-  const pages = flattenDocs(element.children);
-  return pages.find((item) =>
-    Astro.url.pathname.startsWith(`/docs/${item.id}`),
-  );
-});
 
 const { id, title, description } = Astro.props;
 ---
@@ -29,128 +19,46 @@ const { id, title, description } = Astro.props;
   thumbnail={`/docs/${id}/thumbnail.png`}
 >
   <main class="relative flex-1">
-    <div class="mx-auto px-2 sm:px-0 max-w-[var(--container-width)]">
+    <div class="mx-auto px-4 sm:px-6 max-w-[90rem]">
       <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
         <aside class="hidden lg:block lg:col-span-2 pr-2">
           <div
-            class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)] w-[225px]"
+            class="fixed left-5 md:left-auto top-14 px-4 sm:px-0 py-8 overflow-y-auto h-[calc(100vh-4rem)] w-[225px] z-10 bg-background"
           >
-            {
-              documentations.length > 1 && (
-                <div class="px-5 2xl:px-0 mb-10">
-                  <DocSwitcher
-                    client:load
-                    current={currentCollection}
-                    items={documentations}
-                  />
-                </div>
-              )
-            }
-
-            <div
-              class="px-5 2xl:px-0 space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 flex flex-col gap-4"
-            >
-              {
-                currentCollection?.children.map((children: any) => {
-                  return (
-                    <Collapsible
-                      client:load
-                      currentPathname={Astro.url.pathname}
-                      item={children}
-                    />
-                  );
-                })
-              }
-            </div>
+            <Sidebar
+              client:load
+              transition:persist
+              documentations={documentations}
+              currentPathname={Astro.url.pathname}
+            />
           </div>
         </aside>
-        <div
-          class="flex justify-between border-b border-dashed border-border py-2.5 px-4 sm:hidden"
-        >
+        <div class="border-b border-dashed border-border py-2.5 px-4 lg:hidden">
           <details class="group w-full">
             <summary
               class="text-sm font-semibold w-full flex items-center justify-between cursor-pointer"
             >
-              <span>In the documentation</span>
-              <div class="flex">
-                <svg
-                  class="h-4 w-4 transition-transform group-open:rotate-180"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </div>
+              <span>Navigation</span>
+              <svg
+                class="h-4 w-4 transition-transform group-open:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
             </summary>
-            <div class="mt-2">
-              <div class="sm:px-0 py-5 overflow-y-auto">
-                <nav>
-                  <div class="space-y-3 mb-3 lg:mb-6 lg:mx-0">
-                    {
-                      documentations.length > 1 && (
-                        <div class="mb-10">
-                          <DocSwitcher
-                            client:load
-                            current={currentCollection}
-                            items={documentations}
-                          />
-                        </div>
-                      )
-                    }
-
-                    <!-- {
-                      documentations?.map((element) => (
-                        <a
-                          class="flex items-center gap-2 group text-primary font-medium"
-                          href={element?.collection?.[0]?.href}
-                        >
-                          <div
-                            class={clsx(
-                              "rounded-sm p-1 inline-flex ring-inset ring-1",
-                              Astro.url.pathname.startsWith(
-                                `${element.children[0].href}`,
-                              )
-                                ? "bg-primary ring-primary text-white"
-                                : "bg-gray-50 dark:bg-gray-800 ring-gray-200 dark:ring-gray-700 text-muted-foreground",
-                            )}
-                          >
-                            {element.data.icon && (
-                              <Icon
-                                client:only
-                                icon={element.data.icon}
-                                className="size-4"
-                              />
-                            )}
-                          </div>
-                          {element?.collection?.[0]?.href}
-                          <span
-                            class={clsx(
-                              "text-sm relative",
-                              Astro.url.pathname.startsWith(
-                                `${element.children[0].href}`,
-                              )
-                                ? "text-primary"
-                                : "text-muted-foreground",
-                            )}
-                          >
-                            {element.data.label}
-                          </span>
-                        </a>
-                      ))
-                    } -->
-                  </div>
-                </nav>
-
-                <hr
-                  class="my-5 border-dashed border-gray-200 dark:border-gray-700"
-                />
-              </div>
+            <div class="py-4 overflow-y-auto max-h-[60vh]">
+              <Sidebar
+                client:load
+                documentations={documentations}
+                currentPathname={Astro.url.pathname}
+              />
             </div>
           </details>
         </div>

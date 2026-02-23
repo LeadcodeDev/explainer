@@ -60,6 +60,30 @@ h6 {
   scroll-margin-top: 100px;
 }
 
+.heading-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
+.heading-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.heading-link::after {
+  content: "#";
+  margin-left: 0.5rem;
+  opacity: 0;
+  color: var(--primary);
+  transition: opacity 0.15s ease;
+  font-weight: 400;
+}
+
+.heading-link:hover::after {
+  opacity: 0.6;
+}
+
 .prose {
   color: var(--paragraph-color);
 
@@ -67,6 +91,12 @@ h6 {
     color: var(--primary);
     text-decoration: underline;
     font-weight: 500;
+  }
+
+  a.heading-link {
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
   }
 
   strong {
@@ -115,20 +145,6 @@ h6 {
     border-top-width: 1px;
     margin-top: 2em;
     margin-bottom: 2em;
-  }
-
-  blockquote {
-    font-style: italic;
-    border-left-width: 0.2rem;
-    border-left-color: var(--primary);
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: 1em;
-    background-color: var(--muted);
-    border-top-right-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
   }
 
   h1 {

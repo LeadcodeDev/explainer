@@ -1,0 +1,126 @@
+---
+title: Configuration
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: configuration
+icon: lucide:settings-2
+visibility:
+  - navbar
+---
+
+# Configuration
+
+The project configuration is simple and centralized in the `explainer.config.ts` file.
+
+This file uses the `defineExplainerConfig` function to define all the configurations for the site. Here is an overview of the different configuration sections available:
+
+```ts [explainer.config.ts]
+import { defineExplainerConfig } from "@/utils";
+
+export default defineExplainerConfig({
+  repository: "https://github.com/LeadcodeDev/explainer",
+  projectName: "Explainer",
+  seo: {
+    title: "Explainer • Make your own documentation easily",
+    description:
+      "Quickly design your documentation and optimise it for search engine optimisation to showcase your products.",
+    thumbnail: "https://placehold.co/1200x630",
+  },
+  socials: {
+    media: {
+      github: "https://github.com/LeadcodeDev/explainer",
+      twitter: "https://twitter.com/LeadcodeDev",
+      linkedin: "https://linkedin.com/in/leadcode-dev",
+    },
+  },
+  blog: {
+    defaults: {
+      thumbnail: "https://placehold.co/1200x630",
+    },
+    authors: {
+      leadcode_dev: {
+        name: "LeadcodeDev",
+        avatar: "https://avatars.githubusercontent.com/u/8946317?v=4",
+        href: "https://github.com/LeadcodeDev",
+      },
+    },
+  },
+  navbar: [
+    {
+      label: "API",
+      href: "/api",
+    },
+    {
+      label: "Blog",
+      href: "/blog",
+    },
+  ],
+});
+```
+
+---
+
+## Navbar
+
+The `navbar` array supports two types of entries: **simple links** and **dropdown menus**.
+
+### Simple link
+
+A simple link navigates directly to a page. You can optionally add an icon.
+
+```ts
+navbar: [
+  {
+    label: "Blog",
+    href: "/blog",
+    icon: "lucide:newspaper", // optional
+  },
+],
+```
+
+| Property | Type     | Description                       |
+| -------- | -------- | --------------------------------- |
+| `label`  | `string` | Display text                      |
+| `href`   | `string` | Target URL                        |
+| `icon`   | `string` | Iconify icon identifier (optional)|
+
+### Dropdown
+
+A dropdown entry displays a collapsible menu with a list of sub-items. Each sub-item can have its own label, description, icon and link.
+
+```ts
+navbar: [
+  {
+    label: "Resources",
+    icon: "lucide:book",
+    children: [
+      {
+        label: "API Reference",
+        description: "Full API docs",
+        icon: "mdi:code-braces",
+        href: "/api",
+      },
+      {
+        label: "Changelog",
+        description: "What's new",
+        icon: "mdi:history",
+        href: "/changelog",
+      },
+    ],
+  },
+],
+```
+
+| Property   | Type     | Description                          |
+| ---------- | -------- | ------------------------------------ |
+| `label`    | `string` | Display text for the trigger         |
+| `icon`     | `string` | Iconify icon on the trigger (optional)|
+| `children` | `array`  | List of sub-items                    |
+
+Each child item accepts the following properties:
+
+| Property      | Type     | Description                          |
+| ------------- | -------- | ------------------------------------ |
+| `label`       | `string` | Display text                         |
+| `description` | `string` | Short description shown below label (optional) |
+| `icon`        | `string` | Iconify icon identifier (optional)   |
+| `href`        | `string` | Target URL                           |

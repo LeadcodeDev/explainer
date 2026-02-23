@@ -4,7 +4,7 @@ import Navbar from "@/components/elements/navbar";
 import { ClientRouter } from "astro:transitions";
 import config from "../../../explainer.config";
 import "../../assets/css/global.css";
-import { useDocumentation } from "@/utils";
+import { isDocSection, useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
 
 const { title = config.seo.title, thumbnail, description } = Astro.props;
@@ -20,20 +20,17 @@ const docs = loaded.map((element) => {
   };
 });
 
-const searchableDoc = await Promise.all(
-  loaded
-    .flatMap((elements) => elements.children)
-    .map(async (element) => {
-      const children = await Promise.all(
-        flattenDocs(element.children).map(async (entry) => {
-          const a = await astroContent.render(entry);
-          return { ...entry, content: a };
-        }),
-      );
-
-      return { ...element, children };
-    }),
-);
+const searchableDoc = loaded
+  .flatMap((elements) =>
+    isDocSection(elements) ? elements.children.filter(isDocSection) : [],
+  )
+  .map((element) => ({
+    ...element,
+    children: flattenDocs(element.children).map((entry) => ({
+      ...entry,
+      description: entry.data.description,
+    })),
+  }));
 ---
 
 <!doctype html>
@@ -45,10 +42,17 @@ const searchableDoc = await Promise.all(
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={Astro.url.href} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={config.seo.title}
+      href="/rss.xml"
+    />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description ?? config.seo.description} />
-    <meta name="image" content={thumbnail ?? config.seo.thumbnail} />
 
+    <!-- Open Graph -->
     <meta property="og:title" content={title ?? config.seo.title} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url.href} />
@@ -61,36 +65,57 @@ const searchableDoc = await Promise.all(
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? config.seo.title} />
+    <meta
+      name="twitter:description"
+      content={description ?? config.seo.description}
+    />
+    <meta name="twitter:image" content={thumbnail ?? config.seo.thumbnail} />
+
     <ClientRouter />
 
-    <script>
-      const root = window.document.documentElement;
-      const theme = localStorage.getItem("theme") ?? "system";
+    <script is:inline>
+      function applyTheme(doc) {
+        const root = doc.documentElement;
+        root.classList.remove("light", "dark");
+        const theme = localStorage.getItem("theme") ?? "system";
 
-      if (theme === "system") {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
-          ? "dark"
-          : "light";
-        root.classList.add(systemTheme);
-      } else {
-        root.classList.add(theme);
+        if (theme === "system") {
+          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+            .matches
+            ? "dark"
+            : "light";
+          root.classList.add(systemTheme);
+        } else {
+          root.classList.add(theme);
+        }
       }
+      applyTheme(document);
+      document.addEventListener("astro:before-swap", (e) => {
+        applyTheme(e.newDocument);
+      });
     </script>
   </head>
-  <body class="relative min-h-screen">
+  <body class="relative min-h-screen overflow-x-clip">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
+    >
+      Skip to main content
+    </a>
     <div class="min-h-screen flex flex-col">
       <Navbar
-        docs={docs.filter((entry) => {
-          // return entry.visibility.includes("navbar");
-          return true;
-        })}
+        docs={docs}
         searchableDoc={searchableDoc}
-        client:only
+        client:load
+        transition:persist
       />
-      <slot />
-      <Footer client:only />
+      <div id="main-content">
+        <slot />
+      </div>
+      <Footer client:idle />
     </div>
   </body>
 </html>

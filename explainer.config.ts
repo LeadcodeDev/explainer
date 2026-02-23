@@ -1,3 +1,4 @@
+import Blockquote from "@/components/content/blockquote/blockquote.astro";
 import Callout from "@/components/content/callout.astro";
 import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
@@ -6,6 +7,8 @@ import CodePreview from "@/components/content/code-preview/code-preview.astro";
 import ContentPreview from "@/components/content/code-preview/content-preview.astro";
 import Preview from "@/components/content/code-preview/preview.astro";
 import CodeBlock from "@/components/content/codeblock.astro";
+import H2 from "@/components/content/heading/h2.astro";
+import H3 from "@/components/content/heading/h3.astro";
 import StepGroup from "@/components/content/step-group/step-group.astro";
 import Step from "@/components/content/step-group/step.astro";
 import Articles from "@/components/elements/articles.astro";
@@ -41,6 +44,48 @@ export default defineExplainerConfig({
   },
   navbar: [
     {
+      label: "Documentations",
+      icon: "lucide:book",
+      children: [
+        {
+          label: "Getting Started",
+          description: "Introduction to Explainer",
+          icon: "lucide:info",
+          href: "/docs/framework/getting-started/getting-started",
+        },
+        {
+          label: "Installation",
+          description: "Install and set up the project",
+          icon: "lucide:play",
+          href: "/docs/framework/getting-started/installation",
+        },
+        {
+          label: "Project Structure",
+          description: "Understand the folder layout",
+          icon: "lucide:layout-panel-top",
+          href: "/docs/framework/getting-started/project-structure",
+        },
+        {
+          label: "Configuration",
+          description: "Configure your site",
+          icon: "lucide:settings-2",
+          href: "/docs/framework/getting-started/configuration",
+        },
+        {
+          label: "Deployment",
+          description: "Deploy your documentation",
+          icon: "lucide:cloud-lightning",
+          href: "/docs/framework/getting-started/deploy",
+        },
+        {
+          label: "Routing",
+          description: "File-based routing system",
+          icon: "lucide:signpost",
+          href: "/docs/framework/foundamentals/routing",
+        },
+      ],
+    },
+    {
       label: "API",
       href: "/api",
     },
@@ -63,6 +108,9 @@ export default defineExplainerConfig({
       "content-preview": ContentPreview,
       preview: Preview,
       articles: Articles,
+      blockquote: Blockquote,
+      h2: H2,
+      h3: H3,
     },
     icons: {
       markdown: "devicon:markdown",
@@ -82,6 +130,7 @@ export default defineExplainerConfig({
       npx: "devicon:npm",
       yarn: "devicon:yarn",
       pnpm: "devicon:pnpm",
+      cargo: "catppuccin:cargo",
       bun: "devicon:bun",
       vite: "devicon:vite",
       "tailwind.config.js": "devicon:tailwindcss",

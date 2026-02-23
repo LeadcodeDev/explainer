@@ -1,3 +1,5 @@
+import type { ShikiTransformer } from "shiki";
+
 /**
  * Transformer to extract label from meta string
  *
@@ -6,11 +8,11 @@
  * pnpm install
  * ```
  */
-export default function transformerMetaLabel() {
+export default function transformerMetaLabel(): ShikiTransformer {
   return {
     name: "transformer-meta-label",
-    pre(node: any) {
-      const meta = (this as any).options.meta as { __raw?: string } | undefined;
+    pre(node) {
+      const meta = this.options.meta as { __raw?: string } | string | undefined;
       const metaString = typeof meta === "string" ? meta : meta?.__raw;
 
       if (!metaString) return;

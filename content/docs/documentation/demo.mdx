@@ -1,0 +1,164 @@
+---
+title: Demo
+description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+permalink: demo
+icon: lucide:tag
+---
+
+# Demo
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+## Getting started
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+
+:::callout{variant="info"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+:::
+
+---
+
+## Installation
+
+Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
+
+::::step-group
+:::step{title="Install dependencies"}
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+
+```bash
+pnpm install
+```
+
+:::
+:::step{title="Configure the project"}
+Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+```ts [explainer.config.ts]
+import { defineExplainerConfig } from "@/utils";
+
+export default defineExplainerConfig({
+  projectName: "My Project",
+  seo: {
+    title: "My Project",
+    description: "Lorem ipsum dolor sit amet.",
+    thumbnail: "https://placehold.co/1200x630",
+  },
+});
+```
+
+:::
+:::step{title="Start the dev server"}
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+
+```bash
+pnpm dev
+```
+
+:::
+::::
+
+---
+
+## Code examples
+
+Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.
+
+:::codegroup
+
+```ts [server.ts]
+import express from "express";
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World" });
+});
+
+app.listen(3000);
+```
+
+```ts [client.ts]
+const response = await fetch("http://localhost:3000");
+const data = await response.json();
+
+console.log(data.message);
+```
+
+:::
+
+### Highlighted code
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.
+
+```rs [entities/user.rs]
+pub struct User {
+  pub firstname: String, // [!code highlight]
+  pub lastname: String,
+  pub email: String, // [!code highlight]
+}
+
+impl User {
+  pub fn new() -> Self { // [!code --]
+  pub fn new(firstname: String, lastname: String, email: String) -> Self { // [!code ++]
+    Self { firstname, lastname, email }
+  }
+}
+```
+
+---
+
+## Features overview
+
+Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.
+
+::::card-group
+:::card{title="Fast" icon="lucide:zap"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+:::
+:::card{title="Flexible" icon="lucide:settings"}
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+:::
+:::card{title="Extensible" icon="lucide:puzzle"}
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.
+:::
+::::
+
+---
+
+## Important notes
+
+Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores.
+
+:::callout{variant="info"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+:::
+
+:::callout{variant="success"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+:::
+
+:::callout{variant="warning"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+:::
+
+:::callout{variant="danger"}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+:::
+
+---
+
+## Summary
+
+| Feature    | Description                  | Status |
+| ---------- | ---------------------------- | ------ |
+| Routing    | File-based routing system    | Stable |
+| Components | Built-in MDX components      | Stable |
+| Theming    | Light and dark mode support  | Stable |
+| Search     | Full-text search across docs | Beta   |
+| Blog       | Integrated blog system       | Stable |
+
+> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+>
+> — John Doe

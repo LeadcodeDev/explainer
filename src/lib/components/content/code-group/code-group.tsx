@@ -19,11 +19,11 @@ export default function CodeGroupComponent(
   >([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const parseProp = (prop: any) => {
+  const parseProp = (prop: string | string[] | undefined): string[] => {
     if (Array.isArray(prop)) return prop;
     if (typeof prop === "string") {
       try {
-        return JSON.parse(prop);
+        return JSON.parse(prop) as string[];
       } catch {
         return [];
       }
@@ -140,7 +140,7 @@ export default function CodeGroupComponent(
     return (
       <div className="code-group border rounded-md overflow-hidden mb-5 bg-background">
         <div className="flex p-2 border-b gap-2 overflow-x-auto">
-          {tabsData.map((tab: any, i: number) => (
+          {tabsData.map((tab, i) => (
             <button
               key={i}
               onClick={() => setActiveTab(i)}
