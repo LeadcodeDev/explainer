@@ -41,22 +41,23 @@ const highlights = [
 <div class="relative w-full py-16 sm:py-24 lg:py-32">
   <!-- Decorative circles (full-width layer) -->
   <div
-    class="absolute inset-0 -z-10 pointer-events-none overflow-hidden"
+    class="absolute inset-0 -z-10 pointer-events-none"
+    style="clip-path: inset(0 -100vw -100vh -100vw);"
     aria-hidden="true"
   >
-    <!-- Left — concentric circles bleeding off screen -->
+    <!-- Left — concentric circles behind first card -->
     <div
-      class="absolute top-1/4 -left-28 w-80 h-80 rounded-full border-2 border-primary/10"
+      class="absolute top-[22%] left-[12%] w-80 h-80 rounded-full border-2 border-primary/10"
     >
-    </div>
-    <div
-      class="absolute top-[30%] -left-16 w-56 h-56 rounded-full border border-primary/[0.07]"
-    >
+      <div
+        class="absolute inset-0 m-auto w-56 h-56 rounded-full border border-primary/[0.07]"
+      >
+      </div>
     </div>
 
-    <!-- Right — large ellipse bleeding off screen -->
+    <!-- Right — large circle bleeding off screen -->
     <div
-      class="absolute -bottom-16 -right-24 w-[22rem] h-72 rounded-full border-2 border-primary/[0.09]"
+      class="absolute -bottom-16 -right-24 w-80 h-80 rounded-full border-2 border-primary/[0.09]"
     >
     </div>
 
@@ -96,7 +97,7 @@ const highlights = [
         highlights.map((item) => (
           <div
             class:list={[
-              "border rounded-xl p-8 bg-background flex flex-col gap-5",
+              "border rounded-xl p-8 bg-primary/5 flex flex-col gap-5",
               item.span === 4 ? "sm:col-span-4" : "sm:col-span-2",
             ]}
           >

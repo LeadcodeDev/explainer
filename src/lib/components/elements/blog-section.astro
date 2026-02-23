@@ -1,27 +1,117 @@
 ---
-import Articles from "@/components/elements/articles.astro";
+import { Icon } from "@iconify/react";
+import { getCollection } from "astro:content";
 import config from "explainer.config";
 
 const title = "From the blog";
 const description = `Latest news and tips from the ${config.projectName} team.`;
+
+const contents = await getCollection("blog");
+const posts = contents
+  .filter((item) => item.id !== "index")
+  .filter((item) => import.meta.env.DEV || !item.data.draft)
+  .filter(
+    (item) =>
+      import.meta.env.DEV ||
+      (item.data.publishedAt && new Date(item.data.publishedAt) <= new Date()),
+  )
+  .reverse()
+  .slice(0, 3);
 ---
 
-<div
-  class="w-full max-w-[var(--container-width)] mx-auto px-5 py-16 sm:py-24 lg:py-32"
->
-  <div class="text-center mb-16">
-    <p class="text-sm font-semibold text-primary uppercase tracking-wide mb-3">
-      Blog
-    </p>
-    <h2 class="text-3xl font-semibold text-highlighted sm:text-4xl">
-      {title}
-    </h2>
-    <p
-      class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-balance"
+<div class="relative w-full py-16 sm:py-24 lg:py-32">
+  <!-- Decorative circles -->
+  <div
+    class="absolute inset-0 -z-10 pointer-events-none overflow-hidden"
+    aria-hidden="true"
+  >
+    <div
+      class="absolute -bottom-20 -right-20 w-72 h-72 rounded-full border-2 border-primary/10"
     >
-      {description}
-    </p>
+      <div
+        class="absolute inset-0 m-auto w-48 h-48 rounded-full border border-primary/[0.07]"
+      >
+      </div>
+    </div>
   </div>
 
-  <Articles />
+  <div class="w-full max-w-[var(--container-width)] mx-auto px-5">
+    <div class="text-center mb-16">
+      <p
+        class="text-sm font-semibold text-primary uppercase tracking-wide mb-3"
+      >
+        Blog
+      </p>
+      <h2 class="text-3xl font-semibold text-highlighted sm:text-4xl">
+        {title}
+      </h2>
+      <p
+        class="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-balance"
+      >
+        {description}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        posts.map((post) => (
+          <a
+            href={`/blog/${post.data.permalink}`}
+            class="group relative flex flex-col border rounded-xl bg-primary/5 p-4 transition-colors hover:border-primary/30"
+          >
+            <div class="overflow-hidden rounded-lg">
+              <img
+                src={post.data?.thumbnail ?? config.blog.defaults.thumbnail}
+                alt={post.data.title}
+                class="w-full aspect-[1200/630] object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2 pt-4 flex-1">
+              <h3 class="text-base font-semibold text-highlighted group-hover:text-primary transition-colors">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                {post.data.description}
+              </p>
+
+              <div class="mt-auto pt-4">
+                {post.data.authors && post.data.authors.length >= 1 && (
+                  <div class="flex items-center gap-3">
+                    <img
+                      width="36"
+                      height="36"
+                      alt={post.data.authors[0]}
+                      class="size-9 rounded-full object-cover"
+                      src={config.blog.authors[post.data.authors[0]].avatar}
+                    />
+                    <div>
+                      <p class="font-medium text-sm text-highlighted">
+                        {config.blog.authors[post.data.authors[0]].name}
+                      </p>
+                      <p class="text-muted-foreground text-xs">
+                        @
+                        {config.blog.authors[post.data.authors[0]].username ??
+                          post.data.authors[0]}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 text-center">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+      >
+        View all posts
+        <Icon icon="mdi:arrow-right" className="size-4" client:load />
+      </a>
+    </div>
+  </div>
 </div>
