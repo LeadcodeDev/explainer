@@ -4,7 +4,7 @@ import Navbar from "@/components/elements/navbar";
 import { ClientRouter } from "astro:transitions";
 import config from "../../../explainer.config";
 import "../../assets/css/global.css";
-import { useDocumentation } from "@/utils";
+import { isDocSection, useDocumentation } from "@/utils";
 import * as astroContent from "astro:content";
 
 const { title = config.seo.title, thumbnail, description } = Astro.props;
@@ -21,7 +21,9 @@ const docs = loaded.map((element) => {
 });
 
 const searchableDoc = loaded
-  .flatMap((elements) => elements.children)
+  .flatMap((elements) =>
+    isDocSection(elements) ? elements.children.filter(isDocSection) : [],
+  )
   .map((element) => ({
     ...element,
     children: flattenDocs(element.children).map((entry) => ({

@@ -1,0 +1,45 @@
+---
+
+---
+
+<figure class="relative my-8 py-6 px-8">
+  <div
+    class="absolute top-0 left-0 text-9xl font-serif leading-none text-primary/20 select-none"
+    aria-hidden="true"
+  >
+    &ldquo;
+  </div>
+  <blockquote class="relative pt-4 pl-4">
+    <div class="text-lg italic text-muted-foreground leading-relaxed">
+      <slot />
+    </div>
+  </blockquote>
+</figure>
+
+<style is:global>
+  figure:has(> blockquote) p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    hyphens: none;
+  }
+
+  .blockquote-author {
+    margin-top: 1rem !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+  }
+</style>
+
+<script>
+  document
+    .querySelectorAll("figure:has(> blockquote) .text-lg > p")
+    .forEach((p) => {
+      const text = p.textContent?.trim() ?? "";
+      if (text.startsWith("\u2014") || text.startsWith("--")) {
+        p.classList.add("blockquote-author");
+      }
+    });
+</script>

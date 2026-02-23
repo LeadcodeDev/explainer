@@ -274,7 +274,9 @@ export function useDocumentation(astro: {
     }
 
     return docs.flatMap((root) =>
-      isDocSection(root) ? flattenChildren(root.children) : [],
+      isDocSection(root)
+        ? flattenChildren(root.children)
+        : [{ params: { slug: root.id }, props: { element: root } }],
     );
   }
 
@@ -282,6 +284,7 @@ export function useDocumentation(astro: {
     const pages: DocPage[] = [];
 
     function flatten(children: DocTreeNode[]) {
+      if (!children) return;
       for (const element of children) {
         if (isDocSection(element) && element.children.length) {
           flatten(element.children);

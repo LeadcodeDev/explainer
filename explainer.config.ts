@@ -1,3 +1,4 @@
+import Blockquote from "@/components/content/blockquote/blockquote.astro";
 import Callout from "@/components/content/callout.astro";
 import CardGroup from "@/components/content/card-group/card-group.astro";
 import Card from "@/components/content/card-group/card.astro";
@@ -6,6 +7,8 @@ import CodePreview from "@/components/content/code-preview/code-preview.astro";
 import ContentPreview from "@/components/content/code-preview/content-preview.astro";
 import Preview from "@/components/content/code-preview/preview.astro";
 import CodeBlock from "@/components/content/codeblock.astro";
+import H2 from "@/components/content/heading/h2.astro";
+import H3 from "@/components/content/heading/h3.astro";
 import StepGroup from "@/components/content/step-group/step-group.astro";
 import Step from "@/components/content/step-group/step.astro";
 import Articles from "@/components/elements/articles.astro";
@@ -105,6 +108,9 @@ export default defineExplainerConfig({
       "content-preview": ContentPreview,
       preview: Preview,
       articles: Articles,
+      blockquote: Blockquote,
+      h2: H2,
+      h3: H3,
     },
     icons: {
       markdown: "devicon:markdown",
