@@ -1,7 +1,7 @@
 import { Resvg } from "@resvg/resvg-js";
 import type { AstroIntegration } from "astro";
 import matter from "gray-matter";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { generateThumbnail } from "../lib/components/content/thumbnail";
 
@@ -21,84 +21,88 @@ export function buildDocIntegration(): AstroIntegration {
       "astro:build:done": async ({ pages, logger }) => {
         logger.info("Starting thumbnail generation");
 
-        // Generate doc thumbnails
-        const docPaths = pages
-          .filter((element) => element.pathname.startsWith("docs/"))
-          .map((element) => element.pathname);
+        // Build blog metadata map upfront (permalink → { title, description })
+        const blogDir = join(process.cwd(), "content/blog");
+        const allBlogFiles = await readdir(blogDir);
+        const blogFiles = allBlogFiles.filter(
+          (f) => (f.endsWith(".mdx") || f.endsWith(".md")) && f !== "index.mdx",
+        );
+        const blogMap = new Map<
+          string,
+          { title: string; description: string; thumbnail?: string }
+        >();
+        for (const file of blogFiles) {
+          const content = await readFile(join(blogDir, file), "utf8");
+          const { data } = matter(content);
+          if (data.permalink) {
+            blogMap.set(data.permalink, {
+              title: data.title,
+              description: data.description,
+              thumbnail: data.thumbnail,
+            });
+          }
+        }
 
-        await Promise.all(
-          docPaths.map(async (path) => {
-            try {
-              const file = join(path.replace("docs/", "").replace(/\/$/, ""));
-              const { data } = await readFile(
+        // Collect doc thumbnail tasks
+        const docTasks = pages
+          .filter((element) => element.pathname.startsWith("docs/"))
+          .map((element) => async () => {
+            const file = element.pathname
+              .replace("docs/", "")
+              .replace(/\/$/, "");
+            const { data } = matter(
+              await readFile(
                 join(process.cwd(), "content/docs", `${file}.mdx`),
                 "utf8",
-              ).then(matter);
+              ),
+            );
 
-              const thumbnail = await generateThumbnail(
-                file.split("/").at(0),
-                data.title,
-                data.description,
-              );
+            const thumbnail = await generateThumbnail(
+              file.split("/").at(0),
+              data.title,
+              data.description,
+            );
 
-              const location = join(process.cwd(), "dist", "docs");
-              await mkdir(join(location, file), { recursive: true });
-              await renderThumbnail(
-                thumbnail,
-                join(location, file, "thumbnail.png"),
-              );
-              logger.info(`Thumbnail generated for docs/${file}`);
-            } catch (error) {
-              logger.warn(`Failed to generate thumbnail for ${path}: ${error}`);
-            }
-          }),
-        );
+            const location = join(process.cwd(), "dist", "docs");
+            await mkdir(join(location, file), { recursive: true });
+            await renderThumbnail(
+              thumbnail,
+              join(location, file, "thumbnail.png"),
+            );
+            logger.info(`Thumbnail generated for docs/${file}`);
+          });
 
-        // Generate blog thumbnails
-        const blogPaths = pages
+        // Collect blog thumbnail tasks
+        const blogTasks = pages
           .filter((element) => element.pathname.startsWith("blog/"))
           .filter((element) => element.pathname !== "blog/")
-          .map((element) => element.pathname);
+          .map((element) => async () => {
+            const slug = element.pathname
+              .replace("blog/", "")
+              .replace(/\/$/, "");
+            const blogData = blogMap.get(slug);
+            if (!blogData || blogData.thumbnail) return;
 
+            const thumbnail = await generateThumbnail(
+              "Blog",
+              blogData.title,
+              blogData.description,
+            );
+
+            const location = join(process.cwd(), "dist", "blog", slug);
+            await mkdir(location, { recursive: true });
+            await renderThumbnail(thumbnail, join(location, "thumbnail.png"));
+            logger.info(`Thumbnail generated for blog/${slug}`);
+          });
+
+        // Run ALL thumbnails in a single batch so Vite module runner stays active
+        const allTasks = [...docTasks, ...blogTasks];
         await Promise.all(
-          blogPaths.map(async (path) => {
+          allTasks.map(async (task) => {
             try {
-              const slug = path.replace("blog/", "").replace(/\/$/, "");
-
-              // Find the matching blog MDX file by permalink
-              const { readdirSync, readFileSync } = await import("node:fs");
-              const blogDir = join(process.cwd(), "content/blog");
-              const files = readdirSync(blogDir).filter(
-                (f) => f.endsWith(".mdx") || f.endsWith(".md"),
-              );
-
-              let blogData: { title?: string; description?: string } | null =
-                null;
-              for (const file of files) {
-                const content = readFileSync(join(blogDir, file), "utf8");
-                const { data } = matter(content);
-                if (data.permalink === slug) {
-                  blogData = data;
-                  break;
-                }
-              }
-
-              if (!blogData) return;
-
-              const thumbnail = await generateThumbnail(
-                "Blog",
-                blogData.title,
-                blogData.description,
-              );
-
-              const location = join(process.cwd(), "dist", "blog", slug);
-              await mkdir(location, { recursive: true });
-              await renderThumbnail(thumbnail, join(location, "thumbnail.png"));
-              logger.info(`Thumbnail generated for blog/${slug}`);
+              await task();
             } catch (error) {
-              logger.warn(
-                `Failed to generate blog thumbnail for ${path}: ${error}`,
-              );
+              logger.warn(`Failed to generate thumbnail: ${error}`);
             }
           }),
         );
