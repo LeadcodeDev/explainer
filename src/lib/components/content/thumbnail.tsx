@@ -104,6 +104,7 @@ export async function generateThumbnail(headline?: string, title?: string, descr
             display: 'block',
             WebkitLineClamp: 3,
             textOverflow: 'ellipsis',
+            opacity: 0.5,
           }}
         >
           {description}

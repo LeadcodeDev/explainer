@@ -68,7 +68,20 @@ export function buildDocIntegration(): AstroIntegration {
       'astro:config:setup': async ({ logger }) => {
         const blogMap = await buildBlogMetadataMap()
         const publicDir = join(process.cwd(), 'public')
+
         await generateBlogThumbnails(blogMap, publicDir, logger)
+
+        // Generate default site thumbnail
+        const siteThumbnail = await generateThumbnail(
+          undefined,
+          'Explainer',
+          'Quickly design your documentation and optimise it for search engine optimisation to showcase your products.',
+        )
+
+        await mkdir(publicDir, { recursive: true })
+        await renderThumbnail(siteThumbnail, join(publicDir, 'thumbnail.png'))
+
+        logger.info('Thumbnail generated for site default')
       },
       'astro:build:done': async ({ pages, logger }) => {
         logger.info('Starting doc thumbnail generation')
@@ -78,6 +91,7 @@ export function buildDocIntegration(): AstroIntegration {
           .filter((element) => element.pathname.startsWith('docs/'))
           .map((element) => async () => {
             const file = element.pathname.replace('docs/', '').replace(/\/$/, '')
+
             const { data } = matter(
               await readFile(join(process.cwd(), 'content/docs', `${file}.mdx`), 'utf8'),
             )

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 public/blog/
+public/thumbnail.png
 .idea
 .vscode
 .DS_Store
